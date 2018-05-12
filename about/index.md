@@ -1,37 +1,84 @@
 ---
 layout: page
-title: About the Theme
-tags: [about, Jekyll, theme, moon]
-date: 2016-03-21
+title: HARSHAD RANGANATHAN
+tags: [about, harshad, ranganathan, harshad ranganathan]
+date: 2018-05-12
 comments: false
 ---
-    
-<center><a href="http://taylantatli.github.io/Moon"><b>Moon</b></a> is a minimal, one column jekyll theme.</center>
+E-mail: <rharshad93@gmail.com>
 
-## Features
-* Minimal, you can focus on your content
-* Responsive
-* Disqus integration
-* Syntax highlighting
-* Optional post image
-* Social icons
-* Page for sharing projects
-* Optional background image
-* Simple navigation menu
-* MathJax support
+Current Work Location: Dublin, Ireland
 
-## Preview
+VISA Status: Stamp 1
 
-{% capture images %}
-    https://cloud.githubusercontent.com/assets/754514/14509720/61c61058-01d6-11e6-93ab-0918515ecd56.png
-    https://cloud.githubusercontent.com/assets/754514/14509716/61ac6c8e-01d6-11e6-879f-8308883de790.png
-{% endcapture %}
-{% include gallery images=images caption="Screenshots of Moon Theme" cols=2 %}
+Experienced Associate with a demonstrated history of working in the information technology and services industry in both waterfall and agile methodologies. Skilled in Java, Spring and Python. Strong professional with a Bachelor's degree focused in Computer Science.
 
-See a [live version of Moon](http://taylantatli.github.io/Moon) hosted on GitHub.
+<center>
+    <div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="light" data-vanity="harshadranganathan">
+        <a class="LI-simple-link" href='https://ie.linkedin.com/in/harshadranganathan?trk=profile-badge'>Harshad Ranganathan</a>
+    </div>
+</center>
 
-## Getting Started
+## Skills
 
-To learn how to install and use this theme check out the [Setup Guide](http://taylantatli.me/Moon/moon-theme/) for more information.
-      
-[Install Moon](https://github.com/TaylanTatli/Moon){: .btn}
+<span class="entry-meta">
+    <a class="tag"><span class="term">Java</span></a>
+    <a class="tag"><span class="term">Spring</span></a>
+    <a class="tag"><span class="term">Python</span></a>
+    <a class="tag"><span class="term">React.js</span></a>
+    <a class="tag"><span class="term">Spark</span></a>
+    <a class="tag"><span class="term">Amazon Web Services (AWS)</span></a>
+    <a class="tag"><span class="term">MongoDB</span></a>
+</span>
+
+### Cognizant (2014 - Present)
+
+Role: Associate - Projects
+
+Working as a Java developer in client projects building software and automation solutions in agile methodology.
+
+## Open Source Projects
+
+<center>
+    <div class="github-card" data-github="harshadranganathan" data-width="400" data-height="" data-theme="default"></div>
+</center>
+
+### [GNIB Visa App](https://github.com/HarshadRanganathan/gnib-visa-app)
+
+App that helps to find appointment slots for GNIB (Irish Residence Permit) and Re-Entry Visa without hassle.
+
+<span class="entry-meta">
+    <a class="tag"><span class="term">React</span></a>
+    <a class="tag"><span class="term">Redux</span></a>
+    <a class="tag"><span class="term">Express</span></a>
+    <a class="tag"><span class="term">Webpack</span></a>
+    <a class="tag"><span class="term">Babel</span></a>
+</span>
+
+Hosted in AWS EC2 with Nginx as a proxy server.
+
+Website: <http://gnib-visa-app.rharshad.com>
+
+### [MEAN Stack App](https://github.com/HarshadRanganathan/mean-nw-app)
+
+Task Manager application built on a client-server model using MEAN (MongoDB, Express, AngularJS & NodeJS) stack.
+
+<span class="entry-meta">
+    <a class="tag"><span class="term">Angular 1.3</span></a>
+    <a class="tag"><span class="term">Node Webkit</span></a>
+    <a class="tag"><span class="term">SocketJS</span></a>
+    <a class="tag"><span class="term">LdapJS</span></a>
+    <a class="tag"><span class="term">Express</span></a>
+    <a class="tag"><span class="term">JWT</span></a>
+    <a class="tag"><span class="term">MongoDB</span></a>
+</span>
+
+## Developer Communities
+
+### StackOverflow
+
+<a href="https://stackexchange.com/users/3152240">
+    <img src="https://stackexchange.com/users/flair/3152240.png" width="208" height="58" alt="profile for Harshad Ranganathan on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for Harshad Ranganathan on Stack Exchange, a network of free, community-driven Q&amp;A sites">
+</a>
+
+[Read my Developer Story](https://stackoverflow.com/story/harshadranganathan)
