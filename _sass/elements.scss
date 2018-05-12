@@ -206,3 +206,43 @@ kbd {
     font-weight: 300;
     margin-bottom: 10px;
 }
+
+a.fb-msg-btn{
+  display: inline-block;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  padding: 10px 16px;
+  margin: 0;
+  background-color: #0084ff;
+  border: 0;
+  cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  text-decoration: none;
+  &:hover {
+    background-color: #0268c7; 
+  }
+}
+
+a.fb-btn{
+  display: inline-block;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  padding: 10px 16px;
+  margin: 0;
+  background-color: #29487d;
+  border: 0;
+  cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  text-decoration: none;
+  &:hover {
+    background-color: #29487d; 
+  }
+}
