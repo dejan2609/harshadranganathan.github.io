@@ -4,8 +4,8 @@ bio:                'Java Developer | AWS Certified - Associate & Solutions Arch
 description:        "Harshad Ranganathan | Java Developer | AWS Certified - Associate & Solutions Architect"
 reading_time:       true
 words_per_minute:   200
-logo:               'assets/img/HarshadRanganathan.jpg'
-background:         'assets/img/VS-Wallpaper.png'
+logo:               'assets/img/harshad-ranganathan.jpg'
+background:         'assets/img/wallpaper.png'
 tiled_bg:           false   # Set this true if you want to tile your background image, otherwise it will be covered
 locale:             en_US
 url:                https://rharshad.com
