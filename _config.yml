@@ -8,8 +8,8 @@ logo:               'assets/img/HarshadRanganathan.jpg'
 background:         'assets/img/VS-Wallpaper.png'
 tiled_bg:           false   # Set this true if you want to tile your background image, otherwise it will be covered
 locale:             en_US
-#url:                https://harshadranganathan.github.io
-url:                http://localhost:4000
+url:                https://harshadranganathan.github.io
+#url:                http://localhost:4000
 
 # Jekyll
 permalink:          /:title/
