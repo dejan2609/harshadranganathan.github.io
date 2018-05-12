@@ -15,8 +15,8 @@ comments: true
 You can now track the Current Processing Dates for Employment Permits & Support Letters for Stamp 4 by simply sending a message to DBEI messenger bot.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/DBEI-Bot.png"><img src="{{ site.url }}/assets/img/DBEI-Bot.png"></a>
-	<figcaption><a href="{{ site.url }}/assets/img/DBEI-Bot.png" title="Messenger Bot for tracking Current Processing Dates for Employment Permits &amp; Support Letters for Stamp 4">Messenger Bot for tracking Current Processing Dates for Employment Permits &amp; Support Letters for Stamp 4</a></figcaption>
+	<a href="{{ site.url }}/assets/img/dbei-bot.png"><img src="{{ site.url }}/assets/img/dbei-bot.png"></a>
+	<figcaption><a href="{{ site.url }}/assets/img/dbei-bot.png" title="Messenger Bot for tracking Current Processing Dates for Employment Permits &amp; Support Letters for Stamp 4">Messenger Bot for tracking Current Processing Dates for Employment Permits &amp; Support Letters for Stamp 4</a></figcaption>
 </figure>
 
 <div>

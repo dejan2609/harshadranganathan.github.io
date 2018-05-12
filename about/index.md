@@ -57,7 +57,7 @@ App that helps to find appointment slots for GNIB (Irish Residence Permit) and R
 
 Hosted in AWS EC2 with Nginx as a proxy server.
 
-Website: <http://gnib-visa-app.rharshad.com>
+Website: <https://gnib-visa-app.rharshad.com>
 
 ### [MEAN Stack App](https://github.com/HarshadRanganathan/mean-nw-app)
 
