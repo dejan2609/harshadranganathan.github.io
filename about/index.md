@@ -29,6 +29,7 @@ Experienced Associate with a demonstrated history of working in the information 
     <a class="tag"><span class="term">Spark</span></a>
     <a class="tag"><span class="term">Amazon Web Services (AWS)</span></a>
     <a class="tag"><span class="term">MongoDB</span></a>
+    <a class="tag"><span class="term">UiPath</span></a>
 </span>
 
 ### Cognizant (2014 - Present)
