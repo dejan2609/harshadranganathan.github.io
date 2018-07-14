@@ -9,7 +9,7 @@ E-mail: <rharshad93@gmail.com>
 
 Current Work Location: Dublin, Ireland
 
-VISA Status: Stamp 1
+VISA Status: Stamp 4
 
 Experienced Associate with a demonstrated history of working in the information technology and services industry in both waterfall and agile methodologies. Skilled in Java, Spring and Python. Strong professional with a Bachelor's degree focused in Computer Science.
 
