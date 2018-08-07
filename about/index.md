@@ -1,6 +1,6 @@
 ---
 layout: page
-title: HARSHAD RANGANATHAN
+title: Harshad Ranganathan
 tags: [about, harshad, ranganathan, harshad ranganathan]
 date: 2018-05-12
 comments: false
@@ -43,6 +43,21 @@ Working as a Java developer in client projects building software and automation 
 <center>
     <div class="github-card" data-github="harshadranganathan" data-width="400" data-height="" data-theme="default"></div>
 </center>
+
+### [DBEI Messenger Bot](https://github.com/HarshadRanganathan/dbei-bot)
+
+Track current application processing dates for employment permits and support letter processed by the Department of Business, Enterprise and Innovation.
+
+<span class="entry-meta">
+    <a class="tag"><span class="term">Node JS</span></a>
+    <a class="tag"><span class="term">Express</span></a>
+    <a class="tag"><span class="term">LowDB</span></a>
+    <a class="tag"><span class="term">Jest</span></a>
+</span>
+
+Messenger App: <https://m.me/dbei-bot>
+
+FB Page: <https://fb.me/dbei-bot>
 
 ### [GNIB Visa App](https://github.com/HarshadRanganathan/gnib-visa-app)
 
