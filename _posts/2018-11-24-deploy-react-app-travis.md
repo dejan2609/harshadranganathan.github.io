@@ -5,6 +5,7 @@ date:   2018-11-24
 excerpt: "Test and deploy your React App with Travis CI"
 tag:
 - React App
+- Github
 - Travis
 - CI/CD
 comments: true
@@ -14,12 +15,12 @@ comments: true
 
 We can test and deploy react projects hosted at Github using Travis CI. 
 
-Once the build passes, we can create production builds of JS, index.html and deploy them to your server.
-
 ## Pre-Requisites
 
  - Setup a [Travis CI account](https://travis-ci.com)
  - [Register your repositories](https://docs.travis-ci.com/user/tutorial/) with Travis CI
+
+Once you have your react project hosted at Github registered with Travis CI, we can proceed to the next steps of running the tests and deploying it to your server using Travis CI. 
 
 ## Install Travis CLI
 
@@ -68,7 +69,8 @@ touch .travis.yml
 # generate new key called "travis_rsa"
 ssh-keygen -t rsa -N "" -C "React App" -f travis_rsa
 
-# encrypt the file and add it to your .travis.yml file
+# encrypt the file using your repo's public key and add it to your .travis.yml file
+# must be run within your project directory
 travis encrypt-file travis_rsa --add --com
 
 # remove the key
@@ -80,7 +82,7 @@ git add travis_rsa.enc
 
 {% endhighlight %}
 
-If incase, when you are running the `encrypt-file` command your project isn't auto-detected you can pass the repo name as follows
+If incase, when you are running the `encrypt-file` command in your project directory and your repo isn't auto-detected, you can pass the repo name as follows
 
 {% highlight plaintext %}
 # use -r flag e.g. -r owner/project
@@ -208,5 +210,15 @@ else
   echo "Not deploying, since this branch isn't master."
 fi
 {% endhighlight %}
+
+### Safelist Travis IP Addresses
+
+If incase, you have setup SSH restriction in your firewall rules, you will have to safelist travis ip addresses so that travis would be able to SSH and deploy the artifacts in your server.
+
+Refer [Travis IP Addresses](https://docs.travis-ci.com/user/ip-addresses/) list.
+
+Since we had specified `sudo: true` in our .travis.yml file, we have to safelist `Sudo-enabled Linux` IP addresses.
+
+Also it is recommended to subscribe yourself to the notification as these IP adderesses will change periodically.
 
 Now we have everything in place. Whenever you update `master` branch, Travis CI will generate the production build artifacts and deploy them to your server provided the tests pass.
