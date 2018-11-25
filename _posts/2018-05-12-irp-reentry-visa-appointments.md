@@ -23,7 +23,7 @@ Website auto-refreshes every 5 minutes and displays the slots as they are availa
 <a href="https://gnib-visa-app.rharshad.com/" class="btn btn-info" target="_blank">View Appointments</a>
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/gnib-visa-app.png"><img src="{{ site.url }}/assets/img/gnib-visa-app.png"></a>
+	<a href="{{ site.url }}/assets/img/2018/05/gnib-visa-app.png"><img src="{{ site.url }}/assets/img/2018/05/gnib-visa-app.png"></a>
 </figure>
 
 ## Guidelines for booking IRP Appointments:
