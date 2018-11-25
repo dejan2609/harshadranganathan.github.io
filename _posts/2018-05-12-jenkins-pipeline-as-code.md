@@ -54,14 +54,18 @@ To enable code completion follow below steps:
 
 You can also generate snippets of code for the pipeline steps using the `Snippet Generator` feature available in Jenkins (http://(yourjenkinsurl)/job/(yourpipelinejob)/pipeline-syntax/) which you can then make use of in your pipeline.
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="0NlcRaW"><a href="//imgur.com/0NlcRaW">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<figure>
+	<a href="{{ site.url }}/assets/img/2018/05/jenkins-snippet-generator.png"><img src="{{ site.url }}/assets/img/2018/05/jenkins-snippet-generator.png"></a>
+</figure>
 
 
 ## Replay
 
 Replay feature allows you to test your pipeline code without having to commit the changes to your Repo. Once you have tested the code you can then push your changes.
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="z7EAfpd"><a href="//imgur.com/z7EAfpd">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<figure>
+	<a href="{{ site.url }}/assets/img/2018/05/jenkins-replay.png"><img src="{{ site.url }}/assets/img/2018/05/jenkins-replay.png"></a>
+</figure>
 
 ## Jenkins Declarative Pipeline Example
 

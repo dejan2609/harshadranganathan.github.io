@@ -19,13 +19,18 @@ You can even add actions to the content so that users can complete tasks within 
 
 In Microsoft Teams, choose the `More options (⋯)` button next to the channel name in the list of channels and then choose Connectors.
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="JibaOfK"><a href="//imgur.com/JibaOfK">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<figure>
+	<a href="{{ site.url }}/assets/img/2018/05/webhook-connector.png"><img src="{{ site.url }}/assets/img/2018/05/webhook-connector.png"></a>
+</figure>
+
 
 Add `Incoming webhook` connector to the channel.
 
 Now choose `configure` button next to the `Incoming Webhook` connector.
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="y5lGdVV"><a href="//imgur.com/y5lGdVV">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<figure>
+	<a href="{{ site.url }}/assets/img/2018/05/incoming-webhook.png"><img src="{{ site.url }}/assets/img/2018/05/incoming-webhook.png"></a>
+</figure>
 
 Provide a name and upload an image for the connector. Now select `Create` button.
 
@@ -47,7 +52,9 @@ Send this JSON payload as a POST request to the Webhook URL.
 
 You can either use `Send via WebHook` option available in the [Card Playground](https://messagecardplayground.azurewebsites.net/) (or) [Postman](https://docs.microsoft.com/en-us/outlook/actionable-messages/actionable-messages-via-connectors#send-the-message) to send the message to the webhook.
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="17uptVW"><a href="//imgur.com/17uptVW">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<figure>
+	<a href="{{ site.url }}/assets/img/2018/05/webhook-message.png"><img src="{{ site.url }}/assets/img/2018/05/webhook-message.png"></a>
+</figure>
 
 ## Sending Messages to Webhook from Jenkins Build
 

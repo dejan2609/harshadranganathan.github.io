@@ -24,7 +24,6 @@ Website auto-refreshes every 5 minutes and displays the slots as they are availa
 
 <figure class="half">
 	<a href="{{ site.url }}/assets/img/gnib-visa-app.png"><img src="{{ site.url }}/assets/img/gnib-visa-app.png"></a>
-	<figcaption><a href="{{ site.url }}/assets/img/gnib-visa-app.png" title="Find appointment slots for GNIB (Irish Residence Permit) and Re-Entry Visa without hassle">Find appointment slots for GNIB (Irish Residence Permit) and Re-Entry Visa without hassle</a></figcaption>
 </figure>
 
 ## Guidelines for booking IRP Appointments:

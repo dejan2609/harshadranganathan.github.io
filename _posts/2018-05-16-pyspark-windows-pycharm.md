@@ -41,7 +41,9 @@ Now validate the setup by running `spark-shell` from your `SPARK_HOME` directory
 C:\Spark\spark-2.2.0-bin-hadoop2.7>bin\spark-shell
 {% endhighlight %}
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="DvTk8Hw"><a href="//imgur.com/DvTk8Hw">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<figure>
+	<a href="{{ site.url }}/assets/img/2018/05/spark-shell.png"><img src="{{ site.url }}/assets/img/2018/05/spark-shell.png"></a>
+</figure>
 
 ## PyCharm Configuration
 
@@ -51,7 +53,9 @@ Configure the python interpreter to support pyspark by following the below steps
 2. In the `Project Interpreter` dialog, select `More` in the settings option and then select the new virtual environment. Now select `Show paths for the selected interpreter` option.
 2. Add the paths for `Spark Python` and `Spark Py4j` to this virtual environment as shown in the screenshot below.
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="cAwoRrw"><a href="//imgur.com/cAwoRrw">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<figure>
+	<a href="{{ site.url }}/assets/img/2018/05/pycharm-interpreter-paths.png"><img src="{{ site.url }}/assets/img/2018/05/pycharm-interpreter-paths.png"></a>
+</figure>
 
 Create a new run configuration for `Python` in the dialog `Run\Debug Configurations`.
 
