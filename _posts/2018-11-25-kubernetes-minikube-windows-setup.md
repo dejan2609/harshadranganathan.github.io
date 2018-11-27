@@ -42,8 +42,10 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/in
 Once chocolately is installed, we run below command to install Minikube
 
 {% highlight powershell %}
-choco install minikube -y
+choco install minikube --version 0.27 -y
 {% endhighlight %}
+
+Note: Versions above 0.27 have an issue with [shutdown](https://github.com/kubernetes/minikube/issues/2914)
 
 ## Install VirtualBox
 
