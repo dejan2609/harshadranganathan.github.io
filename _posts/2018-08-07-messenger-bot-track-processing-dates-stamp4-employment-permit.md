@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "DBEI Messenger Bot"
+title:  "Messenger Bot for Tracking Current Processing Dates of Stamp4 Support Letter/Work Permit"
 date:   2018-08-07
-excerpt: "Track Current Processing Dates for Employment Permits & Support Letters for Stamp 4"
+excerpt: "Track Current Application Processing Dates with Department of Business, Enterprise and Innovation"
 tag:
 - Employment Permits 
 - Support Letters

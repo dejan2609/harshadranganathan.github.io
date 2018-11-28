@@ -18,7 +18,7 @@ The Appointment System doesn't show you the available slots until you fill up th
 
 You can now track the availability of appointment slots for both IRP and Re-Entry VISA at ease using below website without having to fill any forms. 
 
-Website auto-refreshes every 5 minutes and displays the slots as they are available.
+Website auto-refreshes every minute and displays the slots as they are available.
 
 <a href="https://gnib-visa-app.rharshad.com/" class="btn btn-info" target="_blank">View Appointments</a>
 
