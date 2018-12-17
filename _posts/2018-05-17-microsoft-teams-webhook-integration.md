@@ -42,6 +42,8 @@ We have now set up the webhook for the channel.
 
 To send a message to the webhook connector we have to send it as a JSON payload. Refer [message card template](https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference) on how the payload needs to be structured.
 
+Note: [Adaptive cards](https://docs.microsoft.com/en-us/outlook/actionable-messages/adaptive-card) are the recommended card type for new Teams development. They are the new cross product specification for cards in Microsoft products including Bots, Cortana, Outlook, and Windows. However, they are not supported yet in teams connectors.
+
 You can experiment your card design at [Card Playground](https://messagecardplayground.azurewebsites.net/).
 
 We will send below sample payload to the connector and check if it works.
