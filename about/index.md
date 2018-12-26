@@ -2,16 +2,17 @@
 layout: page
 title: Harshad Ranganathan
 tags: [about, harshad, ranganathan, harshad ranganathan]
-date: 2018-05-12
+date: 2018-12-26
 comments: false
 ---
+
+Experienced Associate with a demonstrated history of working in the information technology and services industry in both waterfall and agile methodologies. Skilled in Java, Spring and Python. Strong professional with a Bachelor's degree focused in Computer Science.
+
 E-mail: <rharshad93@gmail.com>
 
 Current Work Location: Dublin, Ireland
 
 VISA Status: Stamp 4
-
-Experienced Associate with a demonstrated history of working in the information technology and services industry in both waterfall and agile methodologies. Skilled in Java, Spring and Python. Strong professional with a Bachelor's degree focused in Computer Science.
 
 <center>
     <div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="light" data-vanity="harshadranganathan">
@@ -25,9 +26,11 @@ Experienced Associate with a demonstrated history of working in the information 
     <a class="tag"><span class="term">Java</span></a>
     <a class="tag"><span class="term">Spring</span></a>
     <a class="tag"><span class="term">Python</span></a>
-    <a class="tag"><span class="term">React.js</span></a>
+    <a class="tag"><span class="term">Scala</span></a>
     <a class="tag"><span class="term">Spark</span></a>
     <a class="tag"><span class="term">Amazon Web Services (AWS)</span></a>
+    <a class="tag"><span class="term">Docker</span></a>
+    <a class="tag"><span class="term">React.js</span></a>
     <a class="tag"><span class="term">MongoDB</span></a>
     <a class="tag"><span class="term">UiPath</span></a>
 </span>
@@ -44,7 +47,7 @@ Working as a Java developer in client projects building software and automation 
     <div class="github-card" data-github="harshadranganathan" data-width="400" data-height="" data-theme="default"></div>
 </center>
 
-### [DBEI Messenger Bot](https://github.com/HarshadRanganathan/dbei-bot)
+### [Messenger Bot for Tracking Current Processing Dates of Stamp4 Support Letter/Work Permit](https://github.com/HarshadRanganathan/dbei-bot)
 
 Track current application processing dates for employment permits and support letter processed by the Department of Business, Enterprise and Innovation.
 
@@ -66,12 +69,10 @@ App that helps to find appointment slots for GNIB (Irish Residence Permit) and R
 <span class="entry-meta">
     <a class="tag"><span class="term">React</span></a>
     <a class="tag"><span class="term">Redux</span></a>
-    <a class="tag"><span class="term">Express</span></a>
+    <a class="tag"><span class="term">Nginx</span></a>
     <a class="tag"><span class="term">Webpack</span></a>
     <a class="tag"><span class="term">Babel</span></a>
 </span>
-
-Hosted in AWS EC2 with Nginx as a proxy server.
 
 Website: <https://gnib-visa-app.rharshad.com>
 
