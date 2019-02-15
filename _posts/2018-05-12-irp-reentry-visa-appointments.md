@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "IRP &amp; Re-Entry VISA Appointments"
-date:   2019-01-01
+date:   2019-02-15
 excerpt: "Find appointment slots for Irish Residence Permit (IRP) and Re-Entry Visa without hassle"
 tag:
 - gnib 
@@ -18,12 +18,18 @@ The Appointment System doesn't show you the available slots until you fill up th
 
 You can now track the availability of appointment slots for both IRP and Re-Entry VISA at ease using below website without having to fill any forms. 
 
+You can also enable notifications for appointments through your desktop/mobile browser.
+
 Website auto-refreshes every minute and displays the slots as they are available.
 
 <a href="https://gnib-visa-app.rharshad.com/" class="btn btn-info" target="_blank">View Appointments</a>
 
 <figure class="half">
 	<a href="{{ site.url }}/assets/img/2019/01/gnib-visa-app.png"><img src="{{ site.url }}/assets/img/2019/01/gnib-visa-app.png"></a>
+</figure>
+
+<figure class="half">
+	<a href="{{ site.url }}/assets/img/2019/02/gnib-visa-app-notifications.png"><img src="{{ site.url }}/assets/img/2019/02/gnib-visa-app-notifications.png"></a>
 </figure>
 
 ## Guidelines for booking IRP Appointments:
