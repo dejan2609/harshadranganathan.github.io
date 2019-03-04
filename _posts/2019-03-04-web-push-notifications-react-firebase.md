@@ -585,7 +585,7 @@ We then send a message to test if the notification gets shown to the user. We ha
 
 But, for sending the message we will use the FCM v1 HTTP protocol instead of the legacy protocol which will require JWT access token to be passed along the request.
 
-To generate the access token you can make use of. Follow the steps in the README to generate a service account in your firebase project. 
+To generate the access token you can make use of [fcm-http-oauth](https://github.com/HarshadRanganathan/fcm-http-oauth). Follow the steps in the README to generate a service account in your firebase project. 
 
 Let's now send the message to a particular user by providing firebase project id, jwt and the registration token:
 
@@ -623,6 +623,186 @@ Refer:
 ## Server Side
 
 We had looked so far on how to subscribe a user to receive push notifications. We will now look at storing the registration tokens in firestore and sending notification messages using firebase SDK.
+
+<figure>
+	<a href="{{ site.url }}/assets/img/2019/03/registration-tokens-firestore.png"><img src="{{ site.url }}/assets/img/2019/03/registration-tokens-firestore.png"></a> 
+</figure>
+
+### Firestore
+
+Cloud Firestore is a flexible, scalable database for mobile, web, and server development from Firebase and Google Cloud Platform.
+
+It keeps your data in sync across client apps through realtime listeners and offers offline support for mobile and web so you can build responsive apps that work regardless of network latency or Internet connectivity. 
+
+#### Creating New Database
+
+Create a new firestore database in test mode inside your firebase project.
+
+<figure>
+	<a href="{{ site.url }}/assets/img/2019/03/firestore-new-database.png"><img src="{{ site.url }}/assets/img/2019/03/firestore-new-database.png"></a> 
+</figure>
+
+In the `Rules` tab add below rule to allow reads/writes only from your account:
+
+{% highlight text %}
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if request.auth.uid != null;
+    }
+  }
+}
+{% endhighlight %}
+
+#### Storing Registration Token
+
+You can create a node js project which will be sending notifications to your users/use cloud functions/any other framework. In this guide, we will see how we can store tokens in firestore using node.js.
+
+Generate a service account by following these steps:
+
+ - In your firebase project, under project settings, choose `Service accounts` tab.
+
+ - Select `Generate new private key` to download your service account file.
+
+We will use the service account to access firestore.
+
+Install `firebase-admin` SDK to your node.js project. 
+
+{% highlight bash %}
+npm install --save firebase-admin
+{% endhighlight %}
+
+We will define `firebase.js` file which will perform the required operations.
+
+{% highlight text %}
+const serviceAccount = require('./service-account.json');
+const admin = require('firebase-admin');
+
+/* initialise app */
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+/* initialise firestore */
+const firestore = admin.firestore();
+firestore.settings({
+    timestampsInSnapshots: true
+});
+const FIRESTORE_TOKEN_COLLECTION = 'instance_tokens';
+
+async function storeAppInstanceToken(token) {
+    try {
+        return await firestore.collection(FIRESTORE_TOKEN_COLLECTION)
+        .add({ token, createdAt: admin.firestore.FieldValue.serverTimestamp() });
+    } catch(err) {
+        console.log(`Error storing token [${token}] in firestore`, err);
+        return null;
+    }
+}
+
+async function deleteAppInstanceToken(token) {
+    try {
+        const deleteQuery = firestore.collection(FIRESTORE_TOKEN_COLLECTION).where('token', '==', token);
+        const querySnapshot = await deleteQuery.get();
+        querySnapshot.docs.forEach(async (doc) => {
+            await doc.ref.delete();
+        });
+        return true;
+    } catch(err) {
+        console.log(`Error deleting token [${token}] in firestore`, err);
+        return null;
+    }
+}
+
+
+module.exports = {
+    storeAppInstanceToken,
+    deleteAppInstanceToken
+}
+{% endhighlight %}
+
+This script exports two functions -
+
+[1] storeAppInstanceToken - You will pass in the token which needs to be stored in a firestore collection. Also, adds a server timestamp to the document.
+
+[2] deleteAppInstanceToken - Gets the docs which match the token and deletes them.
+
+### Sending User Notifications
+
+We update the script `firebase.js` to export below functions to be able to send push notifications -
+
+{% highlight text %}
+const messaging = admin.messaging();
+
+function buildCommonMessage(title, body) {
+    return {
+        'notification': {
+            'title': title,
+            'body': body
+        }
+    };
+}
+
+/**
+* Builds message with platform specific options
+* Link: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages
+*/
+function buildPlatformMessage(token, title, body) {
+    const fcmMessage = buildCommonMessage(title, body);
+    
+    const webpush = {
+        'headers': {
+            'TTL': '0'
+        },
+        'notification': {
+            'icon': 'https://img.icons8.com/color/96/e74c3c/ireland.png'
+        },
+        'fcm_options': {
+            'link': 'https://gnib-visa-app.rharshad.com'
+        }
+    };
+
+    fcmMessage['token'] = token;
+    fcmMessage['webpush'] = webpush;
+    return fcmMessage;
+}
+
+async function sendFcmMessage(fcmMessage) {
+    try {    
+        await messaging.send(fcmMessage);
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+module.exports = {
+    buildPlatformMessage,
+    storeAppInstanceToken,
+    deleteAppInstanceToken,
+    subscribeAppInstanceToTopic,
+    unsubscribeAppInstanceFromTopic,
+    sendFcmMessage
+}
+{% endhighlight %}
+
+We can use `buildPlatformMessage` to generate a message and then pass it on to `sendFcmMessage` to notify the user.
+
+### Topic Subscription 
+
+You can also subscribe users to topics by calling `subscribeToTopic` method.
+
+{% highlight text %}
+async function subscribeAppInstanceToTopic(token, topic) {
+    try {
+        return await messaging.subscribeToTopic(token, topic);
+    } catch(err) {
+        console.log(`Error subscribing token [${token}] to topic: `, err);
+        return null;
+    }
+}
+{% endhighlight %}
+
+We had used firebase SDK for sending FCM messages. You can also make use of webpush or send the messages to the FCM HTTP App server endpoint.
 
 ## References
 
