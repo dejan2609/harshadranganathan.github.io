@@ -2,7 +2,7 @@
 layout: page
 title: Harshad Ranganathan
 tags: [about, harshad, ranganathan, harshad ranganathan]
-date: 2018-12-26
+date: 2019-04-28
 comments: false
 ---
 
@@ -46,6 +46,16 @@ Working as a Java developer in client projects building software and automation 
 <center>
     <div class="github-card" data-github="harshadranganathan" data-width="400" data-height="" data-theme="default"></div>
 </center>
+
+### [MS Teams](https://github.com/HarshadRanganathan/ms-teams)
+
+Python helper library to construct microsoft teams connector card messages.
+
+<span class="entry-meta">
+    <a class="tag"><span class="term">Python</span></a>
+</span>
+
+PYPI Repo: <https://pypi.org/project/ms-teams/>
 
 ### [Messenger Bot for Tracking Current Processing Dates of Stamp4 Support Letter/Work Permit](https://github.com/HarshadRanganathan/dbei-bot)
 
