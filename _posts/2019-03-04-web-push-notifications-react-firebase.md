@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Web Push Notifications for your React app using Firebase"
-date:   2019-03-04
+date:   2019-05-07
 excerpt: "Implement push notifications for your react application using firebase"
 tag:
 - push notifications
@@ -408,6 +408,10 @@ We need to provide subscription options to our user based on whether he has alre
 For example, in our `notifications.js` we could do something like below:
 
 {% highlight react %}
+import axios from 'axios';
+
+const ROOT_URL = ''; // define your server subscription url (sample express server setup for handling subscriptions described at the end)
+
 class Notifications extends Component {
 
     constructor(props) {
@@ -425,6 +429,25 @@ class Notifications extends Component {
      */
     componentDidMount() {
         localStorage.getItem(GNIB_APPT_NOTIFICATION_SUBSCRIBED) === "TRUE" ? this.setState({ gnibApptSubscriptionToggleSwitch: true }) : this.setState({ gnibApptSubscriptionToggleSwitch: false });
+    }
+
+    /**
+    * Send the subscription details (token and topic) to the server endpoint 
+    */
+    async subscriptionActions(mode, token, topic) {
+        try {
+            return await axios.post(`${ROOT_URL}/${mode}`, { token, topic });
+        } catch(error) {
+            if (error.response) {
+                console.log(error.response.status);
+                console.log(error.response.data);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error: ', error.message);
+            }
+            return null;
+        }
     }
 
     /**
@@ -674,7 +697,7 @@ npm install --save firebase-admin
 
 We will define `firebase.js` file which will perform the required operations.
 
-{% highlight text %}
+{% highlight javascript %}
 const serviceAccount = require('./service-account.json');
 const admin = require('firebase-admin');
 
@@ -731,7 +754,7 @@ This script exports two functions -
 
 We update the script `firebase.js` to export below functions to be able to send push notifications -
 
-{% highlight text %}
+{% highlight javascript %}
 const messaging = admin.messaging();
 
 function buildCommonMessage(title, body) {
@@ -789,9 +812,9 @@ We can use `buildPlatformMessage` to generate a message and then pass it on to `
 
 ### Topic Subscription 
 
-You can also subscribe users to topics by calling `subscribeToTopic` method.
+You can also subscribe/unsubscribe users to topics by calling `subscribeToTopic` & `unsubscribeFromTopic` methods.
 
-{% highlight text %}
+{% highlight javascript %}
 async function subscribeAppInstanceToTopic(token, topic) {
     try {
         return await messaging.subscribeToTopic(token, topic);
@@ -800,9 +823,94 @@ async function subscribeAppInstanceToTopic(token, topic) {
         return null;
     }
 }
+
+async function unsubscribeAppInstanceFromTopic(token, topic) {
+    try {
+        return await messaging.unsubscribeFromTopic(token, topic);
+    } catch(err) {
+        console.log(`Error unsubscribing token [${token}] from topic: `, err);
+        return null;
+    }
+}
 {% endhighlight %}
 
 We had used firebase SDK for sending FCM messages. You can also make use of webpush or send the messages to the FCM HTTP App server endpoint.
+
+### Express Server
+
+So far, we had defined subscription, firebase and fcm actions. 
+
+We will use [Express](https://expressjs.com/) to expose them as API's in a web server so that our client app can access them.
+
+Install express as a dependency.
+
+{% highlight bash %}
+npm install --save express
+{% endhighlight %}
+
+Create a new file named `index.js` and define below API's.
+
+{% highlight javascript %}
+const { storeAppInstanceToken, deleteAppInstanceToken, subscribeAppInstanceToTopic, unsubscribeAppInstanceFromTopic } = require('./firebase');
+
+const 
+    express = require('express'),
+    bodyParser = require('body-parser'),
+    app = express().use(bodyParser.json());
+
+app.post('/storetoken', async (req, res) => {
+    if (!req.body) res.sendStatus(400);
+    if(req.body.token) {
+        result = await storeAppInstanceToken(req.body.token);
+        result?res.sendStatus(200):res.sendStatus(500);
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+app.delete('/deletetoken', async(req, res) => {
+    if (!req.body) res.sendStatus(400);
+    if(req.body.token) {
+        result = await deleteAppInstanceToken(req.body.token);
+        result?res.sendStatus(204):res.sendStatus(500);
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+app.post('/subscribe', async(req, res) => {
+    if (!req.body) res.sendStatus(400);
+    if(req.body.token) {
+        result = await subscribeAppInstanceToTopic(req.body.token, req.body.topic);
+        result?res.sendStatus(200):res.sendStatus(500);
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+app.post('/unsubscribe', async(req, res) => {
+    if (!req.body) res.sendStatus(400);
+    if(req.body.token) {
+        result = await unsubscribeAppInstanceFromTopic(req.body.token, req.body.topic);
+        result?res.sendStatus(200):res.sendStatus(500);
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+app.listen(process.env.PORT || 1338, () => {
+    console.log('Server is running');
+});
+{% endhighlight %}
+
+You can run the server with below command and access the endpoints via localhost e.g. send a POST request to http://localhost:1338/subscribe with appropriate JSON body content.
+
+{% highlight bash %}
+node index.js
+{% endhighlight %}
+
+There are various cloud platforms available where you can deploy the node express server.
+
 
 ## References
 
