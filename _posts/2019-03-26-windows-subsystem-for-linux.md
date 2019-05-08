@@ -106,6 +106,8 @@ root = /
 options = "metadata"
 {% endhighlight %}
 
+{% include donate.html %}
+
 ## Install Docker
 
 To install docker and docker compose in WSL run below script:
@@ -231,6 +233,8 @@ echo ''
 echo "Please logout then login before continuing."
 
 {% endhighlight %}
+
+{% include donate.html %}
 
 ## References
 

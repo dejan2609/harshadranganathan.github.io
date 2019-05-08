@@ -88,6 +88,8 @@ Delete .minikube and .kube folders in your home directory
 
 Run minikube start command with appropriate options.
 
+{% include donate.html %}
+
 ## Running Kubernetes Cluster in Hyper-V
 
 ### Create vSwitch
@@ -165,6 +167,8 @@ Delete .minikube and .kube folders in your home directory
 
 Run minikube start command with appropriate options.
 
+{% include donate.html %}
+
 ## Interacting With Your Cluster
 
 To check if minikube is running use below command
@@ -209,3 +213,5 @@ To access the Kubernetes dashboard run below command
 {% highlight powershell %}
 minikube dashboard
 {% endhighlight %}
+
+{% include donate.html %}

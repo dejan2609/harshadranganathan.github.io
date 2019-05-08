@@ -108,6 +108,8 @@ curl -X GET "localhost:1337/webhook?hub.verify_token=<YOUR_VERIFY_TOKEN>&hub.cha
 
 Above should return HTTP status code 200 with response as `CHALLENGE_ACCEPTED` if everything was set up properly.
 
+{% include donate.html %}
+
 ## Add webhook endpoint
 
 In `index.js` file we add below code to expose `/webhook` POST endpoint which will be used by the Messenger platform to send webhook events.
@@ -295,6 +297,8 @@ function quickReplyOptions(text) {
 callSendAPI(sender_psid, quickReplyOptions("Hi! How can I help you today?"));
 {% endhighlight %}
 
+{% include donate.html %}
+
 
 # Deploy your webhook
 
@@ -419,6 +423,8 @@ The generated token will NOT be saved in this UI. Each time you select a Page fr
 
 Send a message to your Page from facebook.com or in Messenger. If your webhook receives a webhook event then everything has been wired up properly.
 
+{% include donate.html %}
+
 # Publishing your App
 
 While in Development mode, apps are automatically approved for all login permissions, features, and product-specific features.
@@ -484,6 +490,8 @@ Business verification is required once per Business Manager account.
 After your business information and verification documents are submitted, you will receive an email from the Facebook legal team asking you to digitally sign the supplemental terms and apply for review.
 
 Once all the review is completed, your bot will be approved. You can then make it live and anyone will be able to message and get the response back from your page.
+
+{% include donate.html %}
 
 ## References:
 

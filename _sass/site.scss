@@ -132,6 +132,21 @@ body {
 	    box-shadow: none;
 	}
 }
+.donate-wrapper {
+	display: flex; 
+	align-items: center; 
+	justify-content: center; 
+	height: 150px;
+}
+.donate-content {
+	display: none;
+	@media #{$notsmall} {
+		display: inline;
+		font-size: 1.2em; 
+		color: #FF4136; 
+		line-height: 2em;
+	}
+}
 // entry meta
 .entry-meta {
 	@include font-rem(12);

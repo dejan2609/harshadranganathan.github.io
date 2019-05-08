@@ -58,6 +58,7 @@ You can also generate snippets of code for the pipeline steps using the `Snippet
 	<a href="{{ site.url }}/assets/img/2018/05/jenkins-snippet-generator.png"><img src="{{ site.url }}/assets/img/2018/05/jenkins-snippet-generator.png"></a>
 </figure>
 
+{% include donate.html %}
 
 ## Replay
 
@@ -70,6 +71,8 @@ Replay feature allows you to test your pipeline code without having to commit th
 ## Jenkins Declarative Pipeline Example
 
 <script src="https://gist.github.com/HarshadRanganathan/97feed7f91b7ae542c994393447f3db4.js"></script>
+
+{% include donate.html %}
 
 ## References
 

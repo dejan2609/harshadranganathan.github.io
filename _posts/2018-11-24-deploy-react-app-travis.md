@@ -185,6 +185,8 @@ Add the public key to file named `server.pub` and push to your repo.
 
 In .travis.yml file, we had specified this command `cat server.pub >> $HOME/.ssh/known_hosts` which will add your server's public key to the known hosts file in the virtualized machine created by travis ci.
 
+{% include donate.html %}
+
 ## Deploy Script
 
 Now add below deploy script to your project repo which does the following
@@ -222,3 +224,5 @@ Since we had specified `sudo: true` in our .travis.yml file, we have to safelist
 Also it is recommended to subscribe yourself to the notification as these IP adderesses will change periodically.
 
 Now we have everything in place. Whenever you update `master` branch, Travis CI will generate the production build artifacts and deploy them to your server provided the tests pass.
+
+{% include donate.html %}

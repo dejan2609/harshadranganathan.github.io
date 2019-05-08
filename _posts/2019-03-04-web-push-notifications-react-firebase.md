@@ -102,6 +102,8 @@ Sample notification page:
 	<a href="{{ site.url }}/assets/img/2019/03/sample-push-notification-page.png"><img src="{{ site.url }}/assets/img/2019/03/sample-push-notification-page.png"></a>
 </figure>
 
+{% include donate.html %}
+
 ## Client Side
 
 Push API relies on a few different pieces of technology, including Web App Manifests and Service Workers. 
@@ -273,6 +275,8 @@ Few points:
 3. Every time our page loads, the browser will download the latest copy of service worker and will do a byte-to-byte comparison to see if anything has changed. If so, it will activate the new copy otherwise it won't perform the update.
 
 4. Also, if it notices any difference with the latest copy it won't immediately activate the new service worker. The browser will wait until the current service worker controlls zero clients. You can however, force an update to be done.
+
+{% include donate.html %}
 
 ### Notification Message
 
@@ -565,6 +569,8 @@ gzip_types
     application/manifest+json
 {% endhighlight %}
 
+{% include donate.html %}
+
 ## Testing
 
 We now have everything wired up on our client side. So, how can we test everything works fine on our client side before proceeding to the server side of things.
@@ -642,6 +648,8 @@ curl -X POST \
 Refer:
 
 [1] [FCM Message Structure](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+
+{% include donate.html %}
 
 ## Server Side
 
@@ -910,6 +918,8 @@ node index.js
 {% endhighlight %}
 
 There are various cloud platforms available where you can deploy the node express server.
+
+{% include donate.html %}
 
 
 ## References

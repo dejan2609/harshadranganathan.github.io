@@ -58,6 +58,8 @@ You can either use `Send via WebHook` option available in the [Card Playground](
 	<a href="{{ site.url }}/assets/img/2018/05/webhook-message.png"><img src="{{ site.url }}/assets/img/2018/05/webhook-message.png"></a>
 </figure>
 
+{% include donate.html %}
+
 ## Sending Messages to Webhook from Jenkins Build
 
 You can make use of the [office 365 connector plugin](https://wiki.jenkins.io/display/JENKINS/Office+365+Connector+Plugin) to send build messages to the webhook. 
@@ -70,7 +72,10 @@ Below is a sample which sends a custom card message to the webhook using `httpRe
 
 This card shows the build parameter values with an action button to view the build job.
 
+{% include donate.html %}
+
 References:
 
 https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/connectors
+
 https://docs.microsoft.com/en-us/outlook/actionable-messages/actionable-messages-via-connectors
