@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Getting started with PySpark on Windows and PyCharm"
-date:   2018-05-16
+date:   2019-05-13
 excerpt: "Setting up PySpark on Windows and running the scripts in PyCharm IDE"
 tag:
 - pyspark 
@@ -31,9 +31,11 @@ HADOOP_HOME=C:\winutils\hadoop-2.7.1
 SPARK_HOME=C:\Spark\spark-2.2.0-bin-hadoop2.7
 {% endhighlight %}
 
+Create a new folder `tmp/hive` in your C: drive.
+
 Provide permissions for the folder `tmp/hive` using `winutils.exe` by running below command in your command prompt
 {% highlight plaintext %}
-C:\winutils\hadoop-2.7.1\bin chmod 777 C:\tmp\hive
+C:\winutils\hadoop-2.7.1\bin\winutils.exe chmod 777 C:\tmp\hive
 {% endhighlight %}
 
 Now validate the setup by running `spark-shell` from your `SPARK_HOME` directory in your command prompt
