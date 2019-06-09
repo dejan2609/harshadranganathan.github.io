@@ -38,7 +38,7 @@ Over time, Jenkins, like most other self-hosted CI/CD tools resulted in:
 
 * The Pipeline plugin supports custom extensions to its DSL and multiple options for integration with other plugins.
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="WshehVd"><a href="//imgur.com/WshehVd">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<img src="https://i.imgur.com/WshehVd.gif" />
 
 ## Pipeline Autocompletion in IntelliJ
 

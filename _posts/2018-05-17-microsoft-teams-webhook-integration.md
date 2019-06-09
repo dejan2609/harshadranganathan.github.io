@@ -76,6 +76,6 @@ This card shows the build parameter values with an action button to view the bui
 
 References:
 
-https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/connectors
+<https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/connectors>
 
-https://docs.microsoft.com/en-us/outlook/actionable-messages/actionable-messages-via-connectors
+<https://docs.microsoft.com/en-us/outlook/actionable-messages/actionable-messages-via-connectors>
