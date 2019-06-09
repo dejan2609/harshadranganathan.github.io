@@ -1,46 +1,46 @@
 # Site
-title:              Harshad Ranganathan
-bio:                'Java Developer | AWS Certified - Associate & Solutions Architect'
-description:        "Harshad Ranganathan | Java Developer | AWS Certified - Associate & Solutions Architect"
-reading_time:       true
-words_per_minute:   200
-logo:               'assets/img/harshad-ranganathan.jpg'
-background:         'assets/img/wallpaper.png'
-tiled_bg:           false   # Set this true if you want to tile your background image, otherwise it will be covered
-locale:             en_US
-url:                https://rharshad.com
-#url:                http://localhost:4000
+title: Harshad Ranganathan
+bio: "Java Developer | AWS Certified - Associate & Solutions Architect"
+description: "Harshad Ranganathan | Java Developer | AWS Certified - Associate & Solutions Architect"
+reading_time: true
+words_per_minute: 200
+logo: "assets/img/harshad-ranganathan.jpg"
+background: "assets/img/wallpaper.png"
+tiled_bg: false # Set this true if you want to tile your background image, otherwise it will be covered
+locale: en_US
+url:  https://rharshad.com
+#url: http://localhost:4000
 
 # Jekyll
-permalink:          /:title/
-markdown:           kramdown
-highlighter:        rouge
+permalink: /:title/
+markdown: kramdown
+highlighter: rouge
 kramdown:
-  auto_ids:         true
-  footnote_nr:      1
-  entity_output:    as_char
-  toc_levels:       1..6
-  enable_coderay:   false
-mathjax:            true
+    auto_ids: true
+    footnote_nr: 1
+    entity_output: as_char
+    toc_levels: 1..6
+    enable_coderay: false
+mathjax: true
 sass:
-  sass_dir:         _sass
-  style:            compressed
+    sass_dir: _sass
+    style: compressed
 
 # Social
 # if you don't have any of social below, comment the line.
 google:
-  #plus:            #username
-  analytics:        UA-114369504-1
-  #verify:
-  #ad-client:
-  #ad-slot:
+    #plus:            #username
+    analytics:        UA-114369504-1
+    #verify:
+    ad-client:        ca-pub-9623736537242800
+    #ad-slot:
 #bing-verify:
-email:              rharshad93@gmail.com
+email: rharshad93@gmail.com
 #twitter:           username
 #facebook:          username
-github-url:         harshadranganathan
-stackoverflow:      2665431/harshad-ranganathan
-linkedin:           harshadranganathan
+github-url: harshadranganathan
+stackoverflow: 2665431/harshad-ranganathan
+linkedin: harshadranganathan
 #xing:              username
 #instagram:         username
 #lastfm:            username
@@ -62,13 +62,27 @@ linkedin:           harshadranganathan
 
 # Gems
 gems:
-  - jekyll-mentions
-  - jekyll-feed
-  - jekyll-sitemap
-  - jekyll-gist
+    - jekyll-mentions
+    - jekyll-feed
+    - jekyll-sitemap
+    - jekyll-gist
 
 jekyll-mentions:
     base_url: https://github.com
 
 # Exclude list
-exclude: [README.md, Gemfile, Gemfile.lock, node_modules, gulpfile.js, package.json, _site, src, vendor, CNAME, LICENSE, Rakefile]
+exclude:
+    [
+        README.md,
+        Gemfile,
+        Gemfile.lock,
+        node_modules,
+        gulpfile.js,
+        package.json,
+        _site,
+        src,
+        vendor,
+        CNAME,
+        LICENSE,
+        Rakefile,
+    ]

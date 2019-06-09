@@ -88,6 +88,8 @@ For example, here we have set the difficulty as '4'. We will continue to re-gene
 
 As the difficulty increases, the number of possible valid hashes decreases, so it will take more processing power to find a valid hash.
 
+{% include donate.html %}
+
 A new block is added to the blockchain only if it meets the following requirements:
 
 1. New block has a valid index i.e. block index should be greater than latest block index.
@@ -123,6 +125,8 @@ Let's assume we have 3 blocks and we want to tamper the data in block #1.
 5. You will then have to mine all the invalidated blocks again by finding new nonce values to make them valid.
 
 This will be a compute intensive and unfeasible operation as the chain continuously grows with new blocks.
+
+{% include donate.html %}
 
 ## References
 
