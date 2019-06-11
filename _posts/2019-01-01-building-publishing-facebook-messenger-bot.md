@@ -109,6 +109,7 @@ curl -X GET "localhost:1337/webhook?hub.verify_token=<YOUR_VERIFY_TOKEN>&hub.cha
 Above should return HTTP status code 200 with response as `CHALLENGE_ACCEPTED` if everything was set up properly.
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## Add webhook endpoint
 
@@ -298,6 +299,7 @@ callSendAPI(sender_psid, quickReplyOptions("Hi! How can I help you today?"));
 {% endhighlight %}
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 
 # Deploy your webhook
@@ -424,6 +426,7 @@ The generated token will NOT be saved in this UI. Each time you select a Page fr
 Send a message to your Page from facebook.com or in Messenger. If your webhook receives a webhook event then everything has been wired up properly.
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 # Publishing your App
 
@@ -492,6 +495,7 @@ After your business information and verification documents are submitted, you wi
 Once all the review is completed, your bot will be approved. You can then make it live and anyone will be able to message and get the response back from your page.
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## References:
 

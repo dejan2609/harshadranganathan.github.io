@@ -107,6 +107,7 @@ options = "metadata"
 {% endhighlight %}
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## Install Docker
 
@@ -235,6 +236,7 @@ echo "Please logout then login before continuing."
 {% endhighlight %}
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## References
 

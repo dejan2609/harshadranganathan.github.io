@@ -59,6 +59,7 @@ You can either use `Send via WebHook` option available in the [Card Playground](
 </figure>
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## Sending Messages to Webhook from Jenkins Build
 
@@ -73,6 +74,7 @@ Below is a sample which sends a custom card message to the webhook using `httpRe
 This card shows the build parameter values with an action button to view the build job.
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 References:
 

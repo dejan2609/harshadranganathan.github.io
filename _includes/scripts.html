@@ -1,32 +1,53 @@
-    <!-- JS -->
-    <script src="{{ site.url }}/assets/js/jquery-1.12.0.min.js"></script>
-    <script src="{{ site.url }}/assets/js/jquery.dlmenu.min.js"></script>
-    <script src="{{ site.url }}/assets/js/jquery.goup.min.js"></script>
-    <script src="{{ site.url }}/assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="{{ site.url }}/assets/js/jquery.fitvid.min.js"></script>
-    <script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
-    <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
-    <script src="{{ site.url }}/assets/js/scripts.js"></script>
-    {% if site.google.analytics %}
-    <!-- Asynchronous Google Analytics snippet -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{site.google.analytics}}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', '{{site.google.analytics}}');
-    </script>
-    {% endif %}
-    {% if site.google.ad-client %}
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: '{{site.google.ad-client}}',
-        enable_page_level_ads: true
-      });
-    </script>
-    {% endif %}
-    {% if page.comments != false %}
-        {% include disqus_comments.html %}
-    {% endif %}
+<!-- JS -->
+<script src="{{ site.url }}/assets/js/jquery-1.12.0.min.js"></script>
+<script src="{{ site.url }}/assets/js/jquery.dlmenu.min.js"></script>
+<script src="{{ site.url }}/assets/js/jquery.goup.min.js"></script>
+<script src="{{ site.url }}/assets/js/jquery.magnific-popup.min.js"></script>
+<script src="{{ site.url }}/assets/js/jquery.fitvid.min.js"></script>
+<script
+    type="text/javascript"
+    src="https://platform.linkedin.com/badges/js/profile.js"
+    async
+    defer
+></script>
+<script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+<script src="{{ site.url }}/assets/js/scripts.js"></script>
+<!-- Cookie consent script -->
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        window.cookieconsent.initialise({
+            palette: {
+                popup: {
+                    background: "#efefef",
+                    text: "#404040"
+                },
+                button: {
+                    background: "#8ec760",
+                    text: "#ffffff"
+                }
+            }
+        });
+    });
+</script>
+{% if site.google.analytics %}
+<!-- Asynchronous Google Analytics snippet -->
+<script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id={{
+        site.google.analytics
+    }}"
+></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "{{site.google.analytics}}");
+</script>
+{% endif %} 
+{% if page.comments != false %} 
+{% include disqus_comments.html %}
+{% endif %}

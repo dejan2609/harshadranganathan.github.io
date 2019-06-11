@@ -59,6 +59,7 @@ You can also generate snippets of code for the pipeline steps using the `Snippet
 </figure>
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## Replay
 
@@ -73,6 +74,7 @@ Replay feature allows you to test your pipeline code without having to commit th
 <script src="https://gist.github.com/HarshadRanganathan/97feed7f91b7ae542c994393447f3db4.js"></script>
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## References
 

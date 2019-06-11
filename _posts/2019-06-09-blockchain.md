@@ -89,6 +89,7 @@ For example, here we have set the difficulty as '4'. We will continue to re-gene
 As the difficulty increases, the number of possible valid hashes decreases, so it will take more processing power to find a valid hash.
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 A new block is added to the blockchain only if it meets the following requirements:
 
@@ -127,6 +128,7 @@ Let's assume we have 3 blocks and we want to tamper the data in block #1.
 This will be a compute intensive and unfeasible operation as the chain continuously grows with new blocks.
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## References
 

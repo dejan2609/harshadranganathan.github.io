@@ -89,6 +89,7 @@ Delete .minikube and .kube folders in your home directory
 Run minikube start command with appropriate options.
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## Running Kubernetes Cluster in Hyper-V
 
@@ -168,6 +169,7 @@ Delete .minikube and .kube folders in your home directory
 Run minikube start command with appropriate options.
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## Interacting With Your Cluster
 
@@ -215,3 +217,4 @@ minikube dashboard
 {% endhighlight %}
 
 {% include donate.html %}
+{% include advertisement.html %}

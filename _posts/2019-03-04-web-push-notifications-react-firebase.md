@@ -103,6 +103,7 @@ Sample notification page:
 </figure>
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## Client Side
 
@@ -277,6 +278,7 @@ Few points:
 4. Also, if it notices any difference with the latest copy it won't immediately activate the new service worker. The browser will wait until the current service worker controlls zero clients. You can however, force an update to be done.
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ### Notification Message
 
@@ -570,6 +572,7 @@ gzip_types
 {% endhighlight %}
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## Testing
 
@@ -650,6 +653,7 @@ Refer:
 [1] [FCM Message Structure](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## Server Side
 
@@ -920,6 +924,7 @@ node index.js
 There are various cloud platforms available where you can deploy the node express server.
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 
 ## References

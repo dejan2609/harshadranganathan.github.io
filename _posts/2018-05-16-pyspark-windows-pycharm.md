@@ -48,6 +48,7 @@ C:\Spark\spark-2.2.0-bin-hadoop2.7>bin\spark-shell
 </figure>
 
 {% include donate.html %}
+{% include advertisement.html %}
 
 ## PyCharm Configuration
 
@@ -68,3 +69,4 @@ In the `Python interpreter` option select the interpreter which we had created i
 You can now add your pyspark script to the project and use this run configuration to execute it in a Spark context.
 
 {% include donate.html %}
+{% include advertisement.html %}
