@@ -8,7 +8,7 @@ logo: "assets/img/harshad-ranganathan.jpg"
 background: "assets/img/wallpaper.png"
 tiled_bg: false # Set this true if you want to tile your background image, otherwise it will be covered
 locale: en_US
-url:  https://rharshad.com
+url: https://rharshad.com
 #url: http://localhost:4000
 
 # Jekyll
@@ -30,10 +30,10 @@ sass:
 # if you don't have any of social below, comment the line.
 google:
     #plus:            #username
-    analytics:        UA-114369504-1
+    analytics: UA-114369504-1
     #verify:
-    ad-client:        ca-pub-1878609677678910
-    ad-slot:          8163988025
+    ad-client: ca-pub-2553716231991280
+    #ad-slot:          8163988025
 #bing-verify:
 email: rharshad93@gmail.com
 #twitter:           username
