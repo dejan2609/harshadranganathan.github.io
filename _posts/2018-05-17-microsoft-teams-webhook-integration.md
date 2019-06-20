@@ -58,6 +58,10 @@ You can either use `Send via WebHook` option available in the [Card Playground](
 	<a href="{{ site.url }}/assets/img/2018/05/webhook-message.png"><img src="{{ site.url }}/assets/img/2018/05/webhook-message.png"></a>
 </figure>
 
+There is a python library which you can make use of for building the messages dynamically.
+
+<https://pypi.org/project/ms-teams/>
+
 {% include donate.html %}
 {% include advertisement.html %}
 
