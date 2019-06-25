@@ -22,18 +22,63 @@ VISA Status: Stamp 4
 
 ## Skills
 
+Programming Languages: 
 <span class="entry-meta">
     <a class="tag"><span class="term">Java</span></a>
-    <a class="tag"><span class="term">Spring</span></a>
     <a class="tag"><span class="term">Python</span></a>
     <a class="tag"><span class="term">Scala</span></a>
-    <a class="tag"><span class="term">Spark</span></a>
-    <a class="tag"><span class="term">Amazon Web Services (AWS)</span></a>
+</span>
+
+Java Frameworks:
+<span class="entry-meta">  
+    <a class="tag"><span class="term">Spring</span></a>
+    <a class="tag"><span class="term">Spring Batch</span></a>
+    <a class="tag"><span class="term">Spring Integration</span></a>
+    <a class="tag"><span class="term">Apache Camel</span></a>
+</span>
+
+Container Platforms & Orchestration:
+<span class="entry-meta">  
     <a class="tag"><span class="term">Docker</span></a>
-    <a class="tag"><span class="term">React.js</span></a>
+    <a class="tag"><span class="term">Kubernetes</span></a>
+</span>
+
+Big Data:
+<span class="entry-meta">  
+    <a class="tag"><span class="term">Spark</span></a>
+    <a class="tag"><span class="term">Cascading</span></a>
+</span>
+
+Cloud Platforms:
+<span class="entry-meta"> 
+    <a class="tag"><span class="term">AWS</span></a>
+    <a class="tag"><span class="term">Google Cloud</span></a>
+    <a class="tag"><span class="term">IBM Cloud</span></a>
+</span>
+
+Javascript Runtime & Frameworks:
+<span class="entry-meta">
+    <a class="tag"><span class="term">Node.js</span></a>
+    <a class="tag"><span class="term">React</span></a>
+</span>
+
+Blockchain:
+<span class="entry-meta">
+    <a class="tag"><span class="term">Ethereum Smart Contracts</span></a>
+</span>
+
+Databases:
+<span class="entry-meta">  
     <a class="tag"><span class="term">MongoDB</span></a>
+    <a class="tag"><span class="term">Elasticsearch</span></a>
+</span>
+
+RPA:
+<span class="entry-meta">  
     <a class="tag"><span class="term">UiPath</span></a>
 </span>
+
+## Work Experience
 
 ### Cognizant (2014 - Present)
 
