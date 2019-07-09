@@ -77,6 +77,9 @@ networks:
           gateway: 172.16.231.1
 {% endhighlight %}
 
+{% include donate.html %}
+{% include advertisement.html %}
+
 ## Accessing DynamoDB Local Container From Another Container
 
 Let's say you have a webapp written in Java running in a tomcat container and you want to access the local dynamo db container for your integration tests.
@@ -179,3 +182,6 @@ aws dynamodb create-table --table-name <table_name> --attribute-definitions  <at
 
 ./tomcat/bin/catalina.sh jpda run
 {% endhighlight %}
+
+{% include donate.html %}
+{% include advertisement.html %}
