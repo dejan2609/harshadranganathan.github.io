@@ -167,6 +167,14 @@ figure {
     }
   }
 }
+.side-by-side {
+  display: block;
+  img {
+    display: block;
+    float: left;
+    margin-left: 10px;
+  }
+}
 svg:not(:root) {
   overflow: hidden; 
 }

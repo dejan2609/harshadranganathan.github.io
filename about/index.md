@@ -2,7 +2,7 @@
 layout: page
 title: Harshad Ranganathan
 tags: [about, harshad, ranganathan, harshad ranganathan]
-date: 2019-04-28
+date: 2019-10-15
 comments: false
 ---
 
@@ -82,9 +82,35 @@ RPA:
 
 ### Cognizant (2014 - Present)
 
-Role: Associate - Projects
+Role: Associate
 
-Working as a Java developer in client projects building software and automation solutions in agile methodology.
+- Built RESTful API's using Spring with AWS Dynamo as data access
+- Built RESTful Search API's with ElasticSearch as data access
+- Developed ETL pipelines using Apache Spark (Scala) and AWS EMR to ingest data to AWS Dynamo and ElasticSearch databases
+- Built Serverless website using S3, API gateway and AWS Lambda for the QA team to aid in feature deployment and testing activities
+
+Role: Programmer Analyst
+
+- Developed micro service applications using Apache Camel
+- Built test automation framework using JBehave to validate REST API services for the QA team
+- Built test automation framework to validate content in HBase for the QA team
+
+Role: Programmer Analyst Trainee
+
+- Built SoW (Statement of Work) Spring MVC application for internal account usage
+- Worked on DXSI (Abstract data management tool for transforming common data model) to map data from numerous back-end services to a common data model and deliver them to a target exposed via Oracle Service Bus
+
+## Communities
+
+<div class="side-by-side">
+  <a href="https://stackexchange.com/users/3152240">
+      <img src="https://stackexchange.com/users/flair/3152240.png" width="208" height="58" alt="profile for Harshad Ranganathan on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for Harshad Ranganathan on Stack Exchange, a network of free, community-driven Q&amp;A sites">
+  </a>
+  <a href="https://dev.to/harshadranganathan">
+    <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Harshad Ranganathan's DEV Profile" style="width: 50px;">
+  </a>
+  <div style="clear:both"></div>
+</div>
 
 ## Open Source Projects
 
@@ -144,13 +170,3 @@ Task Manager application built on a client-server model using MEAN (MongoDB, Exp
     <a class="tag"><span class="term">JWT</span></a>
     <a class="tag"><span class="term">MongoDB</span></a>
 </span>
-
-## Developer Communities
-
-### StackOverflow
-
-<a href="https://stackexchange.com/users/3152240">
-    <img src="https://stackexchange.com/users/flair/3152240.png" width="208" height="58" alt="profile for Harshad Ranganathan on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for Harshad Ranganathan on Stack Exchange, a network of free, community-driven Q&amp;A sites">
-</a>
-
-[Read my Developer Story](https://stackoverflow.com/story/harshadranganathan)
