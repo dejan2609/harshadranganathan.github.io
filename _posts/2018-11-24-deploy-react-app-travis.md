@@ -34,7 +34,7 @@ We can use this public key to encrypt your SSH key and commit it to github. So, 
 
 This feature is provided through travis cli. Hence, we will be installing the same by running below commands.
 
-{% highlight plaintext %}
+{% highlight bash %}
 # travis cli is ruby based so we need to install ruby and other dev libraries
 sudo yum install ruby -y
 
@@ -56,7 +56,7 @@ If you're setting up Travis CLI in your windows system using git bash beware of 
 
 Now we are going to generate a SSH key and encrypt it using travis cli by running below commands.
 
-{% highlight plaintext %}
+{% highlight bash %}
 # travis login by providing your gihub username and password
 travis login --com
 
@@ -84,13 +84,13 @@ git add travis_rsa.enc
 
 If incase, when you are running the `encrypt-file` command in your project directory and your repo isn't auto-detected, you can pass the repo name as follows
 
-{% highlight plaintext %}
+{% highlight bash %}
 # use -r flag e.g. -r owner/project
 travis encrypt-file travis_rsa --add --com -r HarshadRanganathan/react-app
 {% endhighlight %}
 
 Your .travis.yml file will look as follows
-{% highlight plaintext %}
+{% highlight yaml %}
 before_install:
 - openssl aes-256-cbc -K $encrypted_xxxxxx_key -iv $encrypted_xxxxxx_iv
   -in travis_rsa.enc -out travis_rsa -d
@@ -108,7 +108,7 @@ We will be adding the public key generated previously to this user so that travi
 
 For example, we can use below commands to create a new user in Cent OS.
 
-{% highlight plaintext %}
+{% highlight bash %}
 # create a new travis user
 sudo adduser travis
 
@@ -177,7 +177,7 @@ Travis CI can add entries to ~/.ssh/known_hosts prior to cloning your git reposi
 
 Get your server's public key by running this command
 
-{% highlight plaintext %}
+{% highlight bash %}
 ssh-keyscan (domain/ip_address)
 {% endhighlight %}
 

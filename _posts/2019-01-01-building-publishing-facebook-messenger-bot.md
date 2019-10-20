@@ -16,7 +16,7 @@ In this example, we will use Node.js to build our bot which will respond to user
 
 ## Create a new Node.js project
 
-{% highlight shell %}
+{% highlight bash %}
 mkdir dbei-bot
 cd dbei-bot
 

@@ -34,12 +34,12 @@ SPARK_HOME=C:\Spark\spark-2.2.0-bin-hadoop2.7
 Create a new folder `tmp/hive` in your C: drive.
 
 Provide permissions for the folder `tmp/hive` using `winutils.exe` by running below command in your command prompt
-{% highlight plaintext %}
-C:\winutils\hadoop-2.7.1\bin\winutils.exe chmod 777 C:\tmp\hive
+{% highlight cmd %}
+C:>C:\winutils\hadoop-2.7.1\bin\winutils.exe chmod 777 C:\tmp\hive
 {% endhighlight %}
 
 Now validate the setup by running `spark-shell` from your `SPARK_HOME` directory in your command prompt
-{% highlight plaintext %}
+{% highlight cmd %}
 C:\Spark\spark-2.2.0-bin-hadoop2.7>bin\spark-shell
 {% endhighlight %}
 
