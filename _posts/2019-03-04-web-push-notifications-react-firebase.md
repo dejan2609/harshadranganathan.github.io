@@ -169,7 +169,7 @@ Here, we have used `material-ui` for styling the page. Also, we import our `fire
 
 We are following the passive approach here, which is to have a button or toggle switch that enables / disables push messages in a location on the page that is consistent throughout a site. Good UX design is to offer a way out for the user from the push messages and also not to ask for push permissions as soon as the user visits the page.
 
-{% highlight react %}
+{% highlight jsx %}
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, Card, CardContent, Typography, Switch, FormControlLabel } from '@material-ui/core';

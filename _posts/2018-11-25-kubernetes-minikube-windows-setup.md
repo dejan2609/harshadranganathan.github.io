@@ -137,7 +137,7 @@ Minikube will perform below steps
 
 You will see below logs if everything went fine.
 
-{% highlight powershell %}
+{% highlight text %}
 Connecting to cluster...
 Setting up kubeconfig...
 I1125 23:05:12.192115    4588 config.go:125] Using kubeconfig:  
