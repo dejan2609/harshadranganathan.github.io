@@ -1,0 +1,34 @@
+{% for repository in site.github.public_repositories %}
+  {% if repository.name == include.repo %}
+  <div class="github-card-medium repo-card-medium">
+    <div class="card-header">
+      <a class="avatar" href="{{repository.owner.html_url}}" target="_blank">
+        <img src="{{repository.owner.avatar_url}}" alt="{{repository.owner.login}}"></a>
+      <h1><a href="{{repository.html_url}}" target="_blank">{{repository.name}}</a></h1>
+    </div>
+    <div class="card-content">
+      <p>{{repository.description}}</p>
+      <ul class="card-status">
+        <li>
+            <a href="{{repository.html_url}}/stargazers" target="_blank">
+              <div style="width: 100%;">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <strong>{{repository.stargazers_count}}</strong>
+              </div>
+              <span>Stars</span>
+            </a>
+        </li>
+        <li>
+          <a href="{{repository.html_url}}/network/members" target="_blank">
+            <div style="width: 100%;">
+                <i class="fa fa-code-fork fa-lg" aria-hidden="true"></i>
+                <strong>{{repository.forks_count}}</strong>
+            </div>
+            <span>Fork</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+{% endfor %}

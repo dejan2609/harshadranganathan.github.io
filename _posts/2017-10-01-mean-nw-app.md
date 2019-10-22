@@ -21,7 +21,7 @@ As people work in multiple projects it becomes difficult to keep track of the ta
 
 The application  also allows managers and team lead to specify task priorities. On task assignment, the team member receives desktop notification.
 
-GIT Repo - <a href="https://github.com/HarshadRanganathan/mean-nw-app">https://github.com/HarshadRanganathan/mean-nw-app</a>
+{% include repo-card.html repo="mean-nw-app" %}
 
 This is a client server application with below components:
 
