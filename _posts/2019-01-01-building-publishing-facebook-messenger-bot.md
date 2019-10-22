@@ -14,6 +14,10 @@ comments: true
 
 In this example, we will use Node.js to build our bot which will respond to user's messages.
 
+Source code of the application can be found here -
+
+{% include repo-card.html repo="dbei-bot" %}
+
 ## Create a new Node.js project
 
 {% highlight bash %}

@@ -90,13 +90,15 @@ Firebase Cloud Messaging (FCM) is a cross-platform messaging solution that lets 
 
 We'll see how we can use FCM to send notification messages to the client. 
 
-Below is how our application will work. We won't go into the details of how to build and deploy a react app as it is outside the scope of this guide.
-
 Source code of the application can be found here -
 
 <https://github.com/HarshadRanganathan/gnib-visa-app/blob/master/src/containers/notifications.js>
 
 <https://github.com/HarshadRanganathan/gnib-visa-app/tree/master/notifications>
+
+{% include repo-card.html repo="gnib-visa-app" %}
+
+Below is how our application will work. We won't go into the details of how to build and deploy a react app as it is outside the scope of this guide.
 
 <figure>
 	<a href="{{ site.url }}/assets/img/2019/03/push-notification-how-it-works.png"><img src="{{ site.url }}/assets/img/2019/03/push-notification-how-it-works.png"></a> 

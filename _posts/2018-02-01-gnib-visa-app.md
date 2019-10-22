@@ -15,11 +15,11 @@ tag:
 comments: true
 ---
 
-GIT Repo - <a href="https://github.com/HarshadRanganathan/gnib-visa-app">https://github.com/HarshadRanganathan/gnib-visa-app</a>
+Find appointment slots for GNIB (Irish Residence Permit) without hassle.
 
 Website - <a href="https://gnib-visa-app.rharshad.com/">https://gnib-visa-app.rharshad.com/</a>
 
-Find appointment slots for GNIB (Irish Residence Permit) without hassle.
+{% include repo-card.html repo="gnib-visa-app" %}
 
 This App utilizes:
 - [React](https://reactjs.org/)

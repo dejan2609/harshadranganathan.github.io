@@ -62,6 +62,8 @@ There is a python library which you can make use of for building the messages dy
 
 <https://pypi.org/project/ms-teams/>
 
+{% include repo-card.html repo="ms-teams" %}
+
 {% include donate.html %}
 {% include advertisement.html %}
 
