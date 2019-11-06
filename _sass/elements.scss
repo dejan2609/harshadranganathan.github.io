@@ -388,3 +388,14 @@ a.fb-btn{
     }
   }
 }
+
+.table-striped {
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  thead {
+    th, td {
+      border-bottom-width: 2px;
+    }
+  }
+}
