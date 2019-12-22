@@ -11,6 +11,8 @@ tag:
 comments: true
 ---
 
+## WSL
+
 WSL was introduced with Windows 10 Fall Creators Update and later (Windows build 16215 or later).
 
 ## Pre-requisites

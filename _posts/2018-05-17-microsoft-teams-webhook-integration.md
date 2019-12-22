@@ -1,15 +1,17 @@
 ---
 layout: post
-title:  "Microsoft Teams Webhook Integration"
-date:   2018-05-17
+title: "Microsoft Teams Webhook Integration"
+date: 2018-05-17
 excerpt: "Publish actionable messages to Teams using webhooks"
 tag:
-- microsoft teams 
-- webhook
-- jenkins
-- message cards
+    - microsoft teams
+    - webhook
+    - jenkins
+    - message cards
 comments: true
 ---
+
+## Microsoft Teams Webhook
 
 Microsoft Team's `Incoming webhook` connector allows you to publish messages to teams channel.
 
@@ -22,7 +24,6 @@ In Microsoft Teams, choose the `More options (⋯)` button next to the channel n
 <figure>
 	<a href="{{ site.url }}/assets/img/2018/05/webhook-connector.png"><img src="{{ site.url }}/assets/img/2018/05/webhook-connector.png"></a>
 </figure>
-
 
 Add `Incoming webhook` connector to the channel.
 
@@ -50,7 +51,7 @@ We will send below sample payload to the connector and check if it works.
 
 <script src="https://gist.github.com/HarshadRanganathan/5c169170e6d883f58d0af109773ea56b.js"></script>
 
-Send this JSON payload as a POST request to the Webhook URL. 
+Send this JSON payload as a POST request to the Webhook URL.
 
 You can either use `Send via WebHook` option available in the [Card Playground](https://messagecardplayground.azurewebsites.net/) (or) [Postman](https://docs.microsoft.com/en-us/outlook/actionable-messages/actionable-messages-via-connectors#send-the-message) to send the message to the webhook.
 
@@ -69,7 +70,7 @@ There is a python library which you can make use of for building the messages dy
 
 ## Sending Messages to Webhook from Jenkins Build
 
-You can make use of the [office 365 connector plugin](https://wiki.jenkins.io/display/JENKINS/Office+365+Connector+Plugin) to send build messages to the webhook. 
+You can make use of the [office 365 connector plugin](https://wiki.jenkins.io/display/JENKINS/Office+365+Connector+Plugin) to send build messages to the webhook.
 
 However, if you want to send a custom message as part of your jenkins job then we can't make use of this plugin.
 

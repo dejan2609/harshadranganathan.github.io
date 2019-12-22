@@ -10,6 +10,8 @@ tag:
 comments: true
 ---
 
+## Minikube
+
 [Minikube](https://github.com/kubernetes/minikube) is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM on your laptop for users looking to try out Kubernetes or develop with it day-to-day.
 
 Minikube can be installed in multiple operating systems (Linux, MacOS & Windows) and supports multiple drivers ([VirtualBox](https://www.virtualbox.org/), [Hyper-V](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/) in case of Windows).
