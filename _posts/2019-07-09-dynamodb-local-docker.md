@@ -6,6 +6,9 @@ excerpt: "Getting started with DynamoDB Local as a docker image"
 tag:
 - DynamoDB
 - Docker
+- dynamodb local docker compose
+- dynamodb local docker tutorial
+- docker pull dynamodb local
 comments: true
 ---
 

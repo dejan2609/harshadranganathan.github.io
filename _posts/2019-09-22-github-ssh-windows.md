@@ -7,6 +7,11 @@ tag:
     - github
     - ssh
     - git bash
+    - git ssh key windows
+    - git config ssh key
+    - github ssh clone
+    - github ssh config
+    - ssh github configure
 comments: true
 ---
 

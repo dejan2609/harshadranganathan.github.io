@@ -8,6 +8,9 @@ tag:
     - webhook
     - jenkins
     - message cards
+    - microsoft teams webhook notifications
+    - microsoft teams incoming webhook json
+    - microsoft teams outgoing webhook
 comments: true
 ---
 

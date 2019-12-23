@@ -4,11 +4,19 @@ title:  "Spark SQL - DataFrames & Datasets"
 date:   2019-11-05
 excerpt: "Using spark sql to apply optimizations on structured data"
 tag:
-- apache spark
 - spark sql
 - dataframes
 - dataset
 - rdd
+- spark sql dataframe dataset
+- spark dataframe dataset
+- spark dataframe to dataset
+- spark sql dataframes and datasets guide
+- spark sql dataframe vs dataset
+- dataframe vs dataset spark
+- differences between rdds dataframes and datasets in spark
+- dataset vs dataframe performance
+- spark sql example scala
 comments: true
 ---
 

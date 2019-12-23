@@ -9,6 +9,11 @@ tag:
 - checklist
 - analytics
 - ads
+- things to consider when designing and developing a website
+- what are the most important things to consider when designing a web page
+- website design considerations
+- important factors in web design
+- things to know when building a website
 comments: true
 ---
 

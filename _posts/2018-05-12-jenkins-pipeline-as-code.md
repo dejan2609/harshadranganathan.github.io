@@ -11,6 +11,10 @@ tag:
     - pipeline gdsl
     - pipeline replay
     - snippet generator
+    - jenkins pipeline tutorial for beginners
+    - jenkins pipeline plugin
+    - jenkins pipeline build job
+    - jenkins pipeline github
 comments: true
 ---
 

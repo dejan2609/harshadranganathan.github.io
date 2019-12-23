@@ -8,6 +8,7 @@ tag:
 - Github
 - Travis
 - CI/CD
+- travis ci react
 comments: true
 ---
 

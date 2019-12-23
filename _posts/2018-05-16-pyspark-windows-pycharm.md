@@ -10,6 +10,9 @@ tag:
 - pycharm
 - winutils
 - spark
+- setup spark development environment pycharm and python
+- working with pyspark in pycharm
+- pyspark tutorial
 comments: true
 ---
 

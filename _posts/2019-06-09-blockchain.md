@@ -5,6 +5,8 @@ date:   2019-06-09
 excerpt: "Fundamentals of blockchain and how it works"
 tag:
 - blockchain
+- blockchain explained
+- blockchain tutorial
 comments: true
 ---
 

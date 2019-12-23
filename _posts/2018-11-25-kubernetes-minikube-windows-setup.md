@@ -7,6 +7,8 @@ tag:
 - Kubernetes
 - Minikube
 - Windows
+- install minikube on windows 10
+- minikube hyperv
 comments: true
 ---
 

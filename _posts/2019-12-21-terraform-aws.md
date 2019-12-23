@@ -5,7 +5,17 @@ date: 2019-12-21
 excerpt: "Infrastructure as code tool with multiple cloud providers"
 tag:
     - terraform
-    - aws
+    - terraform aws
+    - terraform for aws
+    - terraform aws tutorial
+    - terraform aws modules
+    - terraform modules
+    - how to use terraform aws
+    - terraform aws config
+    - terraform aws best practices
+    - terraform aws beginner
+    - terraform aws example
+    - terraform aws provider
 comments: true
 ---
 

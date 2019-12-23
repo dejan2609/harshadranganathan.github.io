@@ -7,6 +7,19 @@ tag:
 - Facebook
 - Messenger
 - Bot
+- facebook messenger bot example
+- facebook messenger webhook
+- facebook subscription messaging
+- facebook page messenger bot
+- webhook for messenger
+- facebook messenger bots for business
+- facebook messenger bot tutorial
+- how to use facebook messenger bots
+- how to set up messenger bot
+- how does facebook messenger bot work
+- messenger bot for facebook
+- messenger bot get started
+- messenger bot node js
 comments: true
 ---
 

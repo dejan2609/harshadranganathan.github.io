@@ -7,6 +7,18 @@ tag:
     - pipenv
     - python packaging
     - dependency management
+    - pipenv install from pipfile
+    - pipenv documentation
+    - pipenv install windows
+    - pipenv install local package
+    - how to use pipenv
+    - pipenv install dev packages
+    - python packaging tools
+    - pipenv tutorial
+    - pipenv windows
+    - install pipenv windows
+    - python packaging tutorial
+    - packaging python applications for windows
 comments: true
 ---
 
