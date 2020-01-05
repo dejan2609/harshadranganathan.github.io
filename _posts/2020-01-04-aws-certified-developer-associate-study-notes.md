@@ -128,6 +128,39 @@ Advantages of multipart upload:
 -   Pause and resume object uploads
 -   Begin an upload before you know the final object size
 
+### Consistency Model
+
+-   Amazon S3 provides `read-after-write consistency for PUTS` of new objects in your S3 bucket in all Regions with one caveat.
+
+-   The caveat is that if you make a HEAD or GET request to the key name (to find if the object exists) before creating the object, Amazon S3 provides `eventual consistency for read-after-write`.
+
+-   Amazon S3 offers `eventual consistency for overwrite PUTS and DELETES` in all Regions.
+
+### Encryption
+
+-   You can protect data in transit using Secure Sockets Layer (SSL) or client-side encryption.
+
+-   You can protect data at rest using server-side encryption.
+
+### Server-Side Encryption
+
+<!-- prettier-ignore-start -->
+
+|         |                                                                                                                                                                                                                                                                                                                                                                       |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SSE-S3  | Protecting Data Using Server-Side Encryption with Amazon S3-Managed Encryption Keys<br/>Set x-amz-server-side-encryption header to AES256 in your request if you want Amazon S3 to encrypt your data at rest                                                                                                                                                          |
+| SSE-KMS | Server-Side Encryption with Customer Master Keys (CMKs) Stored in AWS Key Management Service<br/>Set x-amz-server-side-encryption header to aws:kms in your request if you want Amazon S3 to encrypt your data with AWS Key Management Service (SSE-KMS) customer master keys (CMKs) at rest                                                                          |
+| SSE-C   | Server-Side Encryption with Customer-Provided Keys<br/> You must provide encryption key information using the following request headers: x-amz-server-side​-encryption​-customer-algorithm (AES256), x-amz-server-side​-encryption​-customer-key, x-amz-server-side​-encryption​-customer-key-MD5<br/>Amazon S3 rejects any requests made over HTTP when using SSE-C |
+{:.table-striped}
+
+<!-- prettier-ignore-end -->
+
+### Performance
+
+-   Amazon S3 now provides increased performance to support at least 3,500 requests per second to add data and 5,500 requests per second to retrieve data.
+
+-   This S3 request rate performance increase removes any previous guidance to randomize object prefixes to achieve faster performance. That means you can now use logical or sequential naming patterns in S3 object naming without any performance implications.
+
 ## Lambda
 
 <!-- prettier-ignore-start -->
@@ -148,7 +181,84 @@ Advantages of multipart upload:
 
 ## DynamoDB
 
+-   DynamoDB provides `Optimistic Locking with Version Number` to ensure that the client-side item that you are updating (or deleting) is the same as the item in Amazon DynamoDB.
+
+-   DynamoDB provides `Conditional Writes` for PutItem, UpdateItem, DeleteItem to ensure that the write succeeds only if the item attributes meet one or more expected conditions. Conditional writes are helpful in cases where multiple users attempt to modify the same item.
+
+<!-- prettier-ignore-start -->
+
+|                |                                                                                                                                                     |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Scan operation | Limited to 1 MB per call                                                                                                                            |
+| BatchWriteItem | A single BatchWriteItem operation can contain up to 25 PutItem or DeleteItem requests. The total size of all the items written cannot exceed 16 MB. |
+| TTL | DynamoDB typically deletes expired items within 48 hours of expiration. |
+{:.table-striped}
+
+<!-- prettier-ignore-end -->
+
+### Calculate WCU
+
+```
+# of items per second (Round up to the nearest 1 KB multiplier) * ITEM SIZE (rounded up to the next 1KB multiplier)
+```
+
+### Calculate RCU
+
+Strongly consistent reads:
+
+```
+# of items per second (Round up to the nearest 4 KB multiplier) * (ITEM SIZE (rounded up to the next 4KB multiplier) / 4 KB)
+```
+
+Eventually consistent reads:
+
+```
+(# of items per second (Round up to the nearest 4 KB multiplier) / 2) * (ITEM SIZE (rounded up to the next 4KB multiplier) / 4 KB)
+```
+
+### Secondary Indexes
+
+
+
 ## SQS
+
+<!-- prettier-ignore-start -->
+
+|                            |                                                                                                                |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Message size               | Minimum message size is 1 byte. Maximum message size is 256 KB                                                 |
+| Message visibility timeout | The default visibility timeout for a message is 30 seconds. The minimum is 0 seconds. The maximum is 12 hours. |
+| Long polling wait time     | Maximum 20 seconds                                                                                             |
+| Delay queue                | Default (minimum) delay for a queue is 0 seconds. The maximum is 15 minutes                                    |
+{:.table-striped}
+
+<!-- prettier-ignore-end -->
+
+### FIFO
+
+-   FIFO (First-In-First-Out) queues are designed to enhance messaging between applications when the order of operations and events is critical, or where duplicates can't be tolerated.
+
+-   FIFO queues also provide exactly-once processing but have a limited number of transactions per second.
+
+-   `MessageDeduplicationId` token used for deduplication of sent messages. If a message with a particular MessageDeduplicationId is sent successfully, any messages sent with the same MessageDeduplicationId are accepted successfully but aren't delivered during the 5-minute deduplication interval.
+
+-   `MessageGroupId` tag specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (however, messages in different message groups might be processed out of order).
+
+### Server-Side Encryption
+
+-   SQS encrypt messages stored in both Standard and FIFO queues can be encrypted using KMS.
+
+-   SSE encrypts the body of the message, but does not touch the queue metadata, the message metadata, or the per-queue metrics.
+
+-   Adding encryption to an existing queue does not encrypt any backlogged messages.
+
+## ELB
+
+-   Application load balancer supports following protocols: `http, https, websockets`.
+
+-   Application load balancer supports host and path based routing.
+
+-   Because load balancers intercept traffic between clients and servers, your server access logs contain only the IP address of the load balancer. To see the IP address of the client, use the `X-Forwarded-For` request header.
 
 ## KMS
 
