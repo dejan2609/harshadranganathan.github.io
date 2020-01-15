@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AWS Certified Developer - Associate Exam Study Notes"
-date: 2020-01-04
+date: 2020-01-15
 excerpt: "Notes for AWS Certified Developer - Associate Exam"
 tag:
     - aws certified developer associate 2020
@@ -218,7 +218,33 @@ Eventually consistent reads:
 
 ### Secondary Indexes
 
+<!-- prettier-ignore-start -->
 
+| Global Secondary Index                                          | Local Secondary Index                                              |
+| --------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Partition and sort key can be different from base table         | Same partition key as base table                                   |
+| Query entire table across all partitions                        | Query over single partition specified by partition key             |
+| Queries are eventually consistent                               | Queries are eventual or strongly consistent                        |
+| Queries/Scan consume RCU/WCU from index and not from base table | Queries/Scan consume RCU from base table                           |
+| Can only request attributes which are projected into the index  | Can request attributes that are not projected into the index       |
+| GSI can be added to existing table or be deleted from table     | Cannot add LSI to existing table or delete existing LSI from table |
+{:.table-striped}
+
+<!-- prettier-ignore-end -->
+
+### Streams
+
+-   A DynamoDB stream is an ordered flow of information about changes to items in a DynamoDB table.
+
+-   When you enable a stream on a table, DynamoDB captures information about every modification to data items in the table.
+
+-   DynamoDB Streams captures a time-ordered sequence of item-level modifications in any DynamoDB table and stores this information in a log for up to `24 hours`.
+
+### Transactions
+
+-   Amazon DynamoDB transactions provide atomicity, consistency, isolation, and durability (ACID) in DynamoDB, helping you to maintain data correctness in your applications.
+
+-   DynamoDB performs two underlying reads or writes of every item in the transaction: one to prepare the transaction and one to commit the transaction.
 
 ## SQS
 
@@ -296,6 +322,68 @@ If you need to encrypt more than 4 KB of data ,then you have to encrypt data loc
 
 ## Kinesis
 
+Kinesis is composed of stream, firehose and analytics components.
+
+Kinesis Data Streams - Amazon Kinesis Data Streams is a scalable and durable real-time data streaming service that can continuously capture gigabytes of data per second from hundreds of thousands of sources.
+
+Kinesis Firehose - Amazon Kinesis Data Firehose is the easiest way to capture, transform, and load data streams into AWS data stores for near real-time analytics with existing business intelligence tools.
+
+Kinesis Analytics - Amazon Kinesis Data Analytics is the easiest way to process data streams in real time with SQL or Java without having to learn new programming languages or processing frameworks.
+
+### Kinesis Data Streams
+
+-   A data stream represents a group of data records. The data records in a data stream are distributed into shards.
+
+-   A shard has a sequence of data records in a stream.
+
+-   Records are ordered per shard basis.
+
+-   Partition key is used to segregate and route records to different shards of a data stream. A partition key is specified by your data producer while adding data to an Amazon Kinesis data stream.
+
+<!-- prettier-ignore-start -->
+
+|                             |                   |
+| --------------------------- | ----------------- |
+| Data retention period       | 24 hours - 7 days |
+| Maximum size of a data blob | 1 MB              |
+| Shard data input capacity   | 1 MB/sec          |
+| Shard data output capacity  | 2 MB/sec          |
+{:.table-striped}
+
+<!-- prettier-ignore-end -->
+
+#### Writing Data
+
+##### Kinesis Producer Library
+
+`Kinesis Producer Library (KPL)` simplifies producer application development, allowing developers to achieve high write throughput to a Kinesis data stream.
+
+KPL performs these tasks to achieve high write throughput to a kinesis stream.
+
+-   Writes to one or more Kinesis data streams with an automatic and configurable retry mechanism
+
+-   Collects records and uses PutRecords to write multiple records to multiple shards per request
+
+-   Aggregates user records to increase payload size and improve throughput
+
+-   Integrates seamlessly with the Kinesis Client Library (KCL) to de-aggregate batched records on the consumer
+
+-   Submits Amazon CloudWatch metrics on your behalf to provide visibility into producer performance
+
+#### Reading Data
+
+##### Kinesis Client Library
+
+The Kinesis Client Library (KCL) helps you consume and process data from a Kinesis data stream.
+
+The KCL takes care of many of the complex tasks associated with distributed computing, such as load balancing across multiple instances, responding to instance failures, checkpointing processed records, and reacting to resharding.
+
+-   Each shard can be read by only one KCL instance.
+
+-   For each Amazon Kinesis Data Streams application, the KCL uses a unique Amazon DynamoDB table to keep track of the application's state.
+
+-   Kinesis Client Library (KCL) delivers all records for a given partition key to the same record processor, making it easier to build multiple applications reading from the same Amazon Kinesis data stream (for example, to perform counting, aggregation, and filtering)
+
 {% include donate.html %}
 {% include advertisement.html %}
 
@@ -336,6 +424,21 @@ To enable IAM authentication for your API:
 
 ## Cloudformation
 
+#### Intrinsic Functions
+
+<!-- prettier-ignore-start -->
+
+|     |                                                                                                                                                                                                                                                                                                |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ref | Returns the value of the specified parameter or resource<br/>When you specify a parameter's logical name, it returns the value of the parameter<br/>When you specify a resource's logical name, it returns a value that you can typically use to refer to that resource, such as a physical ID |
+|Fn::GetAtt| Returns the value of an attribute from a resource in the template <br/>e.g. "Fn::GetAtt" : [ "myELB" , "DNSName" ]<br/>Returns a string containing the DNS name of the load balancer with the logical name myELB|
+|Fn::FindInMap|Returns the value corresponding to keys in a two-level map that is declared in the Mappings section<br/>e.g. { "Fn::FindInMap" : [ "MapName", "TopLevelKey", "SecondLevelKey"] }|
+|Fn::Join|Appends a set of values into a single value, separated by the specified delimiter|
+|Fn::Sub|Substitutes variables in an input string with values that you specify|
+{:.table-striped}
+
+<!-- prettier-ignore-end -->
+
 ## Cognito
 
 <!-- prettier-ignore-start -->
@@ -349,6 +452,22 @@ To enable IAM authentication for your API:
 <!-- prettier-ignore-end -->
 
 ## X-RAY
+
+With X-Ray, you can understand how your application and its underlying services are performing to identify and troubleshoot the root cause of performance issues and errors.
+
+Segments - The compute resources running your application logic send data about their work as segments. A segment provides the resource's name, details about the request, and details about the work done. e.g. host, request, response, start and end times.
+
+Sampling - To ensure efficient tracing and provide a representative sample of the requests that your application serves, the X-Ray SDK applies a sampling algorithm to determine which requests get traced.
+
+<!-- prettier-ignore-start -->
+
+| Annotations                                            | Metadata                                                                      |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| Key-value pairs with string, number, or Boolean values | Key-value pairs that can have values of any type, including objects and lists |
+| Indexed for use with filter expressions                | Not indexed for use with filter expressions                                   |
+{:.table-striped}
+
+<!-- prettier-ignore-end -->
 
 ## Step Functions
 
