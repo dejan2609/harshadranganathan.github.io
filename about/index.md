@@ -118,6 +118,16 @@ Role: Programmer Analyst Trainee
     <div class="github-card" data-github="harshadranganathan" data-width="400" data-height="" data-theme="default"></div>
 </center>
 
+### [AWS EMR Launcher](https://github.com/HarshadRanganathan/aws-emr-launcher)
+
+Generic python library that enables to provision emr clusters with yaml config files (Configuration as Code).
+
+<span class="entry-meta">
+    <a class="tag"><span class="term">Python</span></a>
+</span>
+
+PYPI Repo: <https://pypi.org/project/aws-emr-launcher/>
+
 ### [MS Teams](https://github.com/HarshadRanganathan/ms-teams)
 
 Python helper library to construct microsoft teams connector card messages.

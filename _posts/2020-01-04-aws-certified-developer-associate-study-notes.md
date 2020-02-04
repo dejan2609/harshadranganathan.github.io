@@ -424,7 +424,7 @@ To enable IAM authentication for your API:
 
 ## Cloudformation
 
-#### Intrinsic Functions
+### Intrinsic Functions
 
 <!-- prettier-ignore-start -->
 
