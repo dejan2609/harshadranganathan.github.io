@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Terraform - AWS"
-date: 2019-12-21
+date: 2020-02-23
 excerpt: "Infrastructure as code tool with multiple cloud providers"
 tag:
     - terraform
@@ -315,6 +315,28 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 
 Terraform interprets these implicit dependencies and decides on the resource creation order. It will decide that `aws_iam_role` needs to be created first, followed by `aws_iam_instance_profile` as it is dependant on the role name.
 
+### Lifecycle
+
+By default, Terraform detects any difference in the current settings of a real infrastructure object and plans to update the remote object to match configuration.
+
+In some rare cases, settings of a remote object are modified by processes outside of Terraform, which Terraform would then attempt to "fix" on the next run. In order to make Terraform share management responsibilities of a single object with a separate process, the ignore_changes meta-argument specifies resource attributes that Terraform should ignore when planning updates to the associated remote object.
+
+For example, you might set the environment variables for your lambda by a process managed outside of terraform. In that case, when you re-run your terraform update it will remove the environment variables set on the lambda as they are not specified in your terraform configuration. In order to avoid this you can use the `ignore_changes` meta-argument by specifying the resource attributes which need to ignored when performing change detection:
+
+```terraform
+resource "aws_lambda_function" "lambda" {
+  # ...
+
+  lifecycle {
+    # ignores changes to environment
+    ignore_changes = [environment]
+  }
+}
+```
+
+Note: Ignore changes can't be used to specify attributes defined inside sets e.g. beanstalk option settings 
+<https://github.com/hashicorp/terraform/issues/22504>
+
 {% include donate.html %}
 {% include advertisement.html %}
 
@@ -343,7 +365,7 @@ When you run your terraform command to create the infrastructure, you will have 
 
 In case, you have lot of variables and they vary based on the account/environment, you can create a variables file and provide the file to be used to terraform.
 
-`rharshad-prod.vars`
+`prod.tfvars`
 
 ```properties
 name=test
@@ -669,12 +691,6 @@ We generate the terraform plan by supplying the variables file.
 terraform plan -var-file="config/prod.tfvars" -out=.terraform/tplan
 ```
 
-Incase we want to generate the plan for destroying the infrastructure, specify the `-destroy` flag.
-
-```bash
-terraform plan -destroy -var-file="config/prod.tfvars" -out=.terraform/tplan
-```
-
 ### Apply Changes
 
 Once we are happy with the plan that is generated, apply the changes to create/update/delete the infrastructure.
@@ -685,6 +701,41 @@ terraform apply .terraform/tplan
 
 {% include donate.html %}
 {% include advertisement.html %}
+
+## Destroying Infrastructure
+
+To generate the plan for destroying the infrastructure, use the `-destroy` flag.
+
+```bash
+terraform plan -destroy -var-file="config/prod.tfvars" -out=.terraform/tplan
+```
+
+As you can see, you will have to specify the input vars file to destroy the infrastructure. You can't destroy the infrastructure with only the tfstate file.
+
+Refer - <https://github.com/hashicorp/terraform/issues/18994>
+
+This means that when you have a CI/CD pipeline, you will have to use the same branch (or) release which was used to create the infrastructure so that you can destroy it with the same input variables as terraform validates the config before running destroy.
+
+One workaround is to save the git hash in S3 when you create the infrastructure. When you want to destroy the infrastructure, you can use the git hash to checkout the same code which was used in creation and supply the input vars file to destroy the environment.
+
+If you're using jenkins pipeline for your CI/CD then you will achieve it using below code snippets:
+
+```groovy
+// when creating the infrastructure save the git commit hash to S3
+commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
+writeFile file: "git", text: "${commitId}"
+sh "aws s3 cp git s3://<bucket>/<key>/git"
+
+..
+
+// when destroying the infrastructure use the git commit hash stored in S3 and perform code checkout
+gitCommitHash = sh(returnStdout: true, script: "aws s3 cp s3://<bucket>/<key>/git - | head -1")
+checkout scm: [
+  $class: 'GitSCM',
+  branches: [[name: gitCommitHash]],
+  userRemoteConfigs: scm.userRemoteConfigs
+]
+```
 
 ## References
 

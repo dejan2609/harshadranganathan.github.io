@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AWS Global Tables - Things To Know"
-date: 2020-02-04
+date: 2020-02-23
 excerpt: "Replicate your DynamoDB table in multiple AWS regions"
 tag:
     - aws global tables
@@ -14,6 +14,8 @@ tag:
     - aws dynamodb global tables regions
 comments: true
 ---
+
+This guide is primarily for Global Table 2019 version although some content might overlap for 2017 version.
 
 ## Conditions
 
@@ -47,6 +49,8 @@ Below conditions must be satisfied to create a global table from an existing tab
 
 -   Changes to auto scaling settings for a replica table or secondary index made through the DynamoDB console or using the UpdateGlobalTableSettings call are applied to all of the replica tables. These changes overwrite any existing auto scaling settings.
 
+-   Tags in the source table are not automatically carried over to the newly added replica tables. As soon as the new region gets added, you can use the CLI's `tag-resource` operation to add tags to the replica table while the table is still being created. This will help to determine costs later in the billing service.
+
 ## Consistency & Conflict Resolution
 
 -   In a global table, a newly written item is usually propagated to all replica tables within a second.
@@ -70,6 +74,63 @@ Below conditions must be satisfied to create a global table from an existing tab
 
 -   To delete a global table, all replica tables need to be deleted first.
 
+## Limits
+
+If you're planning to replicate a larger table (TB in size) then you will get this error:
+
+```
+Failed to create a new replica of table: 'xxxxx' because user is not whitelisted for creating a replica of this size in region: 'ap-southeast-1'.
+Please contact AWS support to request whitelisting for adding a replica of this size.
+```
+
+Console in some cases allows you to initiate replication for a larger table but the replication will get stuck until the table limits are raised by DynamoDB service team.
+
+Note that these limits aren't available via Service Quotas.
+
+You will have to create a support ticket and share below details to DynamoDB service team:
+
+1. Whether you are planning to use global tables in single or multi master configuration.
+
+2. Whether replication of this size is a once off activity.
+
+3. Estimated WCU post replication.
+
+4. How many replicated regions for the table.
+
+DynamoDB service team will use these details to plan for capacity and then whitelist your table for replication.
+
+## Performance
+
+When you are adding a new region to your global table, AWS performs table restore operation. Consider:
+
+Source Table: Virginia region
+
+Then to restore the table in other regions it takes below times (replication time depends on a number of factors such as replica region, table size, network latency, version of Global Table):
+
+<!-- prettier-ignore-start -->
+
+|   |Oregon |Ireland |Singapore |
+|-- |--     |--      |--        |
+|Replication Times for a table of size 2 TB| ~3h | ~3h |~5h |
+|Replication Times for a table of size 12 TB| ~12h | ~12h |~45h |
+{:.table-striped}
+
+<!-- prettier-ignore-end -->
+
+When you add data to an existing global table, AWS documentation mentions that the data should get replicated within a second to your replicated regions.
+
+**Average replication latency (in ms) for replicating updates from a table in Virginia region to other AWS regions:**
+
+<figure>
+	<a href="{{ site.url }}/assets/img/2020/02/average-replication-latency.png"><img src="{{ site.url }}/assets/img/2020/02/average-replication-latency.png"></a>
+</figure>
+
+**Maximum replication latency (in ms) for replicating updates from a table in Virginia region to other AWS regions:**
+
+<figure>
+	<a href="{{ site.url }}/assets/img/2020/02/maximum-replication-latency.png"><img src="{{ site.url }}/assets/img/2020/02/maximum-replication-latency.png"></a>
+</figure>
+
 ## Using CLI
 
 When creating the replica table from the console, the API call made includes the parameters to set the auto scaling if enabled on the base table. Therefore the settings are carried over to the replica table.
@@ -89,6 +150,8 @@ Consider the case where you have created a global table in us-east-1 region with
 | Data transfer to replicated regions | Up to 1 GB/month no charge <br/> $0.09 per GB up to next 9.999 TB/month | $44.91 |
 | Stream read request units || No longer billed for stream resources used by global tables for replicating changes from one replica table to all other replicas |
 {:.table-striped}
+
+<!-- prettier-ignore-end -->
 
 {% include donate.html %}
 {% include advertisement.html %}
