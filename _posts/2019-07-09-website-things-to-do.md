@@ -150,5 +150,15 @@ Lot of companies use proxy filters to restrict access to websites. Check if your
 
 <https://sitereview.bluecoat.com/#/>
 
+## Seo Tools
+
+Knowing how to search for keywords is an essential part of any search engine optimization (SEO) strategy. With the right terms, you can increase your search visibility and drive more traffic from your intended audience.
+
+Below are some of the free tools (limited queries per day) available to find right keywords for your posts:
+
+<https://lsigraph.com/>
+
+<https://answerthepublic.com/>
+
 {% include donate.html %}
 {% include advertisement.html %}
