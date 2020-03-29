@@ -56,15 +56,15 @@ SOAP is a standardized protocol to send messages using HTTP, SMTP and is maintai
 
 Pros:
 
-- Single endpoint used for retrieving data
-- ACID compliance
-- SOAP protocol is supported by a lot of technologies like ws-security etc.
+-   Single endpoint used for retrieving data
+-   ACID compliance
+-   SOAP protocol is supported by a lot of technologies like ws-security etc.
 
 Cons:
 
-- SOAP supports only XML format which must be parsed to be read and consumes more bandwidth.
-- More complex
-- No caching
+-   SOAP supports only XML format which must be parsed to be read and consumes more bandwidth.
+-   More complex
+-   No caching
 
 ### REST
 
@@ -72,32 +72,35 @@ REST is an architectural style that defines a set of recommendations for designi
 
 Pros:
 
-- Better performance
-- Deliver data in HTML, XML, JSON, YAML message formats
-- API calls can be cached
+-   Better performance
+-   Deliver data in HTML, XML, JSON, YAML message formats
+-   API calls can be cached
 
 Cons:
 
-- Data over-fetching/under-fetching (Server driven selection)
-- N+1 queries
+-   Data over-fetching/under-fetching (Server driven selection)
+-   N+1 queries
 
 ### GraphQL
 
 Pros:
 
-- Strong data typing (schemas) -> customer knows exactly what is offered
+-   Strong data typing (schemas) -> customer knows exactly what is offered
 
-- Single endpoint for retrieving data -> integration simplified
+-   Single endpoint for retrieving data -> integration simplified
 
-- Client data definition allows fetching exactly the requested data -> reduces network payload and increases application performance
+-   Client data definition allows fetching exactly the requested data -> reduces network payload and increases application performance
 
-- Search on multiple databases with a single query -> reduce complexity
+-   Search on multiple databases with a single query -> reduce complexity
 
 ## Project Code
 
 Example code for this guide is available at Github:
 
 {% include repo-card.html repo="graphql-examples" %}
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## Maven Dependency
 
@@ -258,6 +261,9 @@ type Query {
 
 Here, `bookById` is expecting a non-null argument `id` to be supplied. If the argument is not supplied in your query then it will result in error.
 
+{% include donate.html %}
+{% include advertisement.html %}
+
 ### Schema-Driven Development
 
 So, far we learnt about the graphql type system and how it's defined. Let's see it in practice for our book details application.
@@ -302,11 +308,11 @@ Let's define our `Book` object.
 
 ```graphql
 type Book {
-  id: ID!
-  title: String!
-  pageCount: Int
-  author: Author,
-  bookStores: [BookStores]
+    id: ID!
+    title: String!
+    pageCount: Int
+    author: Author
+    bookStores: [BookStores]
 }
 ```
 
@@ -316,13 +322,13 @@ Our `Book` object has fields id, title, pageCount and two objects `Author` and `
 
 We define these objects in their respective schema files as follows:
 
-`author.grpahqls`
+`author.graphqls`
 
 ```graphql
 type Author {
-  id: ID
-  firstName: String
-  lastName: String
+    id: ID
+    firstName: String
+    lastName: String
 }
 ```
 
@@ -330,15 +336,303 @@ type Author {
 
 ```graphql
 type BookStores {
-  id: ID
-  storeName: String
-  storeLocation: String
+    id: ID
+    storeName: String
+    storeLocation: String
 }
 ```
 
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Providers
+
+We define a provider class where we write the logic to parse our schema files.
+
+`GraphQLProvider.java`
+
+```java
+@Component
+public class GraphQLProvider {
+
+    private GraphQL graphQL;
+
+    @Value("classpath:schema/**/*.graphqls")
+    private Resource[] schemaResources;
+
+    @Bean
+    public GraphQL graphQL() {
+        return graphQL;
+    }
+
+    @PostConstruct
+    public void init() {
+        final List<File> schemas = Arrays.stream(schemaResources).filter(Resource::isFile).map(resource -> {
+            try {
+                return resource.getFile();
+            } catch (IOException ex) {
+                throw new RuntimeException("Unable to load schema files");
+            }
+        }).collect(Collectors.toList());
+
+        final GraphQLSchema graphQLSchema = buildSchema(schemas);
+
+        this.graphQL = GraphQL
+                .newGraphQL(graphQLSchema)
+                .build();
+    }
+
+    private GraphQLSchema buildSchema(final List<File> schemas) {
+        final SchemaParser schemaParser = new SchemaParser();
+        final SchemaGenerator schemaGenerator = new SchemaGenerator();
+        final TypeDefinitionRegistry typeDefinitionRegistry = new TypeDefinitionRegistry();
+
+        for (final File schema:schemas) {
+            typeDefinitionRegistry.merge(schemaParser.parse(schema));
+        }
+
+        final RuntimeWiring runtimeWiring = buildWiring();
+        return schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
+    }
+
+    private RuntimeWiring buildWiring() {
+        // to be defined later
+    }
+}
+```
+
+Let's see what above code does:
+
+We create a GraphQLSchema and GraphQL instance. This GraphQL instance is exposed as a Spring Bean via the graphQL() method annotated with @Bean. The GraphQL Java Spring adapter will use that GraphQL instance to make our schema available via HTTP on the default url /graphql.
+
+We read our multiple schema files and pass it to `buildSchema` method.
+
+We use TypeDefinitionRegistry `merge` method to combine all the schema files. We then use the SchemaGenerator to combine the schema definitions and runtime wiring to generate the `GraphQLSchema`.
+
+We'll see later what we define inside our `buildWiring` method.
+
+<figure>
+	<a href="{{ site.url }}/assets/img/2020/03/graphql-creation.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-creation.png"></a>
+</figure>
+
+{% include donate.html %}
+{% include advertisement.html %}
+
 ## DataFetchers
 
+Each field in graphql has a graphql.schema.DataFetcher associated with it.
 
+Some fields will use specialised data fetcher code that knows how to go to a database say to get field information while most simply take data from the returned in memory objects using the field name and Plain Old Java Object (POJO) patterns to get the data.
+
+Let's create `GraphQLDataFetchers.java` class where we will define data fetchers for our fields.
+
+Initially, we define our in-memory data store which holds data about the books, authors and stores.
+
+Each entry has an unique ID. We link the author and store details to the books store using the id e.g. book-1 has an authorId of author-1 which links to the entry in author map.
+
+```java
+@Component
+public class GraphQLDataFetchers {
+
+    private static List < Map < String, String >> books = Arrays.asList(
+        ImmutableMap.of("id", "book-1",
+            "title", "Harry Potter and the Philosopher's Stone",
+            "pageCount", "223",
+            "authorId", "author-1",
+            "bookStores", "store-1,store-3"),
+        ImmutableMap.of("id", "book-2",
+            "title", "Moby Dick",
+            "pageCount", "635",
+            "authorId", "author-2",
+            "bookStores", "store-2"),
+        ImmutableMap.of("id", "book-3",
+            "title", "Interview with the vampire",
+            "pageCount", "371",
+            "authorId", "author-3")
+    );
+
+    private static List < Map < String, String >> authors = Arrays.asList(
+        ImmutableMap.of("id", "author-1",
+            "firstName", "Joanne",
+            "lastName", "Rowling"),
+        ImmutableMap.of("id", "author-2",
+            "firstName", "Herman",
+            "lastName", "Melville"),
+        ImmutableMap.of("id", "author-3",
+            "firstName", "Anne",
+            "lastName", "Rice")
+    );
+
+    private static List < Map < String, String >> stores = Arrays.asList(
+        ImmutableMap.of("id", "store-1",
+            "storeName", "ABC Bookstore",
+            "storeLocation", "Parnell St"),
+        ImmutableMap.of("id", "store-2",
+            "storeName", "Rockstone Bookshop",
+            "storeLocation", "Dublin Castle"),
+        ImmutableMap.of("id", "store-3",
+            "storeName", "City Books",
+            "storeLocation", "Grafton St")
+    );
+}
+```
+
+Now we need to define datafetchers for the fields. Let's recall our schema definition.
+
+```graphql
+type Query {
+    bookById(id: ID!): Book
+    listBooks(limit: Int!): [Book]
+}
+```
+
+We had defined two operations `bookById` and `listBooks`. We need to define resolvers for them i.e. functions which will get invoked for each of these fields and return objects or scalars.
+
+```java
+public DataFetcher getBookByIdDataFetcher() {
+    return dataFetchingEnvironment - > {
+        final String bookId = dataFetchingEnvironment.getArgument("id");
+        Map < String, String > bookDetails = books
+        .stream()
+        .filter(book - > book.get("id").equals(bookId))
+        .findFirst().orElse(null);
+
+        return DataFetcherResult.newResult()
+            .data(bookDetails)
+            .build();
+    };
+}
+```
+
+Let's explain what the above code does:
+
+Each DataFetcher is passed a graphql.schema.DataFetchingEnvironment object which contains what field is being fetched, what arguments have been supplied to the field and other information such as the field’s type, its parent type, the query root object or the query context object.
+
+We see that for bookById operation an argument called `id` will get passed. We need to return book details for the matching id.
+
+So, we get the argument value from `dataFetchingEnvironment` and filter our `books` map for a matching id. Once we have a match, we return `DataFetcherResult` with the matched data.
+
+In this case, the data is a map of key value pairs. Datafetcher will resolve the values to the fields defined in the schema. As per the schema, `bookById` returns a `Book` object.
+
+```graphql
+type Book {
+    id: ID!
+    title: String!
+    pageCount: Int
+    author: Author,
+    bookStores: [BookStores]
+}
+```
+
+`Book` type is defined as above. Keys in the map returned by the DataFetcherResult will be used to map the data to the fields defined in the schema, in this case, id, title and pageCount will get mapped to the data.
+
+***Note: You could define data fetchers for each of the fields such as `title`, `pageCount` and transform the response further but if you didn't define any Graphql java will make use of `PropertyDataFetcher` which will resolve map or POJO data to the respective fields defined in the schema matching by the names.***
+
+Now our map has two more entries `authorId` and `bookStores` which contain ID to link to the data in the other maps.
+
+We need to use these ID to resolve data so that a complete response will get returned to the customer.
+
+Let's add two more data fetchers to resolve data for fields `author` and `bookStores`.
+
+```java
+public DataFetcher getAuthorDataFetcher() {
+    return dataFetchingEnvironment - > {
+        final Map < String, String > book = dataFetchingEnvironment.getSource();
+        final String authorId = book.get("authorId");
+        return authors
+            .stream()
+            .filter(author - > author.get("id").equals(authorId))
+            .findFirst().orElse(null);
+    };
+}
+```
+
+The way graphql works is that `Book` is a parent object and `Author`, `BookStores` are child objects. A tree path gets created and for each data fetcher call the parent data gets passed in to the child.
+
+So, when author resolver gets called, the data of parent object `Book` gets passed in. In this case, it will be the map data which we returned from `getBookByIdDataFetcher` method.
+
+We access the source data with call to `dataFetchingEnvironment.getSource()` and then get the `authorId`. We then filter the author data set to get the author details matching the author id and then return the map.
+
+Returned map contains `id`, `firstName` and `lastName` entries which map to the `Author` type defined in the schema.
+
+```graphql
+type Author {
+    id: ID
+    firstName: String
+    lastName: String
+}
+```
+
+Now, we have resolved the `author` field in `book` type object. Likewise, we need to add data fetcher to resolve the `bookStores` field.
+
+```java
+public DataFetcher getBookStores() {
+    return dataFetchingEnvironment - > {
+        final Map < String, String > book = dataFetchingEnvironment.getSource();
+        if (book.get("bookStores") != null) {
+            final List < String > bookStores = Arrays.asList(book.get("bookStores").split(","));
+            return stores
+                .stream()
+                .filter(store - > bookStores.contains(store.get("id")))
+                .collect(Collectors.toList());
+        } else {
+            return null;
+        }
+    };
+}
+```
+
+As per our schema definition, we are to return a list of bookStores. So, in our data fetcher we return a list of bookStore objects.
+
+For every object in the list it will look for an id field, find it by name in a map or via a getId() getter method and that will be sent back in the graphql response. It does that for every field in the query on that type.
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Runtime Wiring
+
+We had created our data fetchers previously where we had defined the logic to populate data for each of our fields. 
+
+We need wire this logic to the fields defined in the schema so that GraphQL java knows what data fetchers for each of the fields.
+
+Remember the `buildWiring` method we had defined in our provider, we define our data fetchers in it as below.
+
+```java
+@Autowired
+private GraphQLDataFetchers graphQLDataFetchers;
+
+private RuntimeWiring buildWiring() {
+    return RuntimeWiring.newRuntimeWiring()
+        .type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("bookById", graphQLDataFetchers.getBookByIdDataFetcher()))
+        .type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("listBooks", graphQLDataFetchers.listBooks()))
+        .type(TypeRuntimeWiring.newTypeWiring("Book").dataFetcher("author", graphQLDataFetchers.getAuthorDataFetcher()))
+        .type(TypeRuntimeWiring.newTypeWiring("Book").dataFetcher("bookStores", graphQLDataFetchers.getBookStores()))
+        .build();
+}
+```
+
+Here, we have defined that when a query operation is invoked on `bookById`, `getBookByIdDataFetcher()` method needs to be called.
+
+`getBookByIdDataFetcher` will return a map containing book details.
+
+We didn't define any data fetchers for the fields `id`, `title` and `pageCount`, so graphql java will use `PropertyDataFetcher` to resolve values for these fields.
+
+We then created two data fetchers to resolve data for fields `author` and `bookStores`. We wire it up by defining a new type wiring for `Book` object and adding data fetcher for the fields `author` and `bookStores` as follows:
+
+```java
+dataFetcher("author", graphQLDataFetchers.getAuthorDataFetcher())
+
+dataFetcher("bookStores", graphQLDataFetchers.getBookStores())
+```
+
+So, GraphQL java will call data fetchers for each of the fields defined in the schema. It will know what data fetcher to call based on the runtime wiring definition. If in case, there is no data fetcher defined for a field it will make use of `PropertyDataFetcher` to resolve Map, List or POJO objects.
+
+<figure>
+	<a href="{{ site.url }}/assets/img/2020/03/graphql-data-fetchers.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-data-fetchers.png"></a>
+</figure>
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## References
 
