@@ -93,9 +93,16 @@ Pros:
 
 -   Search on multiple databases with a single query -> reduce complexity
 
-## Project Code
+{% include donate.html %}
+{% include advertisement.html %}
 
-Example code for this guide is available at Github:
+## Project
+
+For this guide, we will build a book details application based on spring boot.
+
+<img src="https://i.imgur.com/EHn7qOI.gif" />
+
+Code for this guide is available at Github:
 
 {% include repo-card.html repo="graphql-examples" %}
 
@@ -268,6 +275,12 @@ Here, `bookById` is expecting a non-null argument `id` to be supplied. If the ar
 
 So, far we learnt about the graphql type system and how it's defined. Let's see it in practice for our book details application.
 
+We will define below schema in SDL for our sample book details application.
+
+<figure>
+	<a href="{{ site.url }}/assets/img/2020/03/graphql-book-details-schema.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-book-details-schema.png"></a>
+</figure>
+
 We define a root schema file which defines our `query` operation:
 
 `root.graphqls`
@@ -316,9 +329,9 @@ type Book {
 }
 ```
 
-Our `Book` object has fields id, title, pageCount and two objects `Author` and `BookStores`.
+-   Our `Book` object has fields id, title, pageCount and two objects `Author` and `BookStores`.
 
-`Author` contains details about the book author and `BookStores` is a list which returns details of book stores which have stock of this book.
+-   `Author` contains details about the book author and `BookStores` is a list which returns details of book stores which have stock of this book.
 
 We define these objects in their respective schema files as follows:
 
@@ -488,6 +501,8 @@ type Query {
 
 We had defined two operations `bookById` and `listBooks`. We need to define resolvers for them i.e. functions which will get invoked for each of these fields and return objects or scalars.
 
+### bookById Data Fetcher
+
 ```java
 public DataFetcher getBookByIdDataFetcher() {
     return dataFetchingEnvironment - > {
@@ -534,6 +549,8 @@ We need to use these ID to resolve data so that a complete response will get ret
 
 Let's add two more data fetchers to resolve data for fields `author` and `bookStores`.
 
+### author Data Fetcher
+
 ```java
 public DataFetcher getAuthorDataFetcher() {
     return dataFetchingEnvironment - > {
@@ -564,6 +581,8 @@ type Author {
 ```
 
 Now, we have resolved the `author` field in `book` type object. Likewise, we need to add data fetcher to resolve the `bookStores` field.
+
+### bookStores Data Fetcher
 
 ```java
 public DataFetcher getBookStores() {
@@ -628,8 +647,97 @@ dataFetcher("bookStores", graphQLDataFetchers.getBookStores())
 So, GraphQL java will call data fetchers for each of the fields defined in the schema. It will know what data fetcher to call based on the runtime wiring definition. If in case, there is no data fetcher defined for a field it will make use of `PropertyDataFetcher` to resolve Map, List or POJO objects.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/graphql-data-fetchers.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-data-fetchers.png"></a>
+	<a href="{{ site.url }}/assets/img/2020/03/graphql-book-details-data-fetchers.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-book-details-data-fetchers.png"></a>
 </figure>
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Serving over HTTP
+
+Now our application is ready to serve HTTP requests. 
+
+Run the spring boot app which will make it available at <http://localhost:8080/graphql>
+
+### Curl
+
+A standard GraphQL POST request should use the application/json content type.
+
+It include a JSON-encoded body of the following form:
+
+```json
+{
+  "query": "...",
+  "operationName": "...",
+  "variables": { "myVariable": "someValue", ... }
+}
+```
+
+where operationName and variables are optional fields.
+
+```bash
+curl -X POST \
+  http://localhost:8080/graphql \
+  -H 'Accept-Encoding: gzip, deflate' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "query": "query Books($id: ID!) { bookById(id: $id) { id title pageCount author { firstName lastName } } }",
+    "variables": {  "id": "book-1"  }
+}'
+```
+
+### Postman
+
+<figure>
+	<a href="{{ site.url }}/assets/img/2020/03/graphql-book-details-postman-query.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-book-details-postman-query.png"></a>
+</figure>
+
+In [postman](https://www.postman.com/downloads/), you have to give the query and variables in separate windows.
+
+Query:
+
+```graphql
+query Books($id: ID!) {
+    bookById(id: $id) { 
+        id 
+        title 
+        pageCount 
+        author { 
+            firstName 
+            lastName 
+        } 
+    } 
+}
+```
+
+Variables:
+
+```json
+{
+	"id": "book-1"
+}
+```
+
+
+### GraphQL Playground
+
+[GraphQL Playground](https://github.com/prisma-labs/graphql-playground/releases) is a handy tool with notable features:
+
+1. Code completion based on schema introspection
+
+2. Documentation based on schema introspection
+
+<img src="https://i.imgur.com/EHn7qOI.gif" />
+
+## Tools
+
+<https://github.com/graphql/graphiql> - In-browser IDE for exploring GraphQL
+
+<https://graphqleditor.com/> - Visual Editor & GraphQL IDE
+
+<https://apis.guru/graphql-voyager/> - Represent any GraphQL API as an interactive graph
+
+<https://github.com/imolorhe/altair> - A beautiful feature-rich GraphQL Client for all platforms
 
 {% include donate.html %}
 {% include advertisement.html %}
