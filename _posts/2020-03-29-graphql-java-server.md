@@ -93,6 +93,10 @@ Pros:
 
 -   Search on multiple databases with a single query -> reduce complexity
 
+<figure class="half">
+	<a href="{{ site.url }}/assets/img/2020/03/graphql-sample-architecture.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-sample-architecture.png"></a>
+</figure>
+
 {% include donate.html %}
 {% include advertisement.html %}
 
