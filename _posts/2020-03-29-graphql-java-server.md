@@ -160,6 +160,12 @@ We add below dependencies to our `pom.xml` to get started with GraphQL and Sprin
 </build>
 ```
 
+## Queries
+
+You can check out the ways in which you can query the GraphQL API in below doc as it is beyond the scope of this guide.
+
+<https://graphql.org/learn/queries/>
+
 ## Schema
 
 Schema in GraphQL is the central contract between the client and the server, describing all the types of data and all the operations (queries and mutations) upon those types the server offers.
@@ -219,6 +225,9 @@ type Book {
 
 This means that our server always expects to return a non-null value for the field `title`, and if it ends up getting a null value that will actually trigger a GraphQL execution error, letting the client know that something has gone wrong.
 
+{% include donate.html %}
+{% include advertisement.html %}
+
 #### Lists
 
 We can use a type modifier to mark a type as a List, which indicates that this field will return an array of that type. In the schema language, this is denoted by wrapping the type in square brackets, [ and ]
@@ -267,6 +276,32 @@ type Query {
 ```
 
 Here, `bookById` is expecting a non-null argument `id` to be supplied. If the argument is not supplied in your query then it will result in error.
+
+#### Enums
+
+Also called Enums, enumeration types are a special kind of scalar that is restricted to a particular set of allowed values. 
+
+This allows you to:
+
+1. Validate that any arguments of this type are one of the allowed values
+
+2. Communicate through the type system that a field will always be one of a finite set of values
+
+```graphql
+enum BookViewReason {
+    RENT
+    BUY
+    CURIOSITY
+}
+```
+
+Here we have defined an enum named `BookViewReason` that will accept only 3 finite values.
+
+To use this enum in an argument you just define it as below:
+
+```text
+bookById(id: ID!, reason: BookViewReason): Book
+```
 
 {% include donate.html %}
 {% include advertisement.html %}
@@ -352,6 +387,18 @@ type BookStores {
     id: ID
     storeName: String
     storeLocation: String
+}
+```
+
+and finally our enum.
+
+`bookViewReason.graphqls`
+
+```graphql
+enum BookViewReason {
+    RENT
+    BUY
+    CURIOSITY
 }
 ```
 
@@ -534,20 +581,23 @@ type Book {
     id: ID!
     title: String!
     pageCount: Int
-    author: Author,
+    author: Author
     bookStores: [BookStores]
 }
 ```
 
 `Book` type is defined as above. Keys in the map returned by the DataFetcherResult will be used to map the data to the fields defined in the schema, in this case, id, title and pageCount will get mapped to the data.
 
-***Note: You could define data fetchers for each of the fields such as `title`, `pageCount` and transform the response further but if you didn't define any Graphql java will make use of `PropertyDataFetcher` which will resolve map or POJO data to the respective fields defined in the schema matching by the names.***
+**_Note: You could define data fetchers for each of the fields such as `title`, `pageCount` and transform the response further but if you didn't define any Graphql java will make use of `PropertyDataFetcher` which will resolve map or POJO data to the respective fields defined in the schema matching by the names._**
 
 Now our map has two more entries `authorId` and `bookStores` which contain ID to link to the data in the other maps.
 
 We need to use these ID to resolve data so that a complete response will get returned to the customer.
 
 Let's add two more data fetchers to resolve data for fields `author` and `bookStores`.
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ### author Data Fetcher
 
@@ -610,7 +660,7 @@ For every object in the list it will look for an id field, find it by name in a 
 
 ## Runtime Wiring
 
-We had created our data fetchers previously where we had defined the logic to populate data for each of our fields. 
+We had created our data fetchers previously where we had defined the logic to populate data for each of our fields.
 
 We need wire this logic to the fields defined in the schema so that GraphQL java knows what data fetchers for each of the fields.
 
@@ -655,7 +705,7 @@ So, GraphQL java will call data fetchers for each of the fields defined in the s
 
 ## Serving over HTTP
 
-Now our application is ready to serve HTTP requests. 
+Now our application is ready to serve HTTP requests.
 
 Run the spring boot app which will make it available at <http://localhost:8080/graphql>
 
@@ -698,15 +748,15 @@ Query:
 
 ```graphql
 query Books($id: ID!) {
-    bookById(id: $id) { 
-        id 
-        title 
-        pageCount 
-        author { 
-            firstName 
-            lastName 
-        } 
-    } 
+    bookById(id: $id) {
+        id
+        title
+        pageCount
+        author {
+            firstName
+            lastName
+        }
+    }
 }
 ```
 
@@ -714,10 +764,9 @@ Variables:
 
 ```json
 {
-	"id": "book-1"
+    "id": "book-1"
 }
 ```
-
 
 ### GraphQL Playground
 
@@ -729,6 +778,165 @@ Variables:
 
 <img src="https://i.imgur.com/EHn7qOI.gif" />
 
+{% include donate.html %}
+{% include advertisement.html %}
+
+## SDL Directives
+
+You can place directives on SDL elements and then write the backing logic once and have it apply in many places.
+
+This idea of “writing it once” is the key concept here. There is only code place where logic needs to be written and it is then applied to all the places in the SDL that have a named directive.
+
+For our book details application, we want introduce a restriction that certain fields can only be queried if the reason argument is supplied.
+
+### Declaring Directives
+
+Let's create a book view reason directive for this purposes and implement the logic for it.
+
+`bookViewReason.graphqls`
+
+```text
+directive @bookViewReason on FIELD_DEFINITION
+```
+
+Here we have mentioned that the directive location is at a field level.
+
+Other valid directive locations are:
+
+```text
+SCHEMA,
+SCALAR,
+OBJECT,
+FIELD_DEFINITION,
+ARGUMENT_DEFINITION,
+INTERFACE,
+UNION,
+ENUM,
+ENUM_VALUE,
+INPUT_OBJECT,
+INPUT_FIELD_DEFINITION
+```
+
+Let's apply this directive to `bookStores` field by using @ annotation.
+
+```graphql
+type Book {
+    id: ID!
+    title: String!
+    pageCount: Int
+    author: Author,
+    bookStores: [BookStores] @bookViewReason
+}
+```
+
+What it means is that when the customer queries for the field `bookStores` the corresponding directive's code logic will get invoked. We will be seeing next how we wire up the directive to the code logic. 
+
+### Using Context
+
+For whichever field this directive is invoked our intention is to check if the reason argument has a value available. This information won't be directly available to us as the directive could be used in n-th tree position. So, we make use of `localContext` to pass on this information from the parent.
+
+Let's update our `getBookByIdDataFetcher` to pass this information via localContext:
+
+`GraphQLDataFetchers.java`
+
+```java
+public DataFetcher getBookByIdDataFetcher() {
+    return dataFetchingEnvironment - > {
+        final Map < String, String > localContext = new HashMap < > ();
+        localContext.put("reason", dataFetchingEnvironment.getArgument("reason"));
+
+        final String bookId = dataFetchingEnvironment.getArgument("id");
+        Map < String, String > bookDetails = books
+        .stream()
+        .filter(book - > book.get("id").equals(bookId))
+        .findFirst().orElse(null);
+
+        return DataFetcherResult.newResult()
+            .data(bookDetails)
+            .localContext(localContext)
+            .build();
+    };
+}
+```
+
+### Directive Logic
+
+Now let's define the backing logic for our directive.
+
+`BookViewReasonDirective.java`
+
+```java
+@Component
+public class BookViewReasonDirective implements SchemaDirectiveWiring {
+
+    @Override
+    public GraphQLFieldDefinition onField(SchemaDirectiveWiringEnvironment<GraphQLFieldDefinition> environment) {
+        final GraphQLFieldsContainer fieldsContainer = environment.getFieldsContainer();
+        final DataFetcher originalDataFetcher = environment.getCodeRegistry().getDataFetcher(fieldsContainer, environment.getFieldDefinition());
+
+        final DataFetcher dataFetcher = DataFetcherFactories.wrapDataFetcher(originalDataFetcher, ((dataFetchingEnvironment, value) -> {
+            final String reason = ((Map<String, String>) dataFetchingEnvironment.getLocalContext()).get("reason");
+            if(StringUtils.isEmpty(reason)) {
+                final Map<String, Object> extensions = new HashMap<>();
+                extensions.put("errorCode", "001");
+                extensions.put("errorMessage", "Reason required for viewing book store details");
+
+                final GraphQLError graphQLError = GraphqlErrorBuilder.newError()
+                        .message("Reason required for viewing book store details")
+                        .extensions(extensions)
+                        .path(dataFetchingEnvironment.getExecutionStepInfo().getPath())
+                        .build();
+                return DataFetcherResult.newResult().error(graphQLError).build();
+            }
+            return value;
+        }));
+        final FieldCoordinates coordinates = FieldCoordinates.coordinates(fieldsContainer, environment.getFieldDefinition());
+        environment.getCodeRegistry().dataFetcher(coordinates, dataFetcher);
+        return environment.getElement();
+    }
+}
+```
+
+Here, we use `DataFetcherFactories` helper function `wrapDataFetcher` to wrap an existing data fetcher and map the value once it completes.
+
+Inside the function we get the value for `reason` argument from the local context and validate if it's present.
+
+If it's not present we return `GraphQLError` as result otherwise the original value.
+
+We then update the wrapped data fetcher in the code registry so that it will get invoked in place of the original data fetcher.
+
+### Wiring Directives
+
+Now let's wire up the directive and code logic in our `buildWiring` function.
+
+`GraphQLProvider.java`
+
+```java
+@Component
+public class GraphQLProvider {
+
+    @Autowired
+    private BookViewReasonDirective bookViewReasonDirective;
+
+    ...
+
+    private RuntimeWiring buildWiring() {
+        return RuntimeWiring.newRuntimeWiring()
+                .type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("bookById", graphQLDataFetchers.getBookByIdDataFetcher()))
+                .type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("listBooks", graphQLDataFetchers.listBooks()))
+                .type(TypeRuntimeWiring.newTypeWiring("Book").dataFetcher("author", graphQLDataFetchers.getAuthorDataFetcher()))
+                .type(TypeRuntimeWiring.newTypeWiring("Book").dataFetcher("bookStores", graphQLDataFetchers.getBookStores()))
+                .directive("bookViewReason", bookViewReasonDirective)
+                .build();
+    }
+}
+```
+
+Wherever we want this code logic to get applied we just add the SDL directive to the respective fields.
+
+{% include donate.html %}
+{% include advertisement.html %}
+
 ## Tools
 
 <https://github.com/graphql/graphiql> - In-browser IDE for exploring GraphQL
@@ -739,8 +947,6 @@ Variables:
 
 <https://github.com/imolorhe/altair> - A beautiful feature-rich GraphQL Client for all platforms
 
-{% include donate.html %}
-{% include advertisement.html %}
 
 ## References
 
