@@ -21,6 +21,12 @@ tag:
 comments: true
 ---
 
+## Pre-requisites
+
+This guide is for setting up Elasticsearch 7 cluster in Amazon Linux 2 AMI.
+
+  - You need to have a VPC set up with subnets spanning multiple availability zones in the same AWS region. In this guide, we create resources primarily in us-east-1 region.
+
 ## Why run your own Elasticsearch cluster on AWS EC2 instead of hosted services
 
 There are two notable alternatives to running Elasticsearch in AWS:
@@ -51,8 +57,9 @@ Launch an EC2 instance of below configuration for this guide (you will be charge
 | Instance Type    | t3.medium                                                                                                                                         |
 | Network & Subnet | Choose existing VPC & subnet (or) create new ones. It is recommended to run your Elasticsearch instance in a private subnet for security reasons. |
 | Storage | 30 GB gp2 EBS volume |
-| Security Group | Security group must allow access to below ports:<br/><br/>Type: SSH<br/>Protocol: TCP<br/>Port Range: 22<br/>Source: Give your IP<br/><br/>Type: Custom TCP<br/>Protocol: TCP<br/>Port Range: 9200<br/>Source: Give your IP|
+| Security Group | Security group must allow access to below ports:<br/><br/>Type: SSH<br/>Protocol: TCP<br/>Port Range: 22<br/>Source: Give your IP<br/><br/>Type: Custom TCP<br/>Protocol: TCP<br/>Port Range: 9200<br/>Source: Multi AZ Subnet IPv4 CIDR (This is required for ES node in one AZ to discover node running in another AZ)<br/><br/>Type: Custom TCP<br/>Protocol: TCP<br/>Port Range: 9300<br/>Source: Multi AZ Subnet IPv4 CIDR (This is required for ES node in one AZ to discover node running in another AZ) |
 | Key Pair | Create/use an existing key pair as we need to SSH later |
+| IAM | Create an IAM role with ec2:DescribeInstances permission as it required for EC2 discovery plugin to work |
 {:.table-striped}
 
 <!-- prettier-ignore-end -->
@@ -296,7 +303,10 @@ Edit `/etc/elasticsearch/elasticsearch.yml` file to add discovery.seed_providers
 
 ```yaml
 discovery.seed_providers: ec2
+discovery.ec2.endpoint: ec2.us-east-1.amazonaws.com
 ```
+
+Depending on the region in which you had launched your EC2 instance, update the region in `discovery.ec2.endpoint` setting appropriately.
 
 ##### Restart to apply configuration updates
 
@@ -343,6 +353,8 @@ bootstrap.memory_lock: true
 
 Create a new override file `/etc/systemd/system/elasticsearch.service.d/override.conf` with below setting:
 
+**Note: Create elasticsearch.service.d directory first if it doesn't exist**
+
 ```ini
 [Service]
 LimitMEMLOCK=infinity
@@ -359,6 +371,20 @@ You can check whether this setting got applied by using node API:
 
 ```bash
 $ curl -X GET "localhost:9200/_nodes?filter_path=**.mlockall"
+```
+
+##### Virtual Memory & Threads
+
+AWS Linux 2 AMI should already have max_map_count set to `262144` and number of threads that can be created to be at least `4096`.
+
+These can be verified by running below commands:
+
+```bash
+# check max_map_count value
+$ sysctl vm.max_map_count
+
+# check -u value
+$ ulimit -a
 ```
 
 {% include donate.html %}
@@ -380,6 +406,7 @@ cluster.name: production
 bootstrap.memory_lock: true
 network.host: [_local_,_site_]
 discovery.seed_providers: ec2
+discovery.ec2.endpoint: ec2.us-east-1.amazonaws.com
 ```
 
 `/etc/systemd/system/elasticsearch.service.d/override.conf`
@@ -387,6 +414,167 @@ discovery.seed_providers: ec2
 ```ini
 [Service]
 LimitMEMLOCK=infinity
+```
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+### Multi Node, Multi AZ
+
+Let's assume our single node ES instance is running in us-east-1b zone. To create a ES cluster spanning multiple AZ, let's create another instance in us-east-1c zone.
+
+You will follow all the steps which we had done before for single node ES instance set up, with one caveat, do not start the elasticsearch instance yet as we need to do some additional configuration.
+
+*Note: If you had started the new node before applying certain configurations then it will end up in it's own separate cluster. Check the Errors section at the end on the steps to resolve this issue*
+
+#### Configuring Elasticsearch
+
+##### cluster.initial_master_nodes
+
+In our earlier, single node set up we didn't have this setting. 
+
+To form a multi node cluster this setting is required. If you start some Elasticsearch nodes on different hosts without this setting then by default they will not discover each other and will form a different cluster on each host. 
+
+Elasticsearch will not merge separate clusters together after they have formed, even if you subsequently try and configure all the nodes into a single cluster. 
+
+So, in both of your instances in us-east-1b & us-east-1c update `/etc/elasticsearch/elashticsearch.yml` with this setting.
+
+```yml
+cluster.initial_master_nodes: [private_ip_of_instance_in_us_east_1b,private_ip_of_instance_in_us_east_1c]
+```
+
+List of private IP addresses of instances need to be provided at bootstrap time, so that Elasticsearch can form a cluster of nodes. All of the nodes whose IP addresses are provided here are master eligible.
+
+**Note: Although we are using EC2 discovery plugin which auto discovers the Elasticsearch nodes and configures discovery.seed_hosts setting, it has a shortcoming. We still need to explicitly define cluster.initial_master_nodes setting otherwise the nodes will form individual clusters of their own.**
+
+##### dicovery.ec2.tag
+
+We might have multiple Elasticsearch instances running in our account, for example, one for development, one for staging and other for production.
+
+We don't want all of these nodes to be discovered and added as seed nodes. So, we use `dicovery.ec2.tag` setting provided as part of ec2 discovery plugin to discover only instances that are tagged with one of the given values.
+
+As a first step, tag both your instances running in different AZ, with below tag.
+
+```
+Key: cluster_name
+Value: production
+```
+
+Here, we are using the tags to indicate that these nodes should be part of `production` cluster.
+
+Next, add this setting to `/etc/elasticsearch/elashticsearch.yml`
+
+```yml
+dicovery.ec2.tag.cluster_name: production
+```
+
+##### Automatic Node Attributes
+
+The discovery-ec2 plugin can automatically set the `aws_availability_zone` node attribute to the availability zone of each node. This node attribute allows you to ensure that each shard has copies allocated redundantly across multiple availability zones by using the Allocation Awareness feature.
+
+In order to enable the automatic definition of the aws_availability_zone attribute, set cloud.node.auto_attributes to true.
+
+```yml
+cloud.node.auto_attributes: true
+cluster.routing.allocation.awareness.attributes: aws_availability_zone
+```
+
+##### Logging
+
+Since we are setting up the cluster for the first time, let's enable TRACE logging for discovery package to make sure that the EC2 discovery is working as expected.
+
+Update `/etc/elasticsearch/elashticsearch.yml` with below setting:
+
+```yml
+logger.org.elasticsearch.discovery.ec2: "TRACE"
+```
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+#### Complete Configuration
+
+`/etc/elasticsearch/elasticsearch.yml`
+
+```yaml
+cluster.name: production
+cluster.initial_master_nodes: [private_ip_of_instance_in_us_east_1b,private_ip_of_instance_in_us_east_1c]
+bootstrap.memory_lock: true
+network.host: [_local_,_site_]
+discovery.seed_providers: ec2
+discovery.ec2.endpoint: ec2.us-east-1.amazonaws.com
+dicovery.ec2.tag.cluster_name: production
+cloud.node.auto_attributes: true
+cluster.routing.allocation.awareness.attributes: aws_availability_zone
+logger.org.elasticsearch.discovery.ec2: "TRACE"
+```
+
+#### Start Elasticsearch service to apply configuration updates
+
+Now, we have wired up both our instances running in different AZ, it's time to apply these configuration updates so that these nodes discover each other and form a cluster.
+
+Let's stop any running Elasticsearch service in both the nodes.
+
+```bash
+$ systemctl stop elasticsearch.service
+```
+
+Start Elasticsearch service in both the nodes now.
+
+```bash
+$ systemctl start elasticsearch.service
+```
+
+Check the logs available at `/var/log/elasticsearch/production.log`
+
+```text
+[2020-04-05T21:43:33,718][INFO ][o.e.d.DiscoveryModule    ] [ip-.ec2.internal] using discovery type [zen] and seed hosts providers [settings, ec2]
+[2020-04-05T21:43:34,795][INFO ][o.e.n.Node               ] [ip-.ec2.internal] starting ...
+[2020-04-05T21:43:36,252][TRACE][o.e.d.e.AwsEc2SeedHostsProvider] [ip-.ec2.internal] finding seed nodes...
+[2020-04-05T21:43:36,253][TRACE][o.e.d.e.AwsEc2SeedHostsProvider] [ip-.ec2.internal] adding i-0d1a09e8a, address 10., transport_address 10.:9300
+[2020-04-05T21:43:36,253][TRACE][o.e.d.e.AwsEc2SeedHostsProvider] [ip-.ec2.internal] adding i-0d3fab50, address 10., transport_address 10.:9300
+[2020-04-05T21:43:36,929][INFO ][o.e.c.s.ClusterApplierService] [ip-10-246-39-210.ec2.internal] master node changed
+```
+
+You can see from the logs that the EC2 discovery plugin added the seed nodes and then the master got elected.
+
+Let's check if the nodes have formed a cluster. In any of the instance run below query.
+
+```bash
+$ curl -X GET "localhost:9200/_cat/nodes?v"
+```
+
+If you see both the nodes listed then it means that they have successfully formed a cluster.
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+##### Errors
+
+###### CoordinationStateRejectedException
+
+```text
+[2020-04-05T21:36:22,064][INFO ][o.e.c.c.JoinHelper       ] [ip-10-.ec2.internal] failed to join {ip-10-.ec2.internal}{_CIOVqs5QxKWsL2WCa0bMw}{C0a2vr-2S9y3OzpgzeQZQQ}{10.}{10.:9300}{dilm}{ml.machine_memory=4073398272, ml.max_open_jobs=20, xpack.installed=true} with JoinRequest{sourceNode={ip-10-.ec2.internal}{CI7cx9q_SZmJ8hDOroyilw}{Gg98j6PbROS6YoolW46QSg}{10.}{10.:9300}{dil}{ml.machine_memory=4073398272, xpack.installed=true, ml.max_open_jobs=20}, optionalJoin=Optional.empty}
+org.elasticsearch.transport.RemoteTransportException: [ip-10-.ec2.internal][10.:9300][internal:cluster/coordination/join]
+Caused by: java.lang.IllegalStateException: failure when sending a validation request to node
+
+Caused by: org.elasticsearch.transport.RemoteTransportException: [ip-10-.ec2.internal][10.:9300][internal:cluster/coordination/join/validate]
+Caused by: org.elasticsearch.cluster.coordination.CoordinationStateRejectedException: join validation on cluster state with a different cluster uuid hyxP4qbPQHKOIJcWv63R3Q than local cluster uuid AdEdSP1vTHaveITCW0V3gg, rejecting
+```
+
+If you see above errors in your logs, it means that each of the nodes have formed a cluster of their own and so, Elasticsearch prevents them from merging into a single cluster.
+
+To overcome this error, in any one of the nodes, find the `data` path from `/etc/elasticsearch/elasticsearch.yml`.
+
+```yml
+path.data: /var/lib/elasticsearch
+```
+
+Delete the nodes directory and then restart the Elasticsearch service again. This time it will determine that a master is already available and will join the existing cluster.
+
+```yml
+$ rm -rf /var/lib/elasticsearch/nodes/
+$ systemctl restart elasticsearch.service
 ```
 
 {% include donate.html %}
