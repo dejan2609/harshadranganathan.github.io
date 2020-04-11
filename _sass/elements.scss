@@ -479,3 +479,14 @@ hr {
   border-top: 1px solid #aaaaaa;
   border-bottom: 1px solid #ffffff;
 }
+
+.column {
+  float: left;
+  padding: 5px;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}

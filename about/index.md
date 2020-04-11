@@ -14,12 +14,6 @@ Current Work Location: Dublin, Ireland
 
 VISA Status: Stamp 4
 
-<center>
-    <div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="light" data-vanity="harshadranganathan">
-        <a class="LI-simple-link" href='https://ie.linkedin.com/in/harshadranganathan?trk=profile-badge'>Harshad Ranganathan</a>
-    </div>
-</center>
-
 ## Resume Skills
 
 <div class="box-container">
@@ -107,7 +101,32 @@ VISA Status: Stamp 4
             </div>
         </li>
     </ul>
-</div>
+</div><br/>
+
+## Certifications
+
+<div class="row">
+  <div class="column">
+    <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2017-04-20&ci=AWS00263793">
+        <img src="{{ site.url }}/assets/img/aws-certified-developer-associate.png" style="height:100px;width:100px;">
+    </a>
+  </div>
+  <div class="column">
+    <a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2017-09-20&ci=AWS00263793">
+        <img src="{{ site.url }}/assets/img/aws-certified-solutions-architect.png" style="height:100px;width:100px;">
+    </a>
+  </div>
+  <div class="column">
+    <a href="https://www.credential.net/8f0a6fff-0a31-490d-bcd8-5998d02d3a4e">
+        <img src="{{ site.url }}/assets/img/google-cloud-certified-associate-cloud-engineer.png" style="height:100px;width:100px;">
+    </a>
+  </div>
+  <div class="column">
+    <a href="https://www.youracclaim.com/badges/d5d4b3cb-d2b1-492c-8f29-77741b96a5c9/public_url">
+        <img src="{{ site.url }}/assets/img/ibm-cloud-platform-application-developer-v1.png" style="height:100px;width:100px;">
+    </a>
+  </div>
+</div><br/>
 
 ## Work Experience
 
