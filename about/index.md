@@ -20,63 +20,94 @@ VISA Status: Stamp 4
     </div>
 </center>
 
-## Skills
+## Resume Skills
 
-Programming Languages: 
-<span class="entry-meta">
-    <a class="tag"><span class="term">Java</span></a>
-    <a class="tag"><span class="term">Python</span></a>
-    <a class="tag"><span class="term">Scala</span></a>
-</span>
-
-Java Frameworks:
-<span class="entry-meta">  
-    <a class="tag"><span class="term">Spring</span></a>
-    <a class="tag"><span class="term">Spring Batch</span></a>
-    <a class="tag"><span class="term">Spring Integration</span></a>
-    <a class="tag"><span class="term">Apache Camel</span></a>
-</span>
-
-Container Platforms & Orchestration:
-<span class="entry-meta">  
-    <a class="tag"><span class="term">Docker</span></a>
-    <a class="tag"><span class="term">Kubernetes</span></a>
-</span>
-
-Big Data:
-<span class="entry-meta">  
-    <a class="tag"><span class="term">Spark</span></a>
-    <a class="tag"><span class="term">Cascading</span></a>
-</span>
-
-Cloud Platforms:
-<span class="entry-meta"> 
-    <a class="tag"><span class="term">AWS</span></a>
-    <a class="tag"><span class="term">Google Cloud</span></a>
-    <a class="tag"><span class="term">IBM Cloud</span></a>
-</span>
-
-Javascript Runtime & Frameworks:
-<span class="entry-meta">
-    <a class="tag"><span class="term">Node.js</span></a>
-    <a class="tag"><span class="term">React</span></a>
-</span>
-
-Blockchain:
-<span class="entry-meta">
-    <a class="tag"><span class="term">Ethereum Smart Contracts</span></a>
-</span>
-
-Databases:
-<span class="entry-meta">  
-    <a class="tag"><span class="term">MongoDB</span></a>
-    <a class="tag"><span class="term">Elasticsearch</span></a>
-</span>
-
-RPA:
-<span class="entry-meta">  
-    <a class="tag"><span class="term">UiPath</span></a>
-</span>
+<div class="box-container">
+    <ul>
+        <li>
+            <div class="bottom">PROGRAMMING LANGUAGES</div>
+            <div class="skills">
+                <div class="left">
+                    <span>Java</span>
+                </div>
+                <div class="right">
+                    <span class="label proficient">PROFICIENT</span>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="left">
+                    <span>Python</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="left">
+                    <span>Scala</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">JAVA FRAMEWORKS</div>
+            <div class="skills">
+                <div class="left">
+                    <span>Spring</span>
+                </div>
+                <div class="right">
+                    <span class="label proficient">PROFICIENT</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">BIG DATA</div>
+            <div class="skills">
+                <div class="left">
+                    <span>Spark</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">CLOUD</div>
+            <div class="skills">
+                <div class="left">
+                    <span>AWS</span>
+                </div>
+                <div class="right">
+                    <span class="label proficient">PROFICIENT</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">DATABASES</div>
+            <div class="skills">
+                <div class="left">
+                    <span>Elasticsearch</span>
+                </div>
+                <div class="right">
+                    <span class="label proficient">PROFICIENT</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">CONTAINERS</div>
+            <div class="skills">
+                <div class="left">
+                    <span>Docker</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
 
 ## Work Experience
 
@@ -188,3 +219,164 @@ Task Manager application built on a client-server model using MEAN (MongoDB, Exp
     <a class="tag"><span class="term">JWT</span></a>
     <a class="tag"><span class="term">MongoDB</span></a>
 </span>
+
+## Other Skills
+
+<div class="box-container">
+    <ul>
+        <li>
+            <div class="bottom">PROGRAMMING LANGUAGES</div>
+            <div class="skills">
+                <div>
+                    <span>Go</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">JAVA FRAMEWORKS</div>
+            <div class="skills">
+                <div>
+                    <span>Spring Batch, Integration & MVC</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Hibernate</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Apache Camel</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">BIG DATA</div>
+            <div class="skills">
+                <div>
+                    <span>Hadoop EcoSystem</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Cascading</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">CLOUD</div>
+            <div class="skills">
+                <div>
+                    <span>Google</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>IBM</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">DATABASES</div>
+            <div class="skills">
+                <div>
+                    <span>MySQL</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>MongoDB</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>HBase</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">JAVASCRIPT FRAMEWORKS</div>
+            <div class="skills">
+                <div>
+                    <span>React</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>AngularJS</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Node.js</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">MOBILE APPS</div>
+            <div class="skills">
+                <div>
+                    <span>Flutter</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Android</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">ORCHESTRATION</div>
+            <div class="skills">
+                <div>
+                    <span>Kubernetes</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">STREAM PROCESSING</div>
+            <div class="skills">
+                <div>
+                    <span>Kafka</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Flink</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">BLOCKCHAIN</div>
+            <div class="skills">
+                <div>
+                    <span>Ethereum</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Hyperledger</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">RPA</div>
+            <div class="skills">
+                <div>
+                    <span>UiPath</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
