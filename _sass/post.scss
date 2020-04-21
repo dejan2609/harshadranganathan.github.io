@@ -1,0 +1,17 @@
+.terminal{
+  padding: 10px;
+  background-color: black;
+  color: white;
+  .commentLine{
+    // color: black;
+  }
+  .cpyCode{
+    width: 80%;
+    overflow: auto;
+    background: black;
+    color: white;
+    border: none;
+    outline: none;
+    margin-left: 10px;
+  }
+}

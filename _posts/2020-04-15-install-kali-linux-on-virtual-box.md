@@ -88,10 +88,16 @@ Password: kali
 
 Run below command in Kali Linux terminal to install package updates.
 
-```terminal
-# retrieve current package indexes and upgrade all packages to the latest version
+<div class="terminals" >
+	<span class="CopyIcon" onclick="copyCode(e)"><i class="fa far fa-clipboard" aria-hidden="false"></i></span>
+	<div class="commentLine"># retrieve current package indexes and upgrade all packages to the latest version</div>
+	<div>kali@kali:~$ <input type="text" value='sudo sh -c "apt-get update; apt-get -y full-upgrade"' class="cpyCode"></div>
+</div>
+
+<div class="terminal">
+# retrieve current package indexes and upgrade all packages to the latest version.
 kali@kali:~$ sudo sh -c "apt-get update; apt-get -y full-upgrade"
-```
+</div>
 
 You might get couple of errors during the upgrade process. If any, follow these steps in a repeated fashion to fix them. It might take couple of tries to fix everything.
 
