@@ -1,35 +1,35 @@
 ---
 layout: post
-title:  "Install Kali Linux on VirtualBox"
-date:   2020-04-15
+title: "Install Kali Linux on VirtualBox"
+date: 2020-04-15
 excerpt: "Step by Step Guide to install Kali Linux on VirtualBox for Windows users"
 tag:
-- how to install kali linux on virtualbox windows 10
-- kali linux virtualbox download
-- kali linux virtualbox image
-- how to install kali linux on windows 10
-- kali linux for windows 10
-- kali linux not working in virtualbox
-- kali linux virtualbox
-- kali linux download for windows 10
-- how to install kali linux
-- installing kali linux on virtualbox
-- install kali linux virtualbox guest additions
-- how to download and install kali linux on virtualbox
-- how to install kali linux on virtualbox
-- install kali linux on virtualbox step by step
-- install kali linux 64 bit on virtualbox
-- how to install kali linux on virtualbox step by step
-- how to install kali linux on virtualbox windows 10 64 bit
-- i can't install kali linux on virtualbox
-- can't install kali linux on virtualbox
-- cannot install kali linux on virtualbox
-- not able to install kali linux on virtualbox
-- unable to install kali linux on virtualbox
-- error while installing kali linux on virtualbox
-- problems installing kali linux on virtualbox
-- install kali linux iso on virtualbox
-- how to install kali linux ova file on virtualbox
+    - how to install kali linux on virtualbox windows 10
+    - kali linux virtualbox download
+    - kali linux virtualbox image
+    - how to install kali linux on windows 10
+    - kali linux for windows 10
+    - kali linux not working in virtualbox
+    - kali linux virtualbox
+    - kali linux download for windows 10
+    - how to install kali linux
+    - installing kali linux on virtualbox
+    - install kali linux virtualbox guest additions
+    - how to download and install kali linux on virtualbox
+    - how to install kali linux on virtualbox
+    - install kali linux on virtualbox step by step
+    - install kali linux 64 bit on virtualbox
+    - how to install kali linux on virtualbox step by step
+    - how to install kali linux on virtualbox windows 10 64 bit
+    - i can't install kali linux on virtualbox
+    - can't install kali linux on virtualbox
+    - cannot install kali linux on virtualbox
+    - not able to install kali linux on virtualbox
+    - unable to install kali linux on virtualbox
+    - error while installing kali linux on virtualbox
+    - problems installing kali linux on virtualbox
+    - install kali linux iso on virtualbox
+    - how to install kali linux ova file on virtualbox
 comments: true
 ---
 
@@ -58,9 +58,9 @@ VirtualBox will import the OVF to create VDI disk image.
 If you start your VM you might get this error:
 
 ```text
-Implementation of the USB 2.0 controller not found! 
-Because the USB 2.0 controller state is part of the saved VM state, 
-the VM cannot be started. 
+Implementation of the USB 2.0 controller not found!
+Because the USB 2.0 controller state is part of the saved VM state,
+the VM cannot be started.
 To fix this problem, either install the 'Oracle VM VirtualBox Extension Pack' or disable USB 2.0 support in the VM settings
 ```
 
@@ -88,16 +88,10 @@ Password: kali
 
 Run below command in Kali Linux terminal to install package updates.
 
-<div class="terminals" >
-	<span class="CopyIcon" onclick="copyCode(e)"><i class="fa far fa-clipboard" aria-hidden="false"></i></span>
-	<div class="commentLine"># retrieve current package indexes and upgrade all packages to the latest version</div>
-	<div>kali@kali:~$ <input type="text" value='sudo sh -c "apt-get update; apt-get -y full-upgrade"' class="cpyCode"></div>
-</div>
-
-<div class="terminal">
-# retrieve current package indexes and upgrade all packages to the latest version.
+```terminal
+# retrieve current package indexes and upgrade all packages to the latest version
 kali@kali:~$ sudo sh -c "apt-get update; apt-get -y full-upgrade"
-</div>
+```
 
 You might get couple of errors during the upgrade process. If any, follow these steps in a repeated fashion to fix them. It might take couple of tries to fix everything.
 
@@ -238,7 +232,7 @@ Run below commands in the terminal which will install the guest additions.
 
 ```shell
 kali@kali:/media/cdrom0$ sudo sh ./VBoxLinuxAdditions.run
-[sudo] password for kali: 
+[sudo] password for kali:
 Verifying archive integrity... All good.
 Uncompressing VirtualBox 6.1.4 Guest Additions for Linux........
 VirtualBox Guest Additions installer
@@ -327,7 +321,6 @@ kali@kali:~$ proxychains firefox-esr www.whatismyip.com
 {% include advertisement.html %}
 
 ## Scan System for Rootkits
-
 
 ```bash
 kali@kali:~$ sudo chkrootkit
