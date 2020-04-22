@@ -334,21 +334,19 @@ Experienced Associate with a demonstrated history of working in the information 
 
 ## Courses
 
--   Blockchain for Business - An Introduction to Hyperledger Technologies (LinuxFoundation)
-
--   [Docker and Kubernetes](https://www.udemy.com/certificate/UC-NJQWGV9V/) (Udemy)
-
--   [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/certificate/UC-W4WP78DU/) (Udemy)
-
--   [Learn Apache Kafka for Beginners](https://www.udemy.com/certificate/UC-bb8d94d9-4857-4cd6-863e-931211135a5e/) (Udemy)
-
--   [MongoDB for Java Developers](http://university.mongodb.com/course_completion/5c0a67f749254651a90636c7e8aef62b) (MongoDB University)
-
--   [Introduction to Big Data with Apache Spark](https://s3.amazonaws.com/verify.edx.org/downloads/352d49a6c6b34cd59f35e5a91a9d1dc3/Certificate.pdf) (edX) (July 2015)
-
--   [Introduction to MongoDB using the MEAN Stack](https://courses.edx.org/certificates/55e2103a26e342ca9e227a9977cb13ef) (edX)
-
--   [Scalable Machine Learning](https://s3.amazonaws.com/verify.edx.org/downloads/7611d1d22ecd4b2db1fe8d17397d8b85/Certificate.pdf) (edX)
+| Course | Issued by |Issued on  | |
+|--|--|--|--|
+|Lightbend Akka for Scala Professional - Level 1|Lightbend|Apr 2020|[Certificate](https://www.youracclaim.com/badges/656f442f-990c-4fdd-93f2-0d73b81b8b4b)|
+|Learn Apache Kafka for Beginners|Udemy|Mar 2020|[Certificate](https://www.udemy.com/certificate/UC-bb8d94d9-4857-4cd6-863e-931211135a5e/)|
+|Ethereum and Solidity: The Complete Developer's Guide|Udemy|May 2019|[Certificate](https://www.udemy.com/certificate/UC-W4WP78DU/) |
+|Docker and Kubernetes|Udemy|Dec 2018|[Certificate](https://www.udemy.com/certificate/UC-NJQWGV9V/)|
+|Blockchain for Business - An Introduction to Hyperledger Technologies|LinuxFoundation|Oct 2018||
+|Bitcoin and Cryptocurrencies|edX|Aug 2018| |
+|Scalable Machine Learning|edX|Aug 2015|[Certificate](https://s3.amazonaws.com/verify.edx.org/downloads/7611d1d22ecd4b2db1fe8d17397d8b85/Certificate.pdf)|
+|Introduction to Big Data with Apache Spark|edX|Jul 2015|[Certificate](https://s3.amazonaws.com/verify.edx.org/downloads/352d49a6c6b34cd59f35e5a91a9d1dc3/Certificate.pdf)|
+|MongoDB for Java Developers|MongoDB|Jul 2015|[Certificate](http://university.mongodb.com/course_completion/5c0a67f749254651a90636c7e8aef62b)|
+|Introduction to MongoDB using the MEAN Stack|edX| | |
+{:.table-striped}
 
 <br/>
 
