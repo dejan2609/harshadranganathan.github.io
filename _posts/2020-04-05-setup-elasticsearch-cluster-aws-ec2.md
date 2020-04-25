@@ -347,7 +347,7 @@ Swapping is very bad for performance, for node stability, and should be avoided 
 
 To disable swapping, uncomment `bootstrap.memory_lock` setting in `/etc/elasticsearch/elasticsearch.yml`.
 
-```text
+```yaml
 bootstrap.memory_lock: true
 ```
 
