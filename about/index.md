@@ -336,6 +336,7 @@ Experienced Associate with a demonstrated history of working in the information 
 
 | Course | Issued by |Issued on  | |
 |--|--|--|--|
+|Complete Guide to Protocol Buffers 3|Udemy|Apr 2020|[Certificate](https://udemy.com/certificate/UC-4b43015f-2163-4167-bd38-99cc66d1eed1/)|
 |Lightbend Akka for Scala Professional - Level 1|Lightbend|Apr 2020|[Certificate](https://www.youracclaim.com/badges/656f442f-990c-4fdd-93f2-0d73b81b8b4b)|
 |Learn Apache Kafka for Beginners|Udemy|Mar 2020|[Certificate](https://www.udemy.com/certificate/UC-bb8d94d9-4857-4cd6-863e-931211135a5e/)|
 |Ethereum and Solidity: The Complete Developer's Guide|Udemy|May 2019|[Certificate](https://www.udemy.com/certificate/UC-W4WP78DU/) |
@@ -377,7 +378,7 @@ Experienced Associate with a demonstrated history of working in the information 
   </div>
   <div class="column">
     <a href="https://www.qwiklabs.com/public_profiles/2730f8e1-4452-4ffd-a2ad-8c96f1b42979">
-        <img src="{{ site.url }}/assets/img/global/qwik-labs.png" align="left" alt="Wallet - Harshad Ranganathan : Accredible : Certificates, Badges and Blockchain." title="Wallet - Harshad Ranganathan : Accredible : Certificates, Badges and Blockchain." style="width: 75px;height:75px;" />
+        <img src="{{ site.url }}/assets/img/global/qwik-labs.png" align="left" alt="Harshad R. | Qwiklabs" title="Harshad R. | Qwiklabs" style="width: 75px;height:75px;" />
     </a>
    </div>
 </div>
