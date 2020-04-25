@@ -336,6 +336,7 @@ Experienced Associate with a demonstrated history of working in the information 
 
 | Course | Issued by |Issued on  | |
 |--|--|--|--|
+| ECE, Observability & Endpoint Security Fundamentals  | Elastic | Apr 2020 | [Certificate](https://training.elastic.co/award/completion/b604eb5c-4937-341e-9ead-9f50f89bb8cd/preview)<br/>[Certificate](https://training.elastic.co/award/completion/c51bf8f8-7926-38cd-9bff-c90d2e4afb26/preview)<br/>[Certificate](https://training.elastic.co/award/completion/6581848f-ef71-323c-8bf4-b6d40120eb04/preview) |
 |Complete Guide to Protocol Buffers 3|Udemy|Apr 2020|[Certificate](https://udemy.com/certificate/UC-4b43015f-2163-4167-bd38-99cc66d1eed1/)|
 |Lightbend Akka for Scala Professional - Level 1|Lightbend|Apr 2020|[Certificate](https://www.youracclaim.com/badges/656f442f-990c-4fdd-93f2-0d73b81b8b4b)|
 |Learn Apache Kafka for Beginners|Udemy|Mar 2020|[Certificate](https://www.udemy.com/certificate/UC-bb8d94d9-4857-4cd6-863e-931211135a5e/)|
