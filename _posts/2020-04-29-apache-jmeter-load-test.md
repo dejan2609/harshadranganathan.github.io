@@ -275,6 +275,10 @@ If you start all of your threads at the same time, you will cause an initial pea
 
 Also, you might get **Non HTTP response code: java.net.SocketException** errors in your tests. So, it's good to enable **Delay Thread creation until needed** option in the ThreadGroup.
 
+### CPU Utilization
+
+Make sure your CPU utilization doesn't exceed more than 80%. If it exceeds, JMeter will end up spending more time processing the responses and it might affect the response time, thereby skewing the results.
+
 ### Use CLI Mode
 
 Once you have the test scripts ready, run the test in CLI mode instead of GUI mode.
