@@ -336,14 +336,16 @@ Experienced Associate with a demonstrated history of working in the information 
 
 | Course | Issued by |Issued on  | |
 |--|--|--|--|
+| Introduction to Redis Data Structures|Redis University |Apr 2020 |[Certificate](https://university.redislabs.com/certificates/eb96dd3189364ef4a124965dba54c09c) |
 | ECE, Observability & Endpoint Security Fundamentals  | Elastic | Apr 2020 | [Certificate](https://training.elastic.co/award/completion/b604eb5c-4937-341e-9ead-9f50f89bb8cd/preview)<br/>[Certificate](https://training.elastic.co/award/completion/c51bf8f8-7926-38cd-9bff-c90d2e4afb26/preview)<br/>[Certificate](https://training.elastic.co/award/completion/6581848f-ef71-323c-8bf4-b6d40120eb04/preview) |
 |Complete Guide to Protocol Buffers 3|Udemy|Apr 2020|[Certificate](https://udemy.com/certificate/UC-4b43015f-2163-4167-bd38-99cc66d1eed1/)|
-|Lightbend Akka for Scala Professional - Level 1|Lightbend|Apr 2020|[Certificate](https://www.youracclaim.com/badges/656f442f-990c-4fdd-93f2-0d73b81b8b4b)|
+|Lightbend Akka for Scala Professional|Lightbend|Apr 2020|[Certificate](https://academy.lightbend.com/certificates/386ead19e2594450a51bc66293bd2313#)|
 |Learn Apache Kafka for Beginners|Udemy|Mar 2020|[Certificate](https://www.udemy.com/certificate/UC-bb8d94d9-4857-4cd6-863e-931211135a5e/)|
 |Ethereum and Solidity: The Complete Developer's Guide|Udemy|May 2019|[Certificate](https://www.udemy.com/certificate/UC-W4WP78DU/) |
 |Docker and Kubernetes|Udemy|Dec 2018|[Certificate](https://www.udemy.com/certificate/UC-NJQWGV9V/)|
 |Blockchain for Business - An Introduction to Hyperledger Technologies|LinuxFoundation|Oct 2018||
 |Bitcoin and Cryptocurrencies|edX|Aug 2018| |
+|RPA Developer Foundation Training |UiPath |May 2018 | |
 |Scalable Machine Learning|edX|Aug 2015|[Certificate](https://s3.amazonaws.com/verify.edx.org/downloads/7611d1d22ecd4b2db1fe8d17397d8b85/Certificate.pdf)|
 |Introduction to Big Data with Apache Spark|edX|Jul 2015|[Certificate](https://s3.amazonaws.com/verify.edx.org/downloads/352d49a6c6b34cd59f35e5a91a9d1dc3/Certificate.pdf)|
 |MongoDB for Java Developers|MongoDB|Jul 2015|[Certificate](http://university.mongodb.com/course_completion/5c0a67f749254651a90636c7e8aef62b)|
