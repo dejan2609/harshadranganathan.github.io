@@ -336,6 +336,7 @@ Experienced Associate with a demonstrated history of working in the information 
 
 | Course | Issued by |Issued on  | |
 |--|--|--|--|
+|Lightbend Scala Language - Professional | Lightbend | May 2020 |[Certificate](https://academy.lightbend.com/certificates/e47bef0e0a6c4972b453e4f58f55b0c5) |
 |Redis for Java Developers|Redis University|May 2020|[Certificate](https://university.redislabs.com/certificates/367f6e403d63467f832d20e412d20dc8)|
 | Kibana Fundamentals | Elastic | May 2020 |[Certificate](https://training.elastic.co/award/completion/32b2171d-30c7-308b-abdb-7772e433cc9b/preview) |
 | Introduction to Redis Data Structures|Redis University |Apr 2020 |[Certificate](https://university.redislabs.com/certificates/eb96dd3189364ef4a124965dba54c09c) |
@@ -466,6 +467,12 @@ Experienced Associate with a demonstrated history of working in the information 
             <div class="skills">
                 <div>
                     <span>HBase</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Redis</span>
                 </div>
             </div>
         </li>
