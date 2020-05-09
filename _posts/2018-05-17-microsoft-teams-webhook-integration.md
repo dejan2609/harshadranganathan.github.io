@@ -25,7 +25,13 @@ You can even add actions to the content so that users can complete tasks within 
 In Microsoft Teams, choose the `More options (⋯)` button next to the channel name in the list of channels and then choose Connectors.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2018/05/webhook-connector.png"><img src="{{ site.url }}/assets/img/2018/05/webhook-connector.png"></a>
+    <a href="{{ site.url }}/assets/img/2018/05/webhook-connector.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2018/05/webhook-connector.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2018/05/webhook-connector.png">
+            <img src="{{ site.url }}/assets/img/2018/05/webhook-connector.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Add `Incoming webhook` connector to the channel.
@@ -33,7 +39,13 @@ Add `Incoming webhook` connector to the channel.
 Now choose `configure` button next to the `Incoming Webhook` connector.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2018/05/incoming-webhook.png"><img src="{{ site.url }}/assets/img/2018/05/incoming-webhook.png"></a>
+    <a href="{{ site.url }}/assets/img/2018/05/incoming-webhook.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2018/05/incoming-webhook.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2018/05/incoming-webhook.png">
+            <img src="{{ site.url }}/assets/img/2018/05/incoming-webhook.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Provide a name and upload an image for the connector. Now select `Create` button.
@@ -59,7 +71,13 @@ Send this JSON payload as a POST request to the Webhook URL.
 You can either use `Send via WebHook` option available in the [Card Playground](https://messagecardplayground.azurewebsites.net/) (or) [Postman](https://docs.microsoft.com/en-us/outlook/actionable-messages/actionable-messages-via-connectors#send-the-message) to send the message to the webhook.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2018/05/webhook-message.png"><img src="{{ site.url }}/assets/img/2018/05/webhook-message.png"></a>
+    <a href="{{ site.url }}/assets/img2018/05/webhook-message.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2018/05/webhook-message.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2018/05/webhook-message.png">
+            <img src="{{ site.url }}/assets/img/2018/05/webhook-message.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 There is a python library which you can make use of for building the messages dynamically.

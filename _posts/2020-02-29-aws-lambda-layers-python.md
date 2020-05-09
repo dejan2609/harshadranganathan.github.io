@@ -93,13 +93,25 @@ When you run this bash script, it will perform below actions inside the `target/
 Finally, it will generate zip package with all these files inside `target` folder.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2020/02/lambda-layers-target-folder-contents.png"><img src="{{ site.url }}/assets/img/2020/02/lambda-layers-target-folder-contents.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/02/lambda-layers-target-folder-contents.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/02/lambda-layers-target-folder-contents.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/02/lambda-layers-target-folder-contents.png">
+            <img src="{{ site.url }}/assets/img/2020/02/lambda-layers-target-folder-contents.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Important thing to note here is that the source files and dependencies are placed inside `python` folder in the zip package. This ensures that your function code will have access to the library included as a layer.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2020/02/lambda-layers-package-contents.png"><img src="{{ site.url }}/assets/img/2020/02/lambda-layers-package-contents.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/02/lambda-layers-package-contents.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/02/lambda-layers-package-contents.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/02/lambda-layers-package-contents.png">
+            <img src="{{ site.url }}/assets/img/2020/02/lambda-layers-package-contents.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -134,7 +146,13 @@ echo $(aws lambda publish-layer-version --layer-name "aws-emr-launcher" \
 You can see the published lambda layer in the AWS console.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/02/published-lambda-layers.png"><img src="{{ site.url }}/assets/img/2020/02/published-lambda-layers.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/02/published-lambda-layers.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/02/published-lambda-layers.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/02/published-lambda-layers.png">
+            <img src="{{ site.url }}/assets/img/2020/02/published-lambda-layers.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -164,7 +182,13 @@ Lambda runtimes include paths in the `/opt` directory to ensure that your functi
 Let's list the contents of dir `/opt/python` (earlier we had copied our library into python folder when we packaged it). You can see that our library source files and dependencies are available at runtime for our function code.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/02/lambda-runtime-directory-output.png"><img src="{{ site.url }}/assets/img/2020/02/lambda-runtime-directory-output.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/02/lambda-runtime-directory-output.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/02/lambda-runtime-directory-output.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/02/lambda-runtime-directory-output.png">
+            <img src="{{ site.url }}/assets/img/2020/02/lambda-runtime-directory-output.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## Limits

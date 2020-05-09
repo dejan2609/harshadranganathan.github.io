@@ -25,11 +25,23 @@ Website auto-refreshes every minute and displays the slots as they are available
 <a href="https://gnib-visa-app.rharshad.com/" class="btn btn-info" target="_blank">View Appointments</a>
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/01/gnib-visa-app.png"><img src="{{ site.url }}/assets/img/2019/01/gnib-visa-app.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/01/gnib-visa-app.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/01/gnib-visa-app.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/01/gnib-visa-app.png">
+            <img src="{{ site.url }}/assets/img/2019/01/gnib-visa-app.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/02/gnib-visa-app-notifications.png"><img src="{{ site.url }}/assets/img/2019/02/gnib-visa-app-notifications.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/02/gnib-visa-app-notifications.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/02/gnib-visa-app-notifications.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/02/gnib-visa-app-notifications.png">
+            <img src="{{ site.url }}/assets/img/2019/02/gnib-visa-app-notifications.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## Guidelines for booking IRP Appointments:

@@ -42,8 +42,15 @@ Below browsers support Push & Notification API:
 Let's see what's involved in setting up a push notification service for a site.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/03/push-notification-flow.png"><img src="{{ site.url }}/assets/img/2019/03/push-notification-flow.png"></a> 
-</figure><br/>
+    <a href="{{ site.url }}/assets/img/2019/03/push-notification-flow.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/03/push-notification-flow.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/03/push-notification-flow.png">
+            <img src="{{ site.url }}/assets/img/2019/03/push-notification-flow.png" alt="">
+        </picture>
+    </a>
+</figure>
+<br/>
 
 ### Service Worker
 
@@ -114,13 +121,25 @@ Source code of the application can be found here -
 Below is how our application will work. We won't go into the details of how to build and deploy a react app as it is outside the scope of this guide.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/03/push-notification-how-it-works.png"><img src="{{ site.url }}/assets/img/2019/03/push-notification-how-it-works.png"></a> 
+    <a href="{{ site.url }}/assets/img/2019/03/push-notification-how-it-works.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/03/push-notification-how-it-works.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/03/push-notification-how-it-works.png">
+            <img src="{{ site.url }}/assets/img/2019/03/push-notification-how-it-works.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Sample notification page:
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/03/sample-push-notification-page.png"><img src="{{ site.url }}/assets/img/2019/03/sample-push-notification-page.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/03/sample-push-notification-page.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/03/sample-push-notification-page.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/03/sample-push-notification-page.png">
+            <img src="{{ site.url }}/assets/img/22019/03/sample-push-notification-page.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -140,7 +159,13 @@ To add Firebase to your app, you'll need a Firebase project.
 - Get your app config which we will use to initialize firebase in your react app.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/03/firebase-app-config.png"><img src="{{ site.url }}/assets/img/2019/03/firebase-app-config.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/03/firebase-app-config.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/03/firebase-app-config.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/03/firebase-app-config.png">
+            <img src="{{ site.url }}/assets/img/2019/03/firebase-app-config.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 - Install firebase npm module.
@@ -286,7 +311,13 @@ if ('serviceWorker' in navigator) {
 {% endhighlight %}
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/03/service-worker.png"><img src="{{ site.url }}/assets/img/2019/03/service-worker.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/03/service-worker.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/03/service-worker.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/03/service-worker.png">
+            <img src="{{ site.url }}/assets/img/2019/03/service-worker.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Few points:
@@ -681,7 +712,13 @@ Refer:
 We had looked so far on how to subscribe a user to receive push notifications. We will now look at storing the registration tokens in firestore and sending notification messages using firebase SDK.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/03/registration-tokens-firestore.png"><img src="{{ site.url }}/assets/img/2019/03/registration-tokens-firestore.png"></a> 
+    <a href="{{ site.url }}/assets/img/2019/03/registration-tokens-firestore.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/03/registration-tokens-firestore.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/03/registration-tokens-firestore.png">
+            <img src="{{ site.url }}/assets/img/2019/03/registration-tokens-firestore.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Firestore
@@ -695,7 +732,13 @@ It keeps your data in sync across client apps through realtime listeners and off
 Create a new firestore database in test mode inside your firebase project.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/03/firestore-new-database.png"><img src="{{ site.url }}/assets/img/2019/03/firestore-new-database.png"></a> 
+    <a href="{{ site.url }}/assets/img/2019/03/firestore-new-database.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/03/firestore-new-database.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/03/firestore-new-database.png">
+            <img src="{{ site.url }}/assets/img/2019/03/firestore-new-database.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 In the `Rules` tab add below rule to allow reads/writes only from your account:

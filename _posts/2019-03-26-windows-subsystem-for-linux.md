@@ -31,7 +31,13 @@ You can also enable it via `Turn Windows features on or off` control panel optio
 2. From the distro's page, select "Get" to install the distribution.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store.png"><img src="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store.png">
+            <img src="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 You might get below error if incase your corporate policies prevent install from Microsoft store.
@@ -39,7 +45,13 @@ You might get below error if incase your corporate policies prevent install from
 In that case, [download](https://docs.microsoft.com/en-us/windows/wsl/install-manual) the distros and manually install them.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store-install-error.png"><img src="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store-install-error.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store-install-error.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store-install-error.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store-install-error.png">
+            <img src="{{ site.url }}/assets/img/2019/03/ubuntu-windows-store-install-error.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Running the .appx file will still fail due to the corporate policy. To overcome the issue follow below steps:

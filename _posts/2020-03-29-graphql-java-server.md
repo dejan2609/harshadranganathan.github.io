@@ -94,7 +94,13 @@ Pros:
 -   Search on multiple databases with a single query -> reduce complexity
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2020/03/graphql-sample-architecture.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-sample-architecture.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/graphql-sample-architecture.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/graphql-sample-architecture.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/graphql-sample-architecture.png">
+            <img src="{{ site.url }}/assets/img/2020/03/graphql-sample-architecture.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -317,7 +323,13 @@ So, far we learnt about the graphql type system and how it's defined. Let's see 
 We will define below schema in SDL for our sample book details application.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/graphql-book-details-schema.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-book-details-schema.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/graphql-book-details-schema.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/graphql-book-details-schema.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/graphql-book-details-schema.png">
+            <img src="{{ site.url }}/assets/img/2020/03/graphql-book-details-schema.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 We define a root schema file which defines our `query` operation:
@@ -476,7 +488,13 @@ We use TypeDefinitionRegistry `merge` method to combine all the schema files. We
 We'll see later what we define inside our `buildWiring` method.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/graphql-creation.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-creation.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/graphql-creation.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/graphql-creation.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/graphql-creation.png">
+            <img src="{{ site.url }}/assets/img/2020/03/graphql-creation.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -701,7 +719,13 @@ dataFetcher("bookStores", graphQLDataFetchers.getBookStores())
 So, GraphQL java will call data fetchers for each of the fields defined in the schema. It will know what data fetcher to call based on the runtime wiring definition. If in case, there is no data fetcher defined for a field it will make use of `PropertyDataFetcher` to resolve Map, List or POJO objects.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/graphql-book-details-data-fetchers.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-book-details-data-fetchers.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/graphql-book-details-data-fetchers.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/graphql-book-details-data-fetchers.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/graphql-book-details-data-fetchers.png">
+            <img src="{{ site.url }}/assets/img/2020/03/graphql-book-details-data-fetchers.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -743,7 +767,13 @@ curl -X POST \
 ### Postman
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/graphql-book-details-postman-query.png"><img src="{{ site.url }}/assets/img/2020/03/graphql-book-details-postman-query.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/graphql-book-details-postman-query.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/graphql-book-details-postman-query.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/graphql-book-details-postman-query.png">
+            <img src="{{ site.url }}/assets/img/2020/03/graphql-book-details-postman-query.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 In [postman](https://www.postman.com/downloads/), you have to give the query and variables in separate windows.

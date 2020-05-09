@@ -160,7 +160,13 @@ encrypt = true
 Now, create the dynamo db table with primary key as `LockID`.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/12/dynamodb-locks-table.png"><img src="{{ site.url }}/assets/img/2019/12/dynamodb-locks-table.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/12/dynamodb-locks-table.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/12/dynamodb-locks-table.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/12/dynamodb-locks-table.png">
+            <img src="{{ site.url }}/assets/img/2019/12/dynamodb-locks-table.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -502,7 +508,13 @@ Modules in Terraform are self-contained packages of Terraform configurations tha
 You can have your module defined in it's own git repo. At a basic level, it will have below files.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/12/terraform-module-structure.png"><img src="{{ site.url }}/assets/img/2019/12/terraform-module-structure.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/12/terraform-module-structure.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/12/terraform-module-structure.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/12/terraform-module-structure.png">
+            <img src="{{ site.url }}/assets/img/2019/12/terraform-module-structure.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 <!-- prettier-ignore-start -->

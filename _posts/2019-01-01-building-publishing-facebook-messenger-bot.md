@@ -295,7 +295,13 @@ module.exports = {
 Messenger Quick Replies Sample:
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/01/messenger-quick-replies.png"><img src="{{ site.url }}/assets/img/2019/01/messenger-quick-replies.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/01/messenger-quick-replies.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/01/messenger-quick-replies.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/01/messenger-quick-replies.png">
+            <img src="{{ site.url }}/assets/img/2019/01/messenger-quick-replies.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 For example, to make use of `quickRepliesTemplate`, import the templates script and pass in the reply options referring the template documentation:
@@ -348,7 +354,13 @@ A Facebook Page will be used as the identity of your bot. When people chat with 
 For our bot, we are going to create a business page with category as `Internet Company`.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/01/create-fb-page.png"><img src="{{ site.url }}/assets/img/2019/01/create-fb-page.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/01/create-fb-page.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/01/create-fb-page.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/01/create-fb-page.png">
+            <img src="{{ site.url }}/assets/img/2019/01/create-fb-page.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 You can then choose a profile picture and cover page.
@@ -367,7 +379,13 @@ We will be integrating your webhook URL with messenger platform soon. In order f
 Add your domain in the `Whitelisted Domains` section under `Messenger Platform` settings.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/01/messaging-platform-features.png"><img src="{{ site.url }}/assets/img/2019/01/messaging-platform-features.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/01/messaging-platform-features.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/01/messaging-platform-features.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/01/messaging-platform-features.png">
+            <img src="{{ site.url }}/assets/img/2019/01/messaging-platform-features.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 If your bot needs the ability to send regular content to a person on Messenger you need to raise `Subscription Messaging` permission at a page level. 
@@ -399,7 +417,13 @@ Under `Development Mode` only users who have been granted Administrator, Develop
 3. Click the 'Set Up' button.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/01/messenger-product-fb-app.png"><img src="{{ site.url }}/assets/img/2019/01/messenger-product-fb-app.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/01/messenger-product-fb-app.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/01/messenger-product-fb-app.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/01/messenger-product-fb-app.png">
+            <img src="{{ site.url }}/assets/img/2019/01/messenger-product-fb-app.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Setup Webhook
@@ -415,7 +439,13 @@ The Messenger Platform will send a GET request to your webhook with the verify t
 Also, in the subscription field choose `messages` and save the webhook config.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/01/setup-webhook.png"><img src="{{ site.url }}/assets/img/2019/01/setup-webhook.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/01/setup-webhook.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/01/setup-webhook.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/01/setup-webhook.png">
+            <img src="{{ site.url }}/assets/img/2019/01/setup-webhook.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Subscribe your Facebook Page
@@ -425,7 +455,13 @@ In the 'Webhook' section of the Messenger settings console, click the 'Select a 
 This will subscribe your app to receive events when people on Messenger chat with your page and forward them to your webhook.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/01/webhooks-section.png"><img src="{{ site.url }}/assets/img/2019/01/webhooks-section.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/01/webhooks-section.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/01/webhooks-section.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/01/webhooks-section.png">
+            <img src="{{ site.url }}/assets/img/2019/01/webhooks-section.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Generate Page Access Token
@@ -474,7 +510,13 @@ You can generate a privacy policy using [this bot](https://www.messenger.com/t/p
 Request the pages_messaging permissions under App review section in messenger settings, which allows your bot to send messages in live mode.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/01/app-review-messenger.png"><img src="{{ site.url }}/assets/img/2019/01/app-review-messenger.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/01/app-review-messenger.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/01/app-review-messenger.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/01/app-review-messenger.png">
+            <img src="{{ site.url }}/assets/img/2019/01/app-review-messenger.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Submit your bot for review once you have chosen all the required permissions.
@@ -484,7 +526,13 @@ Your bot will then be reviewed by messenger test users who will post the command
 If no response is returned within the stipulated time then your app submission will be sent back.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/01/messenger-test-users.png"><img src="{{ site.url }}/assets/img/2019/01/messenger-test-users.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/01/messenger-test-users.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/01/messenger-test-users.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/01/messenger-test-users.png">
+            <img src="{{ site.url }}/assets/img/2019/01/messenger-test-users.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Gotchas:

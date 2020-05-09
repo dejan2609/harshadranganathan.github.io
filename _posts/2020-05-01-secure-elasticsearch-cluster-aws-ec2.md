@@ -50,7 +50,13 @@ This communication by default is not encrypted, so all the data is sent in plain
 Elastic Stack security features enable you to encrypt traffic to, from, and within your Elasticsearch cluster. Connections are secured using Transport Layer Security (TLS/SSL).
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/05/unsecure-es-cluster.png"><img src="{{ site.url }}/assets/img/2020/05/unsecure-es-cluster.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/05/unsecure-es-cluster.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/05/unsecure-es-cluster.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/05/unsecure-es-cluster.png">
+            <img src="{{ site.url }}/assets/img/2020/05/unsecure-es-cluster.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Let's see the steps involved in securing your cluster with TLS to perform encryption and authentication of nodes joining your cluster.
@@ -346,7 +352,13 @@ It will now do a TLS handshake and once successful, it will join other authentic
 Communication between the nodes is now fully encrypted.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/05/secure-es-cluster.png"><img src="{{ site.url }}/assets/img/2020/05/secure-es-cluster.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/05/secure-es-cluster.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/05/secure-es-cluster.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/05/secure-es-cluster.png">
+            <img src="{{ site.url }}/assets/img/2020/05/secure-es-cluster.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## References

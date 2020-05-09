@@ -30,7 +30,13 @@ Intruders exploit every unprotected resource that travels between your websites 
 If you have your website on Github, you can enable HTTPS in the Settings section of your repository.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/07/github-pages-https.png"><img src="{{ site.url }}/assets/img/2019/07/github-pages-https.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/07/github-pages-https.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/07/github-pages-https.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/07/github-pages-https.png">
+            <img src="{{ site.url }}/assets/img/2019/07/github-pages-https.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Let's Encrypt
@@ -65,7 +71,13 @@ All of the above are tools offered by Google and use data from Lighthouse projec
 You can submit your [sitemap.xml](https://en.wikipedia.org/wiki/Sitemaps) to google so that it can be crawled and indexed.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/07/google-search-console-sitemaps.png"><img src="{{ site.url }}/assets/img/2019/07/google-search-console-sitemaps.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/07/google-search-console-sitemaps.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/07/google-search-console-sitemaps.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/07/google-search-console-sitemaps.png">
+            <img src="{{ site.url }}/assets/img/2019/07/google-search-console-sitemaps.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## Analytics
@@ -78,8 +90,14 @@ Inside the console, you need to create new analytics accounts and apps with the 
 
 Once you have it set up, you can track your audience and real time views. You can also set include/exclude filters for your website.
 
-<figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/07/google-analytics-console.png"><img src="{{ site.url }}/assets/img/2019/07/google-analytics-console.png"></a>
+<figure>
+    <a href="{{ site.url }}/assets/img/2019/07/google-analytics-console.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/07/google-analytics-console.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/07/google-analytics-console.png">
+            <img src="{{ site.url }}/assets/img/2019/07/google-analytics-console.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 To enable analytics for your site, add below script to your webpage with the ID of your google analytics property.
@@ -130,7 +148,13 @@ One of the most tangible requirements of the GDPR is in the definition of what c
 There are several sites which offer GDPR compliant consent function for websites.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/07/cookie-consent-banner.png"><img src="{{ site.url }}/assets/img/2019/07/cookie-consent-banner.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/07/cookie-consent-banner.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/07/cookie-consent-banner.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/07/cookie-consent-banner.png">
+            <img src="{{ site.url }}/assets/img/2019/07/cookie-consent-banner.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## Open Graph Tags

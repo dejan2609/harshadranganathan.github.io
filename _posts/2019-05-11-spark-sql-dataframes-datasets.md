@@ -31,7 +31,13 @@ Spark SQL supports the HiveQL syntax as well as Hive SerDes and UDFs, allowing y
 Spark SQL includes a cost-based optimizer, columnar storage and code generation to make queries fast.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/11/spark-sql-overview.png"><img src="{{ site.url }}/assets/img/2019/11/spark-sql-overview.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/11/spark-sql-overview.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/11/spark-sql-overview.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/11/spark-sql-overview.png">
+            <img src="{{ site.url }}/assets/img/2019/11/spark-sql-overview.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## DataFrames
@@ -99,7 +105,13 @@ At the core of Spark SQL is the Catalyst optimizer, which leverages advanced pro
 Catalyst supports both rule-based and cost-based optimization.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/11/catalyst-optmization-phases.png"><img src="{{ site.url }}/assets/img/2019/11/catalyst-optmization-phases.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/11/catalyst-optmization-phases.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/11/catalyst-optmization-phases.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/11/catalyst-optmization-phases.png">
+            <img src="{{ site.url }}/assets/img/2019/11/catalyst-optmization-phases.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 <p style="text-align: center;">
@@ -178,7 +190,12 @@ Columnar layout for memory data avoids unnecessary I/O and accelerates analytica
 Vectorization allows the CPU to operate on vectors, which are arrays of column values from multiple records. This takes advantage of modern CPU designs, by keeping all pipelines full to achieve efficiency.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/11/columnar-memory-layout.png"><img src="{{ site.url }}/assets/img/2019/11/columnar-memory-layout.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/11/columnar-memory-layout.png">
+        <picture>
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/11/columnar-memory-layout.png">
+            <img src="{{ site.url }}/assets/img/2019/11/columnar-memory-layout.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 <p style="text-align: center;">
@@ -202,7 +219,12 @@ The key idea in Structured Streaming is to treat a live data stream as a table t
 For a word count example, when the query is started, Spark will continuously check for new data from the socket connection. If there is new data, Spark will run an “incremental” query that combines the previous running counts with the new data to compute updated counts.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/11/structured-streaming-example-model.png"><img src="{{ site.url }}/assets/img/2019/11/structured-streaming-example-model.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/11/structured-streaming-example-model.png">
+        <picture>
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/11/structured-streaming-example-model.png">
+            <img src="{{ site.url }}/assets/img/2019/11/structured-streaming-example-model.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 <p style="text-align: center;">

@@ -62,7 +62,13 @@ To enable code completion follow below steps:
 You can also generate snippets of code for the pipeline steps using the `Snippet Generator` feature available in Jenkins (http://(yourjenkinsurl)/job/(yourpipelinejob)/pipeline-syntax/) which you can then make use of in your pipeline.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2018/05/jenkins-snippet-generator.png"><img src="{{ site.url }}/assets/img/2018/05/jenkins-snippet-generator.png"></a>
+    <a href="{{ site.url }}/assets/img/2018/05/jenkins-snippet-generator.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2018/05/jenkins-snippet-generator.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2018/05/jenkins-snippet-generator.png">
+            <img src="{{ site.url }}/assets/img/2018/05/jenkins-snippet-generator.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -73,7 +79,13 @@ You can also generate snippets of code for the pipeline steps using the `Snippet
 Replay feature allows you to test your pipeline code without having to commit the changes to your Repo. Once you have tested the code you can then push your changes.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2018/05/jenkins-replay.png"><img src="{{ site.url }}/assets/img/2018/05/jenkins-replay.png"></a>
+    <a href="{{ site.url }}/assets/img/2018/05/jenkins-replay.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2018/05/jenkins-replay.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2018/05/jenkins-replay.png">
+            <img src="{{ site.url }}/assets/img/2018/05/jenkins-replay.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## Jenkins Declarative Pipeline Example

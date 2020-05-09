@@ -122,13 +122,25 @@ When you add data to an existing global table, AWS documentation mentions that t
 **Average replication latency (in ms) for replicating updates from a table in Virginia region to other AWS regions:**
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/02/average-replication-latency.png"><img src="{{ site.url }}/assets/img/2020/02/average-replication-latency.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/02/average-replication-latency.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/02/average-replication-latency.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/02/average-replication-latency.png">
+            <img src="{{ site.url }}/assets/img/2020/02/average-replication-latency.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 **Maximum replication latency (in ms) for replicating updates from a table in Virginia region to other AWS regions:**
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/02/maximum-replication-latency.png"><img src="{{ site.url }}/assets/img/2020/02/maximum-replication-latency.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/02/maximum-replication-latency.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/02/maximum-replication-latency.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/02/maximum-replication-latency.png">
+            <img src="{{ site.url }}/assets/img/2020/02/maximum-replication-latency.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## Using CLI

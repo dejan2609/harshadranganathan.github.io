@@ -278,7 +278,13 @@ You should have the Web UI running at <http://localhost:8089/> which will show t
 You can now give the hostname, number of users and hatch rate to kick start the load test.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2020/04/locust-swarm-configuration.png"><img src="{{ site.url }}/assets/img/2020/04/locust-swarm-configuration.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/locust-swarm-configuration.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/locust-swarm-configuration.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/locust-swarm-configuration.png">
+            <img src="{{ site.url }}/assets/img/2020/04/locust-swarm-configuration.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 If you want to start locust without the Web UI and generate the results in csv output, you can use below command:
@@ -292,11 +298,23 @@ env API_TOKEN=<apiKey> locust --master --csv=results --no-web -c 200 -r 50 --hos
 As your load test run, you can see the metrics reflected in your Web UI.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/locus-dashboard-stats.png"><img src="{{ site.url }}/assets/img/2020/04/locus-dashboard-stats.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/locus-dashboard-stats.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/locus-dashboard-stats.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/locus-dashboard-stats.png">
+            <img src="{{ site.url }}/assets/img/2020/04/locus-dashboard-stats.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/locust-dashboard-rps.png"><img src="{{ site.url }}/assets/img/2020/04/locust-dashboard-rps.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/locust-dashboard-rps.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/locust-dashboard-rps.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/locust-dashboard-rps.png">
+            <img src="{{ site.url }}/assets/img/2020/04/locust-dashboard-rps.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}

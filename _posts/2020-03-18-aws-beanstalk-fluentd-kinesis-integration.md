@@ -62,7 +62,13 @@ This means customers of all sizes and industries can use it to store and protect
 Here we will show how to use fluentd installed in elasticbeanstalk to import tomcat logs to kinesis streams and then subsequently output them to S3 using firehose.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/beanstalk-fluentd-kinesis-integration-flow.png"><img src="{{ site.url }}/assets/img/2020/03/beanstalk-fluentd-kinesis-integration-flow.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/beanstalk-fluentd-kinesis-integration-flow.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/beanstalk-fluentd-kinesis-integration-flow.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/beanstalk-fluentd-kinesis-integration-flow.png">
+            <img src="{{ site.url }}/assets/img/2020/03/beanstalk-fluentd-kinesis-integration-flow.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -77,7 +83,13 @@ Kinesis stream name: **aws-eb-fluentd-kinesis-stream**
 Number of shards: **3** (to have higher throughput)
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/kinesis-stream-creation-wizard.png"><img src="{{ site.url }}/assets/img/2020/03/kinesis-stream-creation-wizard.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/kinesis-stream-creation-wizard.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/kinesis-stream-creation-wizard.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/kinesis-stream-creation-wizard.png">
+            <img src="{{ site.url }}/assets/img/2020/03/kinesis-stream-creation-wizard.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## Fluentd
@@ -176,7 +188,13 @@ java.lang.ArithmeticException: / by zero
 Regex expression will match this multiline log as follows:
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/runtime-error-log-regex-match.png"><img src="{{ site.url }}/assets/img/2020/03/runtime-error-log-regex-match.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/runtime-error-log-regex-match.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/runtime-error-log-regex-match.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/runtime-error-log-regex-match.png">
+            <img src="{{ site.url }}/assets/img/2020/03/runtime-error-log-regex-match.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -393,7 +411,13 @@ Important thing to note here is that the IAM instance profile which you configur
 If in case, you choose to use the default `aws-elasticbeanstalk-ec2-role` it should already have kinesis access.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/aws-eb-fluentd-kinesis-app.png"><img src="{{ site.url }}/assets/img/2020/03/aws-eb-fluentd-kinesis-app.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/aws-eb-fluentd-kinesis-app.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/aws-eb-fluentd-kinesis-app.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/aws-eb-fluentd-kinesis-app.png">
+            <img src="{{ site.url }}/assets/img/2020/03/aws-eb-fluentd-kinesis-app.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Verification
@@ -582,7 +606,13 @@ Destination: Amazon S3 (we choose amazon s3 as our destination source)
 Give an S3 bucket and prefix that's to be used for writing the data files e.g. S3 Bucket - eb-catalina-logs
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/firehose-stream.png"><img src="{{ site.url }}/assets/img/2020/03/firehose-stream.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/firehose-stream.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/firehose-stream.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/firehose-stream.png">
+            <img src="{{ site.url }}/assets/img/2020/03/firehose-stream.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Once you configure, send lot of requests to the beanstalk so that firehose writes the data to S3.
@@ -590,7 +620,13 @@ Once you configure, send lot of requests to the beanstalk so that firehose write
 Note that firehose buffers the records until it reaches 1 MB or 60 seconds conditions.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/03/firehose-s3-data.png"><img src="{{ site.url }}/assets/img/2020/03/firehose-s3-data.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/03/firehose-s3-data.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/03/firehose-s3-data.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/03/firehose-s3-data.png">
+            <img src="{{ site.url }}/assets/img/2020/03/firehose-s3-data.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## Conclusion

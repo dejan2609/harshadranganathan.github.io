@@ -44,13 +44,25 @@ Download `Kali Linux VirtualBox 64-Bit` image from their site <https://www.offen
 Once you have the `OVF (Open Virtualization Format)` file downloaded, import it to your VirtualBox by using the `Import` button.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/import-virtual-appliance-kali-ovf.png"><img src="{{ site.url }}/assets/img/2020/04/import-virtual-appliance-kali-ovf.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/import-virtual-appliance-kali-ovf.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/import-virtual-appliance-kali-ovf.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/import-virtual-appliance-kali-ovf.png">
+            <img src="{{ site.url }}/assets/img/2020/04/import-virtual-appliance-kali-ovf.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 VirtualBox will import the OVF to create VDI disk image.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/kali-linux-vbox.png"><img src="{{ site.url }}/assets/img/2020/04/kali-linux-vbox.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/kali-linux-vbox.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/kali-linux-vbox.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/kali-linux-vbox.png">
+            <img src="{{ site.url }}/assets/img/2020/04/kali-linux-vbox.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## Disable USB Controller
@@ -81,7 +93,13 @@ Password: kali
 ```
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/kali-linux-login-screen.png"><img src="{{ site.url }}/assets/img/2020/04/kali-linux-login-screen.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/kali-linux-login-screen.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/kali-linux-login-screen.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/kali-linux-login-screen.png">
+            <img src="{{ site.url }}/assets/img/2020/04/kali-linux-login-screen.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ## Install Updates
@@ -225,7 +243,13 @@ This will mount VBox guest additions ISO to your linux VM.
 Open terminal in that folder.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/vbox-guest-additions-kali-linux.png"><img src="{{ site.url }}/assets/img/2020/04/vbox-guest-additions-kali-linux.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/vbox-guest-additions-kali-linux.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/vbox-guest-additions-kali-linux.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/vbox-guest-additions-kali-linux.png">
+            <img src="{{ site.url }}/assets/img/2020/04/vbox-guest-additions-kali-linux.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Run below commands in the terminal which will install the guest additions.

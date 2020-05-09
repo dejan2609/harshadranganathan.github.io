@@ -111,7 +111,13 @@ Give a name for the virtual switch e.g. Minikube with connection type as `Extern
 Now select `Apply` to create a new vSwitch.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2018/11/hyper-v-manager-vswitch.png"><img src="{{ site.url }}/assets/img/2018/11/hyper-v-manager-vswitch.png"></a>
+    <a href="{{ site.url }}/assets/img/2018/11/hyper-v-manager-vswitch.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2018/11/hyper-v-manager-vswitch.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2018/11/hyper-v-manager-vswitch.png">
+            <img src="{{ site.url }}/assets/img/2018/11/hyper-v-manager-vswitch.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 If you see an error message `Failed while adding virtual Ethernet switch connections` it means that you have enabled sharing on your wifi connection which needs to be disabled.
@@ -121,8 +127,14 @@ Go to `Network and Sharing Center` and select your Wi-Fi connection. In the `Wi-
 In the `Wi-Fi` properties window under `Sharing` tab uncheck this option
  - Allow other network users to connect through this computer's Internet connection
 
-<figure class="half">
-	<a href="{{ site.url }}/assets/img/2018/11/windows-wifi-properties.png"><img src="{{ site.url }}/assets/img/2018/11/windows-wifi-properties.png"></a>
+ <figure>
+    <a href="{{ site.url }}/assets/img/2018/11/windows-wifi-properties.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2018/11/windows-wifi-properties.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2018/11/windows-wifi-properties.png">
+            <img src="{{ site.url }}/assets/img/2018/11/windows-wifi-properties.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Start Minikube

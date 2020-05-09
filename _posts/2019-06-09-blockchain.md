@@ -31,7 +31,13 @@ Blockchain is a decentralized, distributed and public digital ledger that is use
 Blockchain starts with a single block called genesis block.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/06/genesis-block.png"><img src="{{ site.url }}/assets/img/2019/06/genesis-block.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/06/genesis-block.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/06/genesis-block.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/06/genesis-block.png">
+            <img src="{{ site.url }}/assets/img/2019/06/genesis-block.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Each block stores the following information:
@@ -48,7 +54,13 @@ Each block stores the following information:
 We'll explain these with the mining of a new block.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/06/mined-block.png"><img src="{{ site.url }}/assets/img/2019/06/mined-block.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/06/mined-block.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/06/mined-block.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/06/mined-block.png">
+            <img src="{{ site.url }}/assets/img/2019/06/mined-block.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Index
@@ -106,7 +118,13 @@ A new block is added to the blockchain only if it meets the following requiremen
 As the blocks are added and linked using cryptography, they continuously grow the blockchain.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2019/06/blockchain.png"><img src="{{ site.url }}/assets/img/2019/06/blockchain.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/06/blockchain.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/06/blockchain.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/06/blockchain.png">
+            <img src="{{ site.url }}/assets/img/2019/06/blockchain.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Immutability

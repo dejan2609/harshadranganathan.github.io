@@ -92,7 +92,13 @@ JMeter GUI will open up with a default test plan.
 You can change the name of the test plan as required.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-test-plan.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-test-plan.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-test-plan.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-test-plan.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-test-plan.png">
+            <img src="{{ site.url }}/assets/img/2020/05/04/jmeter-test-plan.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Thread Group
@@ -104,7 +110,13 @@ A Thread Group defines a pool of users that will execute a particular test case 
 In the Thread Group GUI, you can control the number of users simulated (number of threads), the ramp up time (how long it takes to start all the threads), the number of times to perform the test, and optionally, a start and stop time for the test.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-option.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-option.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-option.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-option.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-option.png">
+            <img src="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-option.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### HTTP Options
@@ -120,7 +132,13 @@ Following the same approach we did for adding a thread group, add HTTP Request S
 **Add -> Config Element -> HTTP Header Manager** 
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-http-options.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-http-options.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-http-options.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-http-options.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-http-options.png">
+            <img src="{{ site.url }}/assets/img/2020/04/jmeter-http-options.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 We will look at configuring these options in our performance and tuning section.
@@ -145,13 +163,25 @@ So, let's parameterize all of our required settings.
 In our thread group, we will configure **Number of Threads** and **Ramp-up Period** to use parameters with some defaults as shown below. We'll look at what these settings mean later.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-parameterize.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-parameterize.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-parameterize.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-parameterize.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-parameterize.png">
+            <img src="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-parameterize.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 Similarly, in the **HTTP Request**, you can give the protocol, Method, and any other content required for your REST API. Here, we configure the **Server Name** to use **host** parameter.
 
 <figure class="half">
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-http-request-parametrize.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-http-request-parametrize.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-http-request-parametrize.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-http-request-parametrize.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-http-request-parametrize.png">
+            <img src="{{ site.url }}/assets/img/2020/04/jmeter-http-request-parametrize.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Use CSV Dataset For Sampling
@@ -176,13 +206,25 @@ To use **CSV Data Set Config** choose **Add -> Config -> CSV Data Set Config** u
 You can then provide the file location and variable names (should match csv columns).
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-csv-dataset-config.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-csv-dataset-config.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-csv-dataset-config.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-csv-dataset-config.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-csv-dataset-config.png">
+            <img src="{{ site.url }}/assets/img/2020/04/jmeter-csv-dataset-config.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 In your **HTTP Request** config you can just use the variable names provided in CSV dataset config for your path parameter as shown below:
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-http-request-path-variable.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-http-request-path-variable.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-http-request-path-variable.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-http-request-path-variable.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-http-request-path-variable.png">
+            <img src="{{ site.url }}/assets/img/2020/04/jmeter-http-request-path-variable.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
@@ -197,7 +239,13 @@ In your ThreadGroup, you can just configure to loop the csv dataset sample which
 Here, we have said to loop the samples for 1 Hour duration.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-loop.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-loop.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-loop.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-loop.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-loop.png">
+            <img src="{{ site.url }}/assets/img/2020/04/jmeter-thread-group-loop.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 ### Use Few Listeners As Possible
@@ -341,16 +389,36 @@ Once you have your test results, you can generate the dashboard report by runnin
 Below are some of the graphs available in the report.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-stats.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-stats.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-stats.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-stats.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-stats.png">
+            <img src="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-stats.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-response-times.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-response-times.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-response-times.png">
+            <img src="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-response-times.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-response-times.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-response-times.png"></a>
+    <a href="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-transactions-per-second.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-transactions-per-second.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-transactions-per-second.png">
+            <img src="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-transactions-per-second.png" alt="">
+        </picture>
+    </a>
 </figure>
 
-<figure>
-	<a href="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-transactions-per-second.png"><img src="{{ site.url }}/assets/img/2020/04/jmeter-dashboard-transactions-per-second.png"></a>
-</figure>
 
 ## References
 

@@ -83,7 +83,13 @@ Under `SSH keys` tab, select `New SSH key`.
 Give a title and paste the key in the text area.
 
 <figure>
-	<a href="{{ site.url }}/assets/img/2019/09/github-ssh-keys.png"><img src="{{ site.url }}/assets/img/2019/09/github-ssh-keys.png"></a>
+    <a href="{{ site.url }}/assets/img/2019/09/github-ssh-keys.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2019/09/github-ssh-keys.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2019/09/github-ssh-keys.png">
+            <img src="{{ site.url }}/assets/img/2019/09/github-ssh-keys.png" alt="">
+        </picture>
+    </a>
 </figure>
 
 {% include donate.html %}
