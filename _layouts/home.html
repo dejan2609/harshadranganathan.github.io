@@ -16,7 +16,11 @@ layout: compress
         <div class="container animated fadeIn">
             <div class="row">
                     <a href="{{ site.url }}">
-                        <img src="{{ site.logo }}" class="img-circle zoombtn animated rotateIn">
+                        <picture>
+                            <source type="image/webp" srcset="{{ site.logo_webp }}">
+                            <source type="image/jpg" srcset="{{ site.logo }}">
+                            <img src="{{ site.logo }}" alt="" class="img-circle zoombtn animated rotateIn">
+                        </picture>
                     </a>
                     <h3 class="title">
                         <a class="zoombtn" href="{{ site.url }}">

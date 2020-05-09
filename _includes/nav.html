@@ -6,7 +6,11 @@
 				<a href="#">About</a>
 				<ul class="dl-submenu">
 					<li>
-						<img src="{{ site.url }}/{{ site.logo }}" alt="{{ site.title }} photo" class="author-photo">
+                        <picture>
+                            <source type="image/webp" srcset="{{ site.url }}/{{ site.logo_webp }}">
+                            <source type="image/jpg" srcset="{{ site.url }}/{{ site.logo }}">
+                            <img src="{{ site.url }}/{{ site.logo }}" alt="{{ site.title }} photo"  class="author-photo">
+                        </picture>
 						<h4>{{ site.title }}</h4>
 						<p>{{ site.description }}</p>
 					</li>

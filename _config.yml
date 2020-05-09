@@ -5,7 +5,9 @@ description: "Harshad Ranganathan | Java Developer | AWS & GCP Certified"
 reading_time: true
 words_per_minute: 200
 logo: "assets/img/harshad-ranganathan.jpg"
+logo_webp: "assets/img/harshad-ranganathan.webp"
 background: "assets/img/wallpaper.png"
+background_webp: "assets/img/wallpaper.webp"
 tiled_bg: false # Set this true if you want to tile your background image, otherwise it will be covered
 locale: en_US
 url: https://rharshad.com

@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="{{ site.url }}/assets/css/main.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 <!-- JS -->
-<script src="{{ site.url }}/assets/js/modernizr-3.3.1.custom.min.js"></script>
+<script src="{{ site.url }}/assets/js/modernizr-3.6.custom.min.js"></script>
 <script type="text/javascript" src="https://ko-fi.com/widgets/widget_2.js"></script>
 <!-- Favicons -->
 <link rel="apple-touch-icon" href="{{ site.url }}/assets/img/favicons/apple-icon-precomposed.png">
@@ -49,8 +49,11 @@
 <!-- Background Image -->
 {% if site.background %}
 {% capture background %}{{ site.background }}{% endcapture %}
+{% capture background_webp %}{{ site.background_webp }}{% endcapture %}
 {% unless background contains 'http://' or background contains 'https://' %}{% capture background %}{{ site.url }}/{{ background }}{% endcapture %}{% endunless %}
-<style type="text/css">body {background-image:url({{ background }}); {% unless site.tiled_bg %} background-repeat: no-repeat; background-size: cover; {% endunless %}}</style>
+{% unless background_webp contains 'http://' or background_webp contains 'https://' %}{% capture background_webp %}{{ site.url }}/{{ background_webp }}{% endcapture %}{% endunless %}
+<style type="text/css">.no-webp, body {background-image:url({{ background }}); {% unless site.tiled_bg %} background-repeat: no-repeat; background-size: cover; {% endunless %}}
+.webp, body {background-image:url({{ background_webp }}); {% unless site.tiled_bg %} background-repeat: no-repeat; background-size: cover; {% endunless %}}</style>
 {% endif %}
 <!-- Post Feature Image -->
 {% if page.feature %}
