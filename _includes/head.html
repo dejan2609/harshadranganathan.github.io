@@ -52,8 +52,7 @@
 {% capture background_webp %}{{ site.background_webp }}{% endcapture %}
 {% unless background contains 'http://' or background contains 'https://' %}{% capture background %}{{ site.url }}/{{ background }}{% endcapture %}{% endunless %}
 {% unless background_webp contains 'http://' or background_webp contains 'https://' %}{% capture background_webp %}{{ site.url }}/{{ background_webp }}{% endcapture %}{% endunless %}
-<style type="text/css">.no-webp, body {background-image:url({{ background }}); {% unless site.tiled_bg %} background-repeat: no-repeat; background-size: cover; {% endunless %}}
-.webp, body {background-image:url({{ background_webp }}); {% unless site.tiled_bg %} background-repeat: no-repeat; background-size: cover; {% endunless %}}</style>
+<style type="text/css">body {background-image:url({{ background }}); background-image: -webkit-image-set(url({{ background_webp }})1x ); {% unless site.tiled_bg %} background-repeat: no-repeat; background-size: cover; {% endunless %}}</style>
 {% endif %}
 <!-- Post Feature Image -->
 {% if page.feature %}
