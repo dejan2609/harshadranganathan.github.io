@@ -336,8 +336,9 @@ Experienced Associate with a demonstrated history of working in the information 
 
 | Course | Issued by |Issued on  | |
 |--|--|--|--|
+|Cool New Features in Python 3.8 |RealPython | May 2020|[Certificate](https://realpython.com/certificates/355e30c1-4ffd-48e7-bf7e-9ddf02394f5f/) | 
 |Lightbend Scala Language - Professional | Lightbend | May 2020 |[Certificate](https://academy.lightbend.com/certificates/e47bef0e0a6c4972b453e4f58f55b0c5) |
-|Redis for Java Developers|Redis University|May 2020|[Certificate](https://university.redislabs.com/certificates/367f6e403d63467f832d20e412d20dc8)|
+|Redis for Java Developers<br/>Redis Streams|Redis University|May 2020|[Certificate](https://university.redislabs.com/certificates/367f6e403d63467f832d20e412d20dc8)<br/>[Certificate](https://university.redislabs.com/certificates/6ed80e70e19b47aa966b111a2b5ebc5a)|
 | Kibana Fundamentals | Elastic | May 2020 |[Certificate](https://training.elastic.co/award/completion/32b2171d-30c7-308b-abdb-7772e433cc9b/preview) |
 | Introduction to Redis Data Structures|Redis University |Apr 2020 |[Certificate](https://university.redislabs.com/certificates/eb96dd3189364ef4a124965dba54c09c) |
 | ECE, Observability & Endpoint Security Fundamentals  | Elastic | Apr 2020 | [Certificate](https://training.elastic.co/award/completion/b604eb5c-4937-341e-9ead-9f50f89bb8cd/preview)<br/>[Certificate](https://training.elastic.co/award/completion/c51bf8f8-7926-38cd-9bff-c90d2e4afb26/preview)<br/>[Certificate](https://training.elastic.co/award/completion/6581848f-ef71-323c-8bf4-b6d40120eb04/preview) |
