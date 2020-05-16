@@ -146,6 +146,9 @@ I0516 11:05:36.312255    8048 driver.go:237] Rejects: [docker podman virtualbox 
 I0516 11:05:36.315250    8048 start.go:215] selected driver: hyperv
 ```
 
+{% include donate.html %}
+{% include advertisement.html %}
+
 ## Running Kubernetes Cluster in Hyper-V
 
 ### Enable Hyper-V
