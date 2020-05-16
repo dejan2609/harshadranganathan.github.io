@@ -118,7 +118,7 @@ I0516 11:05:32.171260    8048 global.go:102] Querying for installed drivers usin
 ```text
 W0516 11:05:32.632042    8048 docker.go:99] docker returned error: exit status 1
 I0516 11:05:32.632042    8048 global.go:110] docker priority: 6, state: {Installed:true Healthy:false Error:"docker vers
-ion --format {{.Server.Os}}-{{.Server.Version}}" exit status 1: error during connect: Get http://%2F%2F.%2Fpipe%2Fdocker
+ion --format " exit status 1: error during connect: Get http://%2F%2F.%2Fpipe%2Fdocker
 _engine/v1.40/version: open //./pipe/docker_engine: 
 ```
 
@@ -138,7 +138,7 @@ Fix:Install the latest version of VirtualBox Doc:https://minikube.sigs.k8s.io/do
 5) Finally, minikube makes a decision to pick **hyperv** as it is the only healthy driver available although we had other drivers installed in our system. If you have multiple drivers in a healthy state, then it will pick one based on assigned priorities.
 
 ```text
-I0516 11:05:36.310251    8048 driver.go:201] not recommending "docker" due to health: "docker version --format {{.Server.Os}}-{{.Server.Version}}" exit status 1: error during connect: Get http://%2F%2F.%2Fpipe%2Fdocker_engine/v1.40/version: open //./pipe/docker_engine: The system cannot find the file specified. In the default daemon configuration on Windows, the docker client must be run elevated to connect. This error may also indicate that the docker daemon is not running.
+I0516 11:05:36.310251    8048 driver.go:201] not recommending "docker" due to health: "docker version --format " exit status 1: error during connect: Get http://%2F%2F.%2Fpipe%2Fdocker_engine/v1.40/version: open //./pipe/docker_engine: The system cannot find the file specified. In the default daemon configuration on Windows, the docker client must be run elevated to connect. This error may also indicate that the docker daemon is not running.
 I0516 11:05:36.311273    8048 driver.go:201] not recommending "virtualbox" due to health: C:\Program Files\Oracle\VirtualBox\VBoxManage.exe list hostinfo failed:
 I0516 11:05:36.312255    8048 driver.go:235] Picked: hyperv
 I0516 11:05:36.312255    8048 driver.go:237] Rejects: [docker podman virtualbox vmware]
