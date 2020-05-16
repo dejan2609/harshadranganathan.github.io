@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Setting up Kubernetes on Windows with Minikube"
-date:   2018-11-25
+date:   2020-05-16
 excerpt: "Run Kubernetes locally with Minikube on Windows"
 tag:
 - Kubernetes
@@ -9,6 +9,16 @@ tag:
 - Windows
 - install minikube on windows 10
 - minikube hyperv
+- install kubernetes on windows 10
+- minikube tutorial
+- minikube vm-driver none
+- kubernetes local development
+- install kubernetes on hyper-v
+- minikube start vm-driver
+- minikube windows containers
+- install minikube on windows 10 virtualbox
+- use hyper-v as a driver
+- how to install minikube on windows 10
 comments: true
 ---
 
@@ -16,13 +26,9 @@ comments: true
 
 [Minikube](https://github.com/kubernetes/minikube) is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM on your laptop for users looking to try out Kubernetes or develop with it day-to-day.
 
-Minikube can be installed in multiple operating systems (Linux, MacOS & Windows) and supports multiple drivers ([VirtualBox](https://www.virtualbox.org/), [Hyper-V](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/) in case of Windows).
+Minikube can be installed in multiple operating systems (Linux, MacOS & Windows) and supports multiple drivers ([VirtualBox](https://www.virtualbox.org/), [Hyper-V](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/), [Docker](https://www.docker.com/) in case of Windows).
 
 We are going to look at Windows setup of Minikube using both VirtualBox & Hyper-V drivers.
-
-If you have [Docker](https://www.docker.com/) in your local system then you would have enabled Hyper-V. In that case, it makes sense to make use of Hyper-V driver instead of VirtualBox as the latter doesn't work with Hyper-V enabled.
-
-So, in such a case if you choose VirtualBox as your driver you might end up toggling Hyper-V and restarting your system based on whether you want to use Docker or VirtualBox for Kubernetes.
 
 ## Install Chocolatey
 
@@ -46,38 +52,142 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/in
 Once chocolately is installed, we run below command to install Minikube
 
 {% highlight powershell %}
-choco install minikube --version 0.27 -y
+choco install minikube -y
 {% endhighlight %}
 
-Note: Versions above 0.27 have an issue with [shutdown](https://github.com/kubernetes/minikube/issues/2914)
-
-## Install VirtualBox
-
-If you're planning to use VirtualBox as the driver for Minikube then run below command. Otherwise skip this step.
+You can specify to install a particular version using **--version** flag.
 
 {% highlight powershell %}
-choco install virtualbox -y
+choco install minikube --version 1.10.1 -y
 {% endhighlight %}
 
-We'll look at running Kubernetes cluster in both VirtualBox and Hyper-V next.
+Running above commands will install **minikube** and **kubernetes-cli** tools in your system.
 
-## Running Kubernetes Cluster in VirtualBox 
+```text
+Chocolatey v0.10.15
+Installing the following packages:
+minikube
+By installing you accept licenses for the packages.
+Progress: Downloading kubernetes-cli 1.18.2... 100%
+Progress: Downloading Minikube 1.10.1... 100%
+
+kubernetes-cli v1.18.2 [Approved]
+```
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Running Kubernetes Cluster in Default Mode
+
+Minikube can be deployed as a VM, a container, or bare-metal.
+
+For windows, Minikube supports below drivers:
+
+- Hyper-V - VM (preferred)
+- Docker - VM + Container (preferred)
+- VirtualBox - VM
+
+You can choose to use any of the above supported drivers. Some drivers will require hypervisors to be installed.
+
+Before you can run minikube in default mode, you need to have any of the hypervisors set up in your system. If you already have them configured then proceed to next steps. Otherwise, check these sections for respective driver installations.
+
+- [Hyper-V](#enable-hyper-v)
+
+- [VirtualBox](#install-virtualbox)
+
+***In my system, I have Hyper-V, VirtualBox and Docker installed. Both VirtualBox and Docker are not running.***
+
+If you start minikube in default mode, it will try to determine the driver to use based on the hypervisors available in your system, their current health (whether running/offline) and assigned priorities for tie breaking.
+
+For example, if you run below command:
+
+```bash
+minikube start --alsologtostderr
+```
+
+You can observe below from the logs.
+
+1) Minikube first checks for installed drivers based on environment settings in PATH variable.
+
+```text
+I0516 11:05:32.171260    8048 global.go:102] Querying for installed drivers using PATH=
+````
+
+2) If you have docker installed but not running, then it will have status **Installed:true Healthy:false**.
+
+```text
+W0516 11:05:32.632042    8048 docker.go:99] docker returned error: exit status 1
+I0516 11:05:32.632042    8048 global.go:110] docker priority: 6, state: {Installed:true Healthy:false Error:"docker vers
+ion --format {{.Server.Os}}-{{.Server.Version}}" exit status 1: error during connect: Get http://%2F%2F.%2Fpipe%2Fdocker
+_engine/v1.40/version: open //./pipe/docker_engine: 
+```
+
+3) If you have hyper-v enabled, then it will have status **Installed:true Healthy:true**.
+
+```text
+I0516 11:05:34.225130    8048 global.go:110] hyperv priority: 7, state: {Installed:true Healthy:true Error:<nil> Fix: Doc:}
+```
+
+4) If you have virtualbox but it is not currently running, then it will have status **Installed:true Healthy:false**.
+
+```text
+I0516 11:05:36.271280    8048 global.go:110] virtualbox priority: 5, state: {Installed:true Healthy:false Error:C:\Program Files\Oracle\VirtualBox\VBoxManage.exe list hostinfo failed:
+Fix:Install the latest version of VirtualBox Doc:https://minikube.sigs.k8s.io/docs/reference/drivers/virtualbox/}
+```
+
+5) Finally, minikube makes a decision to pick **hyperv** as it is the only healthy driver available although we had other drivers installed in our system. If you have multiple drivers in a healthy state, then it will pick one based on assigned priorities.
+
+```text
+I0516 11:05:36.310251    8048 driver.go:201] not recommending "docker" due to health: "docker version --format {{.Server.Os}}-{{.Server.Version}}" exit status 1: error during connect: Get http://%2F%2F.%2Fpipe%2Fdocker_engine/v1.40/version: open //./pipe/docker_engine: The system cannot find the file specified. In the default daemon configuration on Windows, the docker client must be run elevated to connect. This error may also indicate that the docker daemon is not running.
+I0516 11:05:36.311273    8048 driver.go:201] not recommending "virtualbox" due to health: C:\Program Files\Oracle\VirtualBox\VBoxManage.exe list hostinfo failed:
+I0516 11:05:36.312255    8048 driver.go:235] Picked: hyperv
+I0516 11:05:36.312255    8048 driver.go:237] Rejects: [docker podman virtualbox vmware]
+* Automatically selected the hyperv driver
+I0516 11:05:36.315250    8048 start.go:215] selected driver: hyperv
+```
+
+## Running Kubernetes Cluster in Hyper-V
+
+### Enable Hyper-V
+
+To enable Hyper-V, run powershell as administrator and execute below command:
+
+```powershell
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+```
+
+When the installation has completed, reboot your system.
 
 ### Start Minikube
 
 Run this command in PowerShell as an administrator.
 
 {% highlight powershell %}
-minikube start --alsologtostderr
+minikube start --driver=hyperv --disk-size=10g --memory=4096 --alsologtostderr
 {% endhighlight %}
 
 Minikube will perform below steps
  - Downloads MinikubeISO and places it in .minikube folder in your user directory
- - Connects to VirtualBox and runs a `minikube` virtual machine
+ - Connects to Hyper-V and runs a `minikube` virtual machine
  - Downloads the necessary files and moves them to the cluster
  - Runs a single-node Kubernetes cluster inside the VM
 
-Jump to [Interacting With Your Cluster section](#interacting-with-your-cluster) next.
+You will see below logs if everything went fine.
+
+{% highlight text %}
+I0516 11:10:57.839268    9364 ssh_runner.go:148] Run: sudo KUBECONFIG=/var/lib/minikube/kubeconfig \
+/var/lib/minikube/binaries/v1.18.2/kubectl apply -f /etc/kubernetes/addons/storageclass.yaml
+* Enabled addons: default-storageclass, storage-provisioner
+I0516 11:10:57.971439    9364 addons.go:322] enableAddons completed in 12.866012s
+* Done! kubectl is now configured to use "minikube"
+I0516 11:10:58.172457    9364 start.go:378] kubectl: 1.18.2, cluster: 1.18.2 (minor skew: 0)
+{% endhighlight %}
+
+To make hyperv the default driver:
+
+```bash
+minikube config set driver hyperv
+```
 
 ### Troubleshooting
 
@@ -95,81 +205,35 @@ Run minikube start command with appropriate options.
 {% include donate.html %}
 {% include advertisement.html %}
 
-## Running Kubernetes Cluster in Hyper-V
+## Running Kubernetes Cluster in VirtualBox 
 
-### Create vSwitch
+### Install VirtualBox
 
-First step is to create a vSwitch in Hyper-V.
+We install VirtualBox using chocolatey with below command:
 
-Open `Hyper-V Manager` in your windows system. On the right pane, select `Virtual Switch Manager` option.
-
-Select `External` and choose `Create Virtual Switch` option in the `Virtual Switch Manager` window.
-
-Give a name for the virtual switch e.g. Minikube with connection type as `External` and below option enabled
- - Allow management operating system to share this network adapter
-
-Now select `Apply` to create a new vSwitch.
-
-<figure>
-    <a href="{{ site.url }}/assets/img/2018/11/hyper-v-manager-vswitch.png">
-        <picture>
-            <source type="image/webp" srcset="{{ site.url }}/assets/img/2018/11/hyper-v-manager-vswitch.webp">
-            <source type="image/png" srcset="{{ site.url }}/assets/img/2018/11/hyper-v-manager-vswitch.png">
-            <img src="{{ site.url }}/assets/img/2018/11/hyper-v-manager-vswitch.png" alt="">
-        </picture>
-    </a>
-</figure>
-
-If you see an error message `Failed while adding virtual Ethernet switch connections` it means that you have enabled sharing on your wifi connection which needs to be disabled.
-
-Go to `Network and Sharing Center` and select your Wi-Fi connection. In the `Wi-Fi` status window select `Properties`.
-
-In the `Wi-Fi` properties window under `Sharing` tab uncheck this option
- - Allow other network users to connect through this computer's Internet connection
-
- <figure>
-    <a href="{{ site.url }}/assets/img/2018/11/windows-wifi-properties.png">
-        <picture>
-            <source type="image/webp" srcset="{{ site.url }}/assets/img/2018/11/windows-wifi-properties.webp">
-            <source type="image/png" srcset="{{ site.url }}/assets/img/2018/11/windows-wifi-properties.png">
-            <img src="{{ site.url }}/assets/img/2018/11/windows-wifi-properties.png" alt="">
-        </picture>
-    </a>
-</figure>
+{% highlight powershell %}
+choco install virtualbox -y
+{% endhighlight %}
 
 ### Start Minikube
 
 Run this command in PowerShell as an administrator.
 
 {% highlight powershell %}
-minikube start --vm-driver "hyperv" --hyperv-virtual-switch "Minikube" --disk-size 10g --memory 4096 --alsologtostderr
+minikube start --driver=virtualbox --alsologtostderr
 {% endhighlight %}
 
 Minikube will perform below steps
  - Downloads MinikubeISO and places it in .minikube folder in your user directory
- - Connects to Hyper-V and runs a `minikube` virtual machine
+ - Connects to VirtualBox and runs a `minikube` virtual machine
  - Downloads the necessary files and moves them to the cluster
  - Runs a single-node Kubernetes cluster inside the VM
 
-You will see below logs if everything went fine.
+To make VirtualBox the default driver:
 
-{% highlight text %}
-Connecting to cluster...
-Setting up kubeconfig...
-I1125 23:05:12.192115    4588 config.go:125] Using kubeconfig:  
-Starting cluster components...
-I1125 23:05:12.196100    4588 ssh_runner.go:80] Run with output:
-sudo /usr/bin/kubeadm init --config /var/lib/kubeadm.yaml 
-ts --ignore-preflight-errors=DirAvailable--data-minikube 
-FileAvailable--etc-kubernetes-manifests-kube-scheduler.yaml 
-fests-kube-apiserver.yaml --ignore-preflight-errors=FileAvailable
- --ignore-preflight-errors=FileAvailable--etc-kubernetes-manifests-etcd.yaml
-flight-errors=CRI  &&
-sudo /usr/bin/kubeadm alpha phase addon kube-dns
-
-Kubectl is now configured to use the cluster.
-Loading cached images from config file.
-{% endhighlight %}
+```bash
+minikube config set driver virtualbox
+```
 
 ### Troubleshooting
 
@@ -189,40 +253,40 @@ Run minikube start command with appropriate options.
 
 ## Interacting With Your Cluster
 
-To check if minikube is running use below command
-{% highlight powershell %}
-minikube status
-{% endhighlight %}
+To check if minikube is running use below command:
 
-which outputs 
-{% highlight powershell %}
-PS C:\WINDOWS\system32> minikube status
-minikube: Running
-cluster: Running
-kubectl: Correctly Configured: pointing to minikube-vm at
+```bash
+minikube status
+```
+
+which outputs
+{% highlight text %}
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
 {% endhighlight %}
 
 To ensure all the cluster components are running we use below command
 
-{% highlight powershell %}
-PS C:\WINDOWS\system32> kubectl get pods -n kube-system
-NAME                                    READY   STATUS    RESTARTS   AGE
-coredns-c4cffd6dc-565mc                 1/1     Running   0          12m
-etcd-minikube                           1/1     Running   0          11m
-kube-addon-manager-minikube             1/1     Running   0          11m
-kube-apiserver-minikube                 1/1     Running   0          11m
-kube-controller-manager-minikube        1/1     Running   0          12m
-kube-dns-86f4d74b45-vxrr9               3/3     Running   0          12m
-kube-proxy-fn5c9                        1/1     Running   0          12m
-kube-scheduler-minikube                 1/1     Running   0          11m
-kubernetes-dashboard-6f4cfc5d87-hgdnq   1/1     Running   5          12m
-storage-provisioner                     1/1     Running   0          12m
+{% highlight bash %}
+$ kubectl get pods -n kube-system
+NAME                               READY   STATUS    RESTARTS   AGE
+coredns-66bff467f8-h7z4r           1/1     Running   0          6m25s
+coredns-66bff467f8-mrqnm           1/1     Running   0          6m25s
+etcd-minikube                      1/1     Running   0          6m24s
+kube-apiserver-minikube            1/1     Running   0          6m24s
+kube-controller-manager-minikube   1/1     Running   0          6m24s
+kube-proxy-7zl29                   1/1     Running   0          6m25s
+kube-scheduler-minikube            1/1     Running   0          6m24s
+storage-provisioner                1/1     Running   0          6m22s
 {% endhighlight %}
 
 If any of the above pods are in failed status you can get it's logs as follows for debugging
 
 {% highlight powershell %}
-kubectl logs kubernetes-dashboard-6f4cfc5d87-hgdnq -n kube-system
+kubectl logs kube-apiserver-minikube -n kube-system
 {% endhighlight %}
 
 If you notice any of the pods in `CrashLoopBackOff` status then perform the steps as mentioned in the troubleshooting guide earlier.
@@ -231,6 +295,16 @@ To access the Kubernetes dashboard run below command
 {% highlight powershell %}
 minikube dashboard
 {% endhighlight %}
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2020/05/kubernetes-dashboard.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/05/kubernetes-dashboard.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/05/kubernetes-dashboard.png">
+            <img src="{{ site.url }}/assets/img/2020/05/kubernetes-dashboard.png" alt="">
+        </picture>
+    </a>
+</figure>
 
 {% include donate.html %}
 {% include advertisement.html %}
