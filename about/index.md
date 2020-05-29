@@ -336,6 +336,7 @@ Experienced Associate with a demonstrated history of working in the information 
 
 | Course | Issued by |Issued on  | |
 |--|--|--|--|
+|Using Alibaba Cloud Elasticsearch for Log Monitoring<br/>Fully Managed and Less Trouble - Alibaba Cloud Database<br/>Building a Cloud-Native application on Alibaba Cloud<br/>Secure and Fast - Alibaba Cloud Elastic Compute Service<br/>Secure and Robust - Network and Security |Alibaba Cloud |May 2020 | |
 |Cool New Features in Python 3.8 |RealPython | May 2020|[Certificate](https://realpython.com/certificates/355e30c1-4ffd-48e7-bf7e-9ddf02394f5f/) | 
 |Lightbend Scala Language - Professional | Lightbend | May 2020 |[Certificate](https://academy.lightbend.com/certificates/e47bef0e0a6c4972b453e4f58f55b0c5) |
 |Redis for Java Developers<br/>Redis Streams|Redis University|May 2020|[Certificate](https://university.redislabs.com/certificates/367f6e403d63467f832d20e412d20dc8)<br/>[Certificate](https://university.redislabs.com/certificates/6ed80e70e19b47aa966b111a2b5ebc5a)|
@@ -386,6 +387,11 @@ Experienced Associate with a demonstrated history of working in the information 
   <div class="column">
     <a href="https://www.qwiklabs.com/public_profiles/2730f8e1-4452-4ffd-a2ad-8c96f1b42979">
         <img src="{{ site.url }}/assets/img/global/qwik-labs.png" align="left" alt="Harshad R. | Qwiklabs" title="Harshad R. | Qwiklabs" style="width: 75px;height:75px;" />
+    </a>
+   </div>
+   <div class="column">
+    <a href="https://docs.microsoft.com/en-us/users/harshadranganathan-1208/">
+        <img src="{{ site.url }}/assets/img/global/microsoft-learn.png" align="left" alt="Harshad Ranganathan | Microsoft" title="Harshad Ranganathan | Microsoft" style="width: 150px;height:80px;" />
     </a>
    </div>
 </div>
