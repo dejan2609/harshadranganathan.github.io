@@ -116,8 +116,16 @@ Experienced Associate with a demonstrated history of working in the information 
     </a>
   </div>
   <div class="column">
-    <a href="https://www.youracclaim.com/badges/d5d4b3cb-d2b1-492c-8f29-77741b96a5c9/public_url">
+    <a href="https://www.youracclaim.com/users/harshad-ranganathan/badges">
         <img src="{{ site.url }}/assets/img/global/ibm-cloud-platform-application-developer-v1.png" style="height:100px;width:100px;">
+    </a>
+  </div>
+</div>
+
+<div class="row">
+    <div class="column">
+    <a href="https://www.youracclaim.com/badges/d5d4b3cb-d2b1-492c-8f29-77741b96a5c9/public_url">
+        <img src="{{ site.url }}/assets/img/global/ckad.png" style="height:115px;width:115px;">
     </a>
   </div>
 </div><br/>
