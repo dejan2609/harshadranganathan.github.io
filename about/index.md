@@ -111,6 +111,11 @@ Experienced Associate with a demonstrated history of working in the information 
     </a>
   </div>
   <div class="column">
+    <a href="https://www.youracclaim.com/badges/4e2cf693-7126-48e2-abe2-4c67c0c50ec7/public_url">
+        <img src="{{ site.url }}/assets/img/global/azure-fundamentals.png" style="height:100px;width:100px;">
+    </a>
+  </div>
+  <div class="column">
     <a href="https://www.credential.net/8f0a6fff-0a31-490d-bcd8-5998d02d3a4e">
         <img src="{{ site.url }}/assets/img/global/google-cloud-certified-associate-cloud-engineer.png" style="height:100px;width:100px;">
     </a>
