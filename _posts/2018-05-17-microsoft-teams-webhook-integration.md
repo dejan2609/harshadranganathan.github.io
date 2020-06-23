@@ -71,7 +71,7 @@ Send this JSON payload as a POST request to the Webhook URL.
 You can either use `Send via WebHook` option available in the [Card Playground](https://messagecardplayground.azurewebsites.net/) (or) [Postman](https://docs.microsoft.com/en-us/outlook/actionable-messages/actionable-messages-via-connectors#send-the-message) to send the message to the webhook.
 
 <figure>
-    <a href="{{ site.url }}/assets/img2018/05/webhook-message.png">
+    <a href="{{ site.url }}/assets/img/2018/05/webhook-message.png">
         <picture>
             <source type="image/webp" srcset="{{ site.url }}/assets/img/2018/05/webhook-message.webp">
             <source type="image/png" srcset="{{ site.url }}/assets/img/2018/05/webhook-message.png">
