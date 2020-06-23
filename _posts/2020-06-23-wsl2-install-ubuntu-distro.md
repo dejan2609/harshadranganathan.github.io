@@ -91,6 +91,9 @@ Here, you can provide a username and password for your account.
     </a>
 </figure>
 
+{% include donate.html %}
+{% include advertisement.html %}
+
 ## Install Windows Terminal
 
 Windows Terminal is a modern, fast, efficient, powerful and productive terminal application for users of command line tools and shells like Command Prompt, PowerShell and WSL.
@@ -130,6 +133,9 @@ In your Ubuntu shell, update the package information:
 ```shell
 $ sudo apt update
 ```
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## Install ZSH
 
@@ -191,6 +197,9 @@ Shell successfully changed to '/usr/bin/zsh'.
 Please look over the ~/.zshrc file to select plugins, themes, and options.
 ```
 
+{% include donate.html %}
+{% include advertisement.html %}
+
 ## Install Node.js
 
 ### Install NVM
@@ -250,6 +259,9 @@ lts/carbon -> v8.17.0 (-> N/A)
 lts/dubnium -> v10.21.0 (-> N/A)
 lts/erbium -> v12.18.1 (-> N/A)
 ```
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## References
 
