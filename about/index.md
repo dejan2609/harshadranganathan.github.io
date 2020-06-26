@@ -71,6 +71,14 @@ Experienced Associate with a demonstrated history of working in the information 
                     <span class="label proficient">PROFICIENT</span>
                 </div>
             </div>
+            <div class="skills">
+                <div class="left">
+                    <span>GCP</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
         </li>
         <li>
             <div class="bottom">DATABASES</div>
@@ -88,6 +96,14 @@ Experienced Associate with a demonstrated history of working in the information 
             <div class="skills">
                 <div class="left">
                     <span>Docker</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="left">
+                    <span>Kubernetes</span>
                 </div>
                 <div class="right">
                     <span class="label intermediate">INTERMEDIATE</span>
@@ -123,6 +139,11 @@ Experienced Associate with a demonstrated history of working in the information 
   <div class="column">
     <a href="https://www.youracclaim.com/users/harshad-ranganathan/badges">
         <img src="{{ site.url }}/assets/img/global/ibm-cloud-platform-application-developer-v1.png" style="height:100px;width:100px;">
+    </a>
+  </div>
+  <div class="column">
+    <a href="">
+        <img src="{{ site.url }}/assets/img/global/alibaba-cloud-certified-associate.png" style="height:100px;width:100px;">
     </a>
   </div>
 </div>
@@ -349,6 +370,7 @@ Experienced Associate with a demonstrated history of working in the information 
 
 | Course | Issued by |Issued on  | |
 |--|--|--|--|
+|Reactive Architecture: Introduction to Reactive Systems|Lightbend | June 2020| [Certificate](https://academy.lightbend.com/certificates/a16d20c593a741dca55b8e79d154048e) |
 |Using Alibaba Cloud Elasticsearch for Log Monitoring<br/>Fully Managed and Less Trouble - Alibaba Cloud Database<br/>Building a Cloud-Native application on Alibaba Cloud<br/>Secure and Fast - Alibaba Cloud Elastic Compute Service<br/>Secure and Robust - Network and Security |Alibaba Cloud |May 2020 | |
 |Cool New Features in Python 3.8 |RealPython | May 2020|[Certificate](https://realpython.com/certificates/355e30c1-4ffd-48e7-bf7e-9ddf02394f5f/) | 
 |Lightbend Scala Language - Professional | Lightbend | May 2020 |[Certificate](https://academy.lightbend.com/certificates/e47bef0e0a6c4972b453e4f58f55b0c5) |
@@ -527,14 +549,6 @@ Experienced Associate with a demonstrated history of working in the information 
             <div class="skills">
                 <div>
                     <span>Android</span>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="bottom">ORCHESTRATION</div>
-            <div class="skills">
-                <div>
-                    <span>Kubernetes</span>
                 </div>
             </div>
         </li>
