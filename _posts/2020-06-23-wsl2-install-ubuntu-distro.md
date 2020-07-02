@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Windows Subsystem for Linux 2 (WSL 2) on Windows 10"
-date:   2020-06-23
+date:   2020-07-02
 excerpt: "Install Windows Subsystem for Linux 2 (WSL 2) on Windows 10 and set up Ubuntu distro"
 tag:
 - wsl2 docker
@@ -126,6 +126,55 @@ As you can see, windows terminal provides access to multiple shells like Gitbash
     </a>
 </figure>
 
+### Update Color Scheme
+
+Let's update our terminal to use [Snazzy color scheme](https://github.com/Richienb/windows-terminal-snazzy).
+
+Open the terminal settings file by selecting settings option in the terminal dropdown.
+
+Add snazzy color scheme to `schemes` list in the json file.
+
+```json
+    "schemes": [
+        {
+            "name": "Snazzy",
+            "foreground": "#eff0eb",
+            "background": "#282a36",
+            "selectionBackground": "#3e404a",
+            "cursorColor": "#97979b",
+            "black": "#282a36",
+            "red": "#ff5c57",
+            "green": "#5af78e",
+            "yellow": "#f3f99d",
+            "blue": "#57c7ff",
+            "purple": "#ff6ac1",
+            "cyan": "#9aedfe",
+            "white": "#f1f1f0",
+            "brightBlack": "#686868",
+            "brightRed": "#ff5c57",
+            "brightGreen": "#5af78e",
+            "brightYellow": "#f3f99d",
+            "brightBlue": "#57c7ff",
+            "brightPurple": "#ff6ac1",
+            "brightCyan": "#9aedfe",
+            "brightWhite": "#eff0eb"
+        }
+    ]
+```
+
+In the `profiles` field, you have the list of shell settings. Update the `WSL` profile to use the new color scheme.
+
+```json
+{
+    "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+    "hidden": false,
+    "name": "Ubuntu",
+    "source": "Windows.Terminal.Wsl",
+    "colorScheme": "Snazzy"
+}
+```
+
+
 ## Update Package Information
 
 In your Ubuntu shell, update the package information:
@@ -200,6 +249,102 @@ Please look over the ~/.zshrc file to select plugins, themes, and options.
 {% include donate.html %}
 {% include advertisement.html %}
 
+### Pure Prompt
+
+[Pure](https://github.com/sindresorhus/pure) is a pretty, minimal and fast ZSH prompt.
+
+It comes with lot of features such as:
+
+- Perfect prompt character
+
+- Shows git branch and whether it's dirty
+
+- Prompt character turns red if the last command didn't exit with 0
+
+- Username and host only displayed when in an SSH session
+
+- Shows the current path in the title
+
+Pure can be installed with NPM. Check out the NPM installation section before proceeding to next steps.
+
+Run below command in administrative mode:
+
+```zsh
+npm install --global pure-prompt
+```
+
+Sample Output:
+
+```text
+> pure-prompt@1.12.0 postinstall-fail-instructions /home/harshad/.nvm/versions/node/v14.4.0/lib/node_modules/pure-prompt
+> echo "ERROR: Could not automagically symlink the prompt. Either:\n1. Check out the readme on how to do it manually: https://github.com/sindresorhus/pure#manually\n2. Or add the following to your \`.zshrc\`:\n\n    fpath+=('$PWD/functions')"
+
+ERROR: Could not automagically symlink the prompt. Either:
+1. Check out the readme on how to do it manually: https://github.com/sindresorhus/pure#manually
+2. Or add the following to your `.zshrc`:
+
+    fpath+=('/home/harshad/.nvm/versions/node/v14.4.0/lib/node_modules/pure-prompt/functions')
++ pure-prompt@1.12.0
+updated 1 package in 0.741s
+```
+
+Once the installation completes, add the fpath mentioned in above output to your `~/.zshrc` file as shown below.
+
+*Note: Below lines need to be added after `source $ZSH/oh-my-zsh.sh` line in the profile*
+
+```text
+fpath+=('/home/harshad/.nvm/versions/node/v14.4.0/lib/node_modules/pure-prompt/functions')
+autoload -U promptinit; promptinit
+prompt pure
+```
+
+Also, set zsh theme to empty in your .zshrc to disable oh-my-zsh themes.
+
+```properties
+# existing theme in profile
+ZSH_THEME="robbyrussell"
+
+# remove the theme in above setting
+ZSH_THEME=""
+```
+
+Finally, activate your `~/.zshrc` profile to change the prompt.
+
+```zsh
+source ~/.zshrc
+```
+
+### Syntax Highlighting
+
+[zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) provides syntax highlighting for the shell zsh. It enables highlighting of commands whilst they are typed at a zsh prompt into an interactive terminal.
+
+Clone the repository in oh-my-zsh's plugins directory:
+
+```zsh
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
+Add the plugin to `~/.zshrc` profile:
+
+```text
+# add zsh-syntax-highlighting to the list of plugins
+plugins=(
+        git
+        zsh-syntax-highlighting
+)
+```
+
+Activate the profile:
+
+```
+source ~/.zshrc
+```
+
+Enjoy code highlights as you type!
+
+{% include donate.html %}
+{% include advertisement.html %}
+
 ## Install Node.js
 
 ### Install NVM
@@ -228,7 +373,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 ```
 
-Reload your bash profile with command:
+Reload your zsh profile with command:
 
 ```zsh
 source ~/.zshrc
