@@ -137,6 +137,11 @@ Experienced Associate with a demonstrated history of working in the information 
     </a>
   </div>
   <div class="column">
+    <a href="">
+        <img src="{{ site.url }}/assets/img/global/oracle-cloud-infrastructure-developer-2020-certified-associate.png" style="height:100px;width:100px;">
+    </a>
+  </div>
+  <div class="column">
     <a href="https://www.youracclaim.com/users/harshad-ranganathan/badges">
         <img src="{{ site.url }}/assets/img/global/ibm-cloud-platform-application-developer-v1.png" style="height:100px;width:100px;">
     </a>
@@ -482,13 +487,25 @@ Experienced Associate with a demonstrated history of working in the information 
             <div class="bottom">CLOUD</div>
             <div class="skills">
                 <div>
-                    <span>Google</span>
+                    <span>Azure</span>
                 </div>
             </div>
             <hr>
             <div class="skills">
                 <div>
                     <span>IBM</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Oracle</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Alibaba</span>
                 </div>
             </div>
         </li>
