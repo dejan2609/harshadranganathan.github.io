@@ -137,7 +137,7 @@ Experienced Associate with a demonstrated history of working in the information 
     </a>
   </div>
   <div class="column">
-    <a href="">
+    <a href="https://www.youracclaim.com/earner/earned/badge/454631fa-b0c8-4a2a-b6d8-69828036ec84">
         <img src="{{ site.url }}/assets/img/global/oracle-cloud-infrastructure-developer-2020-certified-associate.png" style="height:100px;width:100px;">
     </a>
   </div>
