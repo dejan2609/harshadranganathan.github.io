@@ -6,7 +6,7 @@ date: 2019-10-15
 comments: false
 ---
 ## Summary
-Experienced Associate with a demonstrated history of working in the information technology and services industry in both waterfall and agile methodologies. Skilled in Java, Spring and Python. Strong professional with a Bachelor's degree focused in Computer Science.
+Java Developer with 6+ years of experience in design, development and maintenance of Enterprise applications. During my career, I have worked in both the Developer and QA automation engineer roles. Passionate about learning new technologies, trends and being innovative at work.  
 
 ## Resume Skills
 
@@ -177,11 +177,11 @@ Experienced Associate with a demonstrated history of working in the information 
                  <div class="location"><i class="fa fa-globe">&nbsp;County Dublin, Ireland</i></div>
                 <div class="Description">
                     <ul class="des-content">
-                        <li>Built RESTful API's using Spring with AWS Dynamo as data access.</li>
-                        <li>Built RESTful Search API's with ElasticSearch as data access</li>
-                        <li>Developed ETL pipelines using Apache Spark (Scala) and AWS EMR to ingest data to AWS Dynamo and ElasticSearch databases</li>
-                        <li>Built Serverless website using S3, API gateway and AWS Lambda for the QA team to aid in feature deployment and testing activities</li>
-                        <li>Built Terraform modules to manage AWS infrastructure</li>
+                        <li>Built RESTful API's using Spring Boot with DynamoDB as data access to achieve 300 ms SLA.</li>
+                        <li>Built RESTful Search API's with ElasticSearch as data access.</li>
+                        <li> Developed ETL pipelines to ingest more than 10 TB data to DynamoDB and ElasticSearch databases using Apache Spark (Scala).</li>
+                        <li>Built Serverless website using S3, API gateway and Lambda to aid in feature deployment and testing activities.</li>
+                        <li>Built Terraform modules to manage AWS infrastructure for 10+ projects.</li>
                     </ul>
                     <!-- <input type="checkbox" id="SeeMore"/><label for="SeeMore">To See more</label> -->
                 </div>
@@ -207,9 +207,9 @@ Experienced Associate with a demonstrated history of working in the information 
                 </div> -->
                 <div class="Description">
                     <ul class="des-content">
-                        <li>Developed micro service applications using Apache Camel</li>
-                        <li>Built test automation framework using JBehave to validate REST API services for the QA team</li>
-                        <li>Built test automation framework to validate content in HBase for the QA team</li>
+                        <li>Developed micro service applications using Apache Camel.</li>
+                        <li>Built test automation framework using JBehave to validate 20+ REST API services.</li>
+                        <li>Built test automation framework to validate 2,00,000 row key data in HBase.</li>
                     </ul>
                     <!-- <input type="checkbox" id="SeeMore"/><label for="SeeMore">To See more</label> -->
                 </div>
@@ -231,8 +231,9 @@ Experienced Associate with a demonstrated history of working in the information 
                 </div> -->
                 <div class="Description">
                     <ul class="des-content">
-                        <li>Built SoW (Statement of Work) Spring MVC application for internal account usage</li>
-                        <li> Worked on DXSI (Abstract data management tool for transforming common data model) to map data from numerous back-end services to a common data model and deliver them to a target exposed via Oracle Service Bus</li>
+                        <li>Built SoW (Statement of Work) Spring MVC application for internal account usage.</li>
+                        <li>Semantic Integration of more than 50 sources using Common Data Modelling, Mapping and Translation with DXSI tool.</li>
+                        <li>Deployment of applications to Oracle Service Bus.</li>
                     </ul>
                     <!-- <input type="checkbox" id="SeeMore"/><label for="SeeMore">To See more</label> -->
                 </div>
@@ -375,6 +376,7 @@ Experienced Associate with a demonstrated history of working in the information 
 
 | Course | Issued by |Issued on  | |
 |--|--|--|--|
+|5-week Data Science Foundation Bootcamp | DPhi | July 2020 | |
 |Reactive Architecture: Introduction to Reactive Systems|Lightbend | June 2020| [Certificate](https://academy.lightbend.com/certificates/a16d20c593a741dca55b8e79d154048e) |
 |Using Alibaba Cloud Elasticsearch for Log Monitoring<br/>Fully Managed and Less Trouble - Alibaba Cloud Database<br/>Building a Cloud-Native application on Alibaba Cloud<br/>Secure and Fast - Alibaba Cloud Elastic Compute Service<br/>Secure and Robust - Network and Security |Alibaba Cloud |May 2020 | |
 |Cool New Features in Python 3.8 |RealPython | May 2020|[Certificate](https://realpython.com/certificates/355e30c1-4ffd-48e7-bf7e-9ddf02394f5f/) | 
