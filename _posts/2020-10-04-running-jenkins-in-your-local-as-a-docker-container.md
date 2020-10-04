@@ -38,6 +38,26 @@ You can find the project with the required files in below repository.
 
 {% include repo-card.html repo="jenkins-local-container" %}
 
+We'll will be setting up jenkins to run as a docker container along with below services:
+
+| | |
+|--|--|
+|slapd|stand-alone LDAP daemon|
+|phpldapadmin|web-based LDAP client|
+|nexus|artifact repository|
+|java agent|build agent for running OpenJDK 11 workloads|
+{:.table-striped}
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2020/10/jenkins-docker-containers.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/10/jenkins-docker-containers.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/10/jenkins-docker-containers.png">
+            <img src="{{ site.url }}/assets/img/2020/10/jenkins-docker-containers.png" alt="">
+        </picture>
+    </a>
+</figure>
+
 ## Dockerfile
 
 Let's create the dockerfile with all the commands to assemble the Jenkins image.
@@ -188,6 +208,18 @@ jenkins:
 
 Here, we are just defining the version and system message to be displayed in the home page after login. 
 
+You can get the reference documentation for each of the plugins that you need to configure in `jenkins.yaml` file from <http://localhost:8080/configuration-as-code/reference>.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2020/10/configuration-as-code-reference.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2020/10/configuration-as-code-reference.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2020/10/configuration-as-code-reference.png">
+            <img src="{{ site.url }}/assets/img/2020/10/configuration-as-code-reference.png" alt="">
+        </picture>
+    </a>
+</figure>
+
 Let's update our `Dockerfile` to add this configuration file to our container.
 
 `jenkins/Dockerfile`
@@ -330,6 +362,13 @@ You should lock down the access to Jenkins UI so that users are authenticated an
 
 In our `jenkins.yaml` file, we will define the security realm to use default username and password for authentication.
 
+Possible values for security realm:
+- legacy
+- local
+- ldap
+- pam
+- none
+
 ```yaml
 jenkins:
   securityRealm:
@@ -342,6 +381,13 @@ jenkins:
 ```
 
 With respect to authorization strategy, we choose the simplest option which is to allow logged in users to perform any actions.
+
+Possible values:
+- unsecured
+- legacy
+- loggedInUsersCanDoAnything
+- globalMatrix
+- projectMatrix
 
 ```yaml
 jenkins:
@@ -411,6 +457,60 @@ jenkins:
 
   crumbIssuer: "standard"
 ```
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Location Configuration
+
+We need to configure the location settings to resolve some of the errors shown after jenkins startup.
+
+adminAddress - Notification e-mails from Jenkins to project owners will be sent with this address in the from header. 
+
+url - This value is used to let Jenkins know how to refer to itself
+
+```yaml
+unclassified:
+  location:
+    adminAddress: "Harshad Ranganathan <rharshad93@gmail.com>"
+    url: "http://localhost:8080" 
+```
+
+Here is the complete `jenkins.yaml` file -
+
+```yaml
+configuration-as-code:
+  version: 1
+  deprecated: warn
+  restricted: reject
+
+jenkins:
+  systemMessage: |-
+    Welcome to Jenkins!    ٩(◕‿◕)۶
+  
+  authorizationStrategy: "loggedInUsersCanDoAnything"
+
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+        - id: ${JENKINS_ADMINISTRATOR_USERNAME:-administrator}
+          password: ${JENKINS_ADMINISTRATOR_PASSWORD:-changeit}
+
+  crumbIssuer: "standard"
+
+unclassified:
+  location:
+    adminAddress: "Harshad Ranganathan <rharshad93@gmail.com>"
+    url: "http://localhost:8080"
+```
+
+## Handling Secrets
+
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## References
 
