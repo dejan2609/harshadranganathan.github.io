@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Terraform - AWS"
-date: 2020-02-23
+date: 2020-11-28
 excerpt: "Infrastructure as code tool with multiple cloud providers"
 tag:
     - terraform
@@ -50,16 +50,19 @@ You'll probably integrate terraform with your CI/CD pipeline to provision your i
 
 So, it's good practice to pin down on the versions of terraform and aws provider to be used so that you don't pick up any latest releases which might have introduced breaking changes.
 
-We'll make use of `terraform` configuration block to specify these settings. Let's create `main.tf` file with these settings.
+We'll make use of `terraform` configuration block to specify these settings. Let's create `versions.tf` file with these settings.
 
 ```terraform
 terraform {
   # Terraform CLI version to be used
   required_version = "0.12.8"
 
-  # AWS provider version to be used
+  # Provider versions to be used
   required_providers {
-    aws = ">= 2.33.0"
+    aws       = ">= 2.33.0"
+    template  = "~> 2.0"
+    null      = "~> 2.0"
+    local     = "~> 1.3"
   }
 }
 ```
@@ -71,7 +74,8 @@ Constraint operators allowed:
 | =            | exact version equality                                                                   |
 | !=           | version not equal to                                                                     |
 | >, >=, <, <= | version comparison, where "greater than" is a larger version number                      |
-| ~=           | pessimistic constraint operator, constraining both the oldest and newest version allowed |
+| ~>           | allows specified version, plus newer versions that only increase the most specific segment of specified version number<br/>For example, ~> 0.9 is equivalent to >= 0.9, < 1.0 |
+{:.table-striped}
 
 ### Remote State File
 
@@ -79,38 +83,63 @@ Terraform must store state about your managed infrastructure and configuration. 
 
 It is good practice to store this file remotely in `S3`. Terraform will make use of this remote file to create plans and make changes to your infrastructure.
 
+Advantages of using remote state file:
+
+- Shared storage for state files
+- Locking state files to prevent concurrent updates by multiple team members
+- Isolation to prevent accidental impact to infrastructure
+
 Usually, enterprises will set up separate accounts for development and production which makes it easy for them to manage access at account level.
 
 So, your S3 bucket for storing the state files will vary for each of your accounts. You will need some flexibility in providing them.
 
-Let's add a partial backend configuration block to our `main.tf` file.
+Let's add a partial backend configuration block to `terraform.tf` file.
 
 ```terraform
 terraform {
-  # Terraform CLI version to be used
-  required_version = "0.12.8"
-
-  # AWS provider version to be used
-  required_providers {
-    aws = ">= 2.33.0"
-  }
-
   # Partial backend configuration
   backend "s3" {}
 }
 ```
 
-You can then create multiple `.hcl` files for each of your account to specify the S3 bucket which is to be used for storing state files.
+You can then create multiple backend configuration files for each of your account to specify the S3 bucket which is to be used for storing state files.
 
-Let's consider we have two AWS accounts named `rharshad-dev` and `rharshad-prod.hcl`. We'll create two files namely `rharshad-dev.hcl` & `rharshad-prod.hcl` with below sample configuration which will mention the respective S3 buckets to be used.
+It is recommended to create a state file per AWS component for providing isolation and sharing of state files. So, we provide different S3 keys for the storing state files of each component.
 
-`rharshad-dev.hcl`
+Below is a typical S3 bucket layout for storing state files pertaining to each component.
 
-```hcl
+```text
+rharshad-prod-terraform-state (s3 bucket)
+=========================================
+iam/
+├─ group/
+├─ role/
+├─ user/
+│  ├─ developer/
+│  │  ├─ terraform.tfstate
+├─ policy/
+route53/
+s3/
+├─ log-storage/
+│  ├─ terraform.tfstate
+├─ terraform-state/
+│  ├─ terraform.tfstate
+vpc/
+├─ terraform.tfstate
+```
+
+
+Let's consider we have two AWS accounts for `dev` and `prod` respectively. We'll create two files namely `dev.backend.tfvars` & `prod.backend.tfvars` with below sample configuration which will mention the respective S3 buckets to be used for state files.
+
+Here, we are asking terraform to store the state file for iam policies in S3 path `iam/policies/terraform.tfstate`.
+
+`dev.backend.tfvars`
+
+```text
 # s3 bucket to be used for state files
-bucket = "rharshad-dev"
+bucket = "rharshad-dev-terraform-state"
 
-key = "test/test.tfstate"
+key = "iam/policies/terraform.tfstate"
 
 # region of S3 bucket
 region = "us-east-1"
@@ -119,13 +148,13 @@ region = "us-east-1"
 encrypt = true
 ```
 
-`rharshad-prod.hcl`
+`prod.backend.tfvars`
 
-```hcl
+```text
 # s3 bucket to be used for state files
-bucket = "rharshad-prod"
+bucket = "rharshad-prod-terraform-state"
 
-key = "test/test.tfstate"
+key = "iam/policies/terraform.tfstate"
 
 # region of S3 bucket
 region = "us-east-1"
@@ -134,7 +163,19 @@ region = "us-east-1"
 encrypt = true
 ```
 
-When you are ready to create your infrastructure, you'll specify the backend configuration file to be used. Terraform will get the S3 bucket and region details and will store the state files there.
+When you are ready to create your infrastructure, you'll specify the backend configuration file to be used via CLI options. Terraform will then get the S3 bucket and region details to store the state files there.
+
+Typical file layout for the terraform project will be as below:
+
+```text
+environments/
+├─ dev/
+│  ├─ dev.backend.tfvars
+├─ prod/
+│  ├─ prod.backend.tfvars
+versions.tf
+terraform.tf
+```
 
 ### State Locking
 
@@ -142,22 +183,27 @@ There could be other team members who might be working on updates to the same in
 
 To prevent multiple writes to the state file, you could lock the state and release it once you are done. Terraform AWS provider plugin uses `DynamoDB` for locking to prevent concurrent operations.
 
-Update the hcl file with the dynamo db table to be used for state locking.
+Update the backend file with the `dynamodb_table` to be used for state locking.
 
-`rharshad-prod.hcl`
+`prod.backend.tfvars`
 
-```hcl
-bucket = "rharshad-prod"
+```text
+# s3 bucket to be used for state files
+bucket = "rharshad-prod-terraform-state"
 
+key = "iam/policies/terraform.tfstate"
+
+# region of S3 bucket
 region = "us-east-1"
 
 # name of a DynamoDB table to use for state locking and consistency. The table must have a primary key named LockID
-dynamodb_table = "rharshad-prod-locks"
+dynamodb_table = "rharshad-prod-terraform-state-lock"
 
+# enable server side encryption of state file
 encrypt = true
 ```
 
-Now, create the dynamo db table with primary key as `LockID`.
+Now, we create the dynamo db table with primary key as `LockID`. When you run terraform it will create/update entries in the table as shown below for the respective backend state file.
 
 <figure>
     <a href="{{ site.url }}/assets/img/2019/12/dynamodb-locks-table.png">
@@ -178,7 +224,7 @@ Previously, we had defined version constraint for aws provider plugin but we hav
 
 `provider` block is used to configure `aws` provider which is responsible for creating and managing resources.
 
-AWS providers are region specific and you can define multiple providers.`
+AWS providers are region specific and you can define multiple providers.
 
 Let's create a new file named `providers.tf` and add below configuration.
 
@@ -199,11 +245,23 @@ provider "aws" {
   alias  = "ew1"
   region = "eu-west-1"
 }
+
+provider "local" {
+  version = "~> 1.3"
+}
+
+provider "null" {
+  version = "~> 2.1"
+}
+
+provider "template" {
+  version = "~> 2.1"
+}
 ```
 
 Wherever you want to create the resources, you need to specify the provider to be used. You can make use of the alias to indicate it.
 
-If you don't specify the provider, then the one without the alias is treated as default provider by terraform.
+**If you don't specify the provider, then the one without the alias is treated as default provider by terraform.**
 
 ## Resources
 
