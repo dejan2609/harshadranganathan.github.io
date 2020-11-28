@@ -767,7 +767,7 @@ We are still specifying the git url twice in the override file. But, it allows u
 As part of initilization, we provide the backend config to be used.
 
 ```bash
-terraform init -backend-config=rharshad-prod.hcl
+terraform init -backend-config=environments/prod/prod.backend.tfvars
 ```
 
 ### Generate Plan
@@ -775,7 +775,7 @@ terraform init -backend-config=rharshad-prod.hcl
 We generate the terraform plan by supplying the variables file.
 
 ```bash
-terraform plan -var-file="config/prod.tfvars" -out=.terraform/tplan
+terraform plan -var-file="environments/prod/prod.tfvars" -out=.terraform/tplan
 ```
 
 ### Apply Changes
@@ -794,7 +794,7 @@ terraform apply .terraform/tplan
 To generate the plan for destroying the infrastructure, use the `-destroy` flag.
 
 ```bash
-terraform plan -destroy -var-file="config/prod.tfvars" -out=.terraform/tplan
+terraform plan -destroy -var-file="environments/prod/prod.tfvars" -out=.terraform/tplan
 ```
 
 As you can see, you will have to specify the input vars file to destroy the infrastructure. You can't destroy the infrastructure with only the tfstate file.
