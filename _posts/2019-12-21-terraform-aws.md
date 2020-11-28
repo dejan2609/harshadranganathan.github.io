@@ -379,6 +379,19 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 
 Terraform interprets these implicit dependencies and decides on the resource creation order. It will decide that `aws_iam_role` needs to be created first, followed by `aws_iam_instance_profile` as it is dependant on the role name.
 
+#### Explicit dependencies
+
+Sometimes, the dependencies between resources are not visible to terraform. In such cases, use `depends_on` to explicitly declare the dependency.
+
+Note: `depends_on` can't be used for module blocks in terraform 0.12 and older versions
+
+```terraform
+data "aws_eks_cluster" "eks" {
+  name = var.cluster_name
+  depends_on = [module.cni_role]
+}
+```
+
 ### Lifecycle
 
 By default, Terraform detects any difference in the current settings of a real infrastructure object and plans to update the remote object to match configuration.
@@ -972,6 +985,28 @@ output "route53" {
 ```
 
 We have reduced the duplication but added some complexity. So, it's up to you to decide which structure suits your team.
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Gotchas
+
+### Workspaces
+
+When Terraform is used to manage larger systems, teams should use multiple separate Terraform configurations that correspond with suitable architectural boundaries within the system so that different components can be managed separately and, if appropriate, by distinct teams.
+
+Named workspaces allow conveniently switching between multiple instances of a single configuration **within its single backend**. 
+
+Let's say you have multiple remote state backends for each environment.
+
+You could think that you will create a workspace for each of them and then switch conveniently between them without affecting each other.
+
+But the big gotcha here is that **workspaces operate within a single backend**. So, switching between workspaces doesn't switch the backend.
+
+<https://github.com/hashicorp/terraform/issues/16627>
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## References
 
