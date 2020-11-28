@@ -824,6 +824,155 @@ checkout scm: [
 ]
 ```
 
+## Project Structure
+
+Let's look at some of the project structures for terraform.
+
+### Simple Structure
+
+At the simplest form, your project will consist of terraform files in the root folder categorized based on their purpose.
+
+All the variables and backend files will be placed inside their respective environment folders.
+
+```text
+environments/
+├─ dev/
+│  ├─ dev.backend.tfvars
+│  ├─ dev.tfvars
+├─ prod/
+│  ├─ prod.backend.tfvars
+│  ├─ prod.tfvars
+├─ shared.tfvars
+versions.tf
+terraform.tf
+variables.tf
+providers.tf
+outputs.tf
+main.tf
+data.tf
+```
+
+{% include donate.html %}
+{% include advertisement.html %}
+### Complex Structure
+
+Your project might need local reusable modules to reduce code duplication but at the same time provide flexibility by defining multiple modules with varying levels of complexity.
+
+So, you might go with this structure where the common modules are defined inside `modules` directory. Each of the main modules have their own environment specific variables file.
+
+```text
+modules/
+├─ policy/
+│  ├─ main.tf
+│  ├─ outputs.tf
+│  ├─ variables.tf
+policies/
+├─ route53/
+│  ├─ main.tf
+│  ├─ data.tf
+│  ├─ outputs.tf
+│  ├─ providers.tf
+│  ├─ variables.tf
+│  ├─ versions.tf
+│  ├─ environments/
+│  │  ├─ prod/
+│  │  │  ├─ prod.tfvars
+│  │  │  ├─ prod.backend.tfvars
+├─ s3/
+│  ├─ main.tf
+│  ├─ data.tf
+│  ├─ outputs.tf
+│  ├─ providers.tf
+│  ├─ variables.tf
+│  ├─ versions.tf
+│  ├─ environments/
+│  │  ├─ prod/
+│  │  │  ├─ prod.tfvars
+│  │  │  ├─ prod.backend.tfvars
+```
+
+There is one problem with the above structure though. Your `providers` and `versions` file are duplicated for each of the main module.
+
+So, you will have to update the versions across the duplicated files. Also, the `data` sources file can be reused across the other modules but they are duplicated as well.
+
+You could go with below structure to overcome the cons but it adds some additional effort to make it work.
+
+```text
+modules/
+├─ policy/
+│  ├─ main.tf
+│  ├─ outputs.tf
+│  ├─ variables.tf
+policies/
+├─ route53/
+│  ├─ main.tf
+│  ├─ outputs.tf
+│  ├─ variables.tf
+│  ├─ environments/
+│  │  ├─ prod/
+│  │  │  ├─ prod.tfvars
+│  │  │  ├─ prod.backend.tfvars
+├─ s3/
+│  ├─ main.tf
+│  ├─ outputs.tf
+│  ├─ variables.tf
+│  ├─ environments/
+│  │  ├─ prod/
+│  │  │  ├─ prod.tfvars
+│  │  │  ├─ prod.backend.tfvars
+data.tf
+providers.tf
+versions.tf
+main.tf
+variables.tf
+outputs.tf
+```
+
+In above structure, we have removed the duplication of versions and data sources file. However, the `variables` and `outputs` file are duplicated. This is because terraform will display the outputs only if they are defined in the root path from where you run your commands.
+
+In the previous structure, we could run any of the modules separately by running the terraform commands inside those specific modules. But here, we have to run the command from the root path.
+
+So, we need to update our `main.tf` to be able to select specific modules for execution. Unfortunately, `modules` don't support `count` parameter. Only, resources support it.
+
+In our modules we could pass in a variable such as `enabled` and then use the count parameter in the resource block to decide if we need to execute or not.
+
+`main.tf` in root path
+
+```terraform
+module "route53_policy_execution" {
+  source  = "./policies/route53"
+  enabled = var.policy == "route53" ? true : false
+  name    = var.name
+}
+```
+
+So, if we want to execute route53 policy we could use this command: 
+
+`terraform apply -var-file="policies/route53/environments/prod/prod.tfvars"` 
+
+In the corresponding variable file `prod.tfvars`:
+
+```text
+policy = "route53"
+``` 
+
+so that the condition in the corresponding module will get matched.
+
+Next problem is how to show conditional outputs based on specific module execution. To solve this, we could check for specific attributes in the output block and return a map.
+
+`outputs.tf` in root path
+
+```terraform
+output "route53" {
+  value = length(module.route53_policy_execution.arn) > 0? map(
+    "id", module.route53_policy_execution.id[0],
+    "arn", module.route53_policy_execution.arn[0]
+  ) : null
+}
+```
+
+We have reduced the duplication but added some complexity. So, it's up to you to decide which structure suits your team.
+
 ## References
 
 <https://www.terraform.io>
