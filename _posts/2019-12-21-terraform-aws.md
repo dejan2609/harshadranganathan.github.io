@@ -435,6 +435,20 @@ In case, you have lot of variables and they vary based on the account/environmen
 name=test
 ```
 
+You can move the variables file to each environment folder. Your typical project layout will be as shown below:
+
+```text
+environments/
+├─ dev/
+│  ├─ dev.backend.tfvars
+│  ├─ dev.tfvars
+├─ prod/
+│  ├─ prod.backend.tfvars
+│  ├─ prod.tfvars
+versions.tf
+terraform.tf
+```
+
 ### Accessing Variable Values
 
 We can update our `iam.tf` to make use of the variable with the help of interpolation syntax `var. prefix followed by the variable name`.
@@ -519,18 +533,21 @@ Your state file will be as below when you export output values.
 
 You could then in your respective applications, access this state file to get the vpc name.
 
+**Note: You need to update your modules to produce the required outputs so that you can access them in your dependant child modules using the data source block.**
+
 ```terraform
 # configure vpc remote state file as a data source
 data "terraform_remote_state" "vpc" {
   backend = "s3"
   config =  {
-    bucket = "rharshad-vpc"
-    key    = "vpc.tfstate"
+    bucket = "rharshad-prod-terraform-state"
+    key    = "vpc/terraform.tfstate"
     region = "us-east-1"
   }
 }
 
 # pseudocode to access vpc id from remote state file using interpolation syntax data.<TYPE>.<NAME>.outputs.<OUTPUT_NAME>
+# you need to update your vpc module to produce an output named vpc_id to be able to access it in a different module as a datasource
 vpc_id = "${data.terraform_remote_state.vpc.outputs.vpc_id}"
 ```
 
