@@ -31,8 +31,6 @@ comments: true
 
 Before we set up our EKS cluster, we need to work on setting up the network infrastructure.
 
-If you have already set up the network, then proceed to the next part where we will be provisioning the EKS cluster.
-
 Throughout this article we will be referring to the terraform snippets from [VPC Terraform module](https://github.com/terraform-aws-modules/terraform-aws-vpc/) to describe the network set up process.
 
 ## AWS Network Diagram
@@ -54,8 +52,6 @@ We'll explore the various components and how to set them up using terraform.
 </figure>
 
 ## VPC
-
-Amazon Virtual Private Cloud (Amazon VPC) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. 
 
 Amazon Virtual Private Cloud (Amazon VPC) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. 
 

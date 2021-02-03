@@ -127,6 +127,11 @@ Java Developer with 6+ years of experience in design, development and maintenanc
     </a>
   </div>
   <div class="column">
+    <a href="https://www.youracclaim.com/badges/71ff2fb6-0b95-42d4-90b9-db8afdeb599f/public_url">
+        <img src="{{ site.url }}/assets/img/global/azure-developer-associate.png" style="height:100px;width:100px;">
+    </a>
+  </div>
+  <div class="column">
     <a href="https://www.youracclaim.com/badges/4e2cf693-7126-48e2-abe2-4c67c0c50ec7/public_url">
         <img src="{{ site.url }}/assets/img/global/azure-fundamentals.png" style="height:100px;width:100px;">
     </a>
@@ -167,7 +172,7 @@ Java Developer with 6+ years of experience in design, development and maintenanc
 <div class= "experienceSet">
     <div class="CompanyLOGO"><img src="{{ site.url }}/assets/img/global/cognizant.png" />
         <div class="CompanyName">Cognizant</div>
-        <div class="working_period">(2014 - Present)</div>
+        <div class="working_period">(2014 - 2020)</div>
     </div>
     <div class="WholeContent">
         <div class="ContentBlock">
