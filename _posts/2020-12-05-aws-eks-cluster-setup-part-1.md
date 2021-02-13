@@ -33,6 +33,10 @@ Before we set up our EKS cluster, we need to work on setting up the network infr
 
 Throughout this article we will be referring to the terraform snippets from [VPC Terraform module](https://github.com/terraform-aws-modules/terraform-aws-vpc/) to describe the network set up process.
 
+You can find the sample code that uses the module in below repo:
+
+{% include repo-card.html repo="terraform-aws-vpc" %}
+
 ## AWS Network Diagram
 
 You can zoom on the network diagram here - 
