@@ -74,6 +74,12 @@ data "terraform_remote_state" "vpc" {
 
 ## EKS Cluster
 
+Below is a sample terraform code which calls the module to create EKS control plane.
+
+We pass in the private subnet details of the VPC to the module so that the cluster is created within our private subnet.
+
+We will go in detail to understand what all of these options perform underneath in our module.
+
 ```terraform
 module "eks_cluster" {
   source                    = "git::https://github.com/cloudposse/terraform-aws-eks-cluster.git?ref=master"
@@ -172,6 +178,42 @@ Additionally, two more roles are automatically created for you:
 [1] AmazonEKSServicePolicy, which is a service linked role required for EKS service
 
 [2] An ELB service-linked role for provisioning LB
+
+### Control Plane and Node Security Groups
+
+We need to create a dedicated security group to be attached to our cluster.
+
+This security group will contain rules that will allow all traffic from the control plane and managed/unmanaged node groups to flow freely between each other. 
+
+In the `source_security_group_id` of the custom security group, we add the security groups of our worker nodes so that they can communicate with the control plane.
+
+Sample terraform code is as follows:
+
+```terraform
+resource "aws_security_group" "default" {
+  count       = local.enabled ? 1 : 0
+  name        = module.label.id
+  description = "Security Group for EKS cluster"
+  vpc_id      = var.vpc_id
+  tags        = module.label.tags
+}
+
+resource "aws_security_group_rule" "ingress_workers" {
+  count                    = local.enabled ? length(var.workers_security_group_ids) : 0
+  description              = "Allow the cluster to receive communication from the worker nodes"
+  from_port                = 0
+  to_port                  = 65535
+  protocol                 = "-1"
+  source_security_group_id = var.workers_security_group_ids[count.index]
+  security_group_id        = join("", aws_security_group.default.*.id)
+  type                     = "ingress"
+}
+```
+
+Reference: <https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html>
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ### RBAC access to Nodes
 
@@ -278,6 +320,38 @@ Reference - <https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html
 {% include donate.html %}
 {% include advertisement.html %}
 
+### IAM Roles for Service Accounts
+
+With IAM roles for service accounts on Amazon EKS clusters, you can associate an IAM role with a Kubernetes service account.
+
+This service account can then provide AWS permissions to the containers in any pod that uses that service account. 
+
+With this feature, you no longer need to provide extended permissions to the node IAM role so that pods on that node can call AWS APIs.
+
+We will look into detail later how this works out for the pods.
+
+Below is a sample terraform code that configures an EKS OIDC provider with IAM that establishes trust between the OIDC IdP and your AWS account. 
+
+```terraform
+data "tls_certificate" "eks_oidc_certificate" {
+  url = join("", aws_eks_cluster.default.*.identity.0.oidc.0.issuer)
+}
+
+resource "aws_iam_openid_connect_provider" "default" {
+  count = (local.enabled && var.oidc_provider_enabled) ? 1 : 0
+  url   = join("", aws_eks_cluster.default.*.identity.0.oidc.0.issuer)
+  client_id_list = ["sts.amazonaws.com"]
+  thumbprint_list = [data.tls_certificate.eks_oidc_certificate.certificates.0.sha1_fingerprint]
+}
+```
+
+|Variable|Description|
+|---|---|
+|url |The URL of the EKS OIDC identity provider. By default, each cluster is provided with an OIDC URL.|
+|client_id_list |Audience |
+|thumbprint_list | OpenID Connect (OIDC) identity provider's server certificate fingerprint|
+{:.table-striped} 
+
 ### Control Plane Logs
 
 Amazon EKS control plane logging provides audit and diagnostic logs directly from the Amazon EKS control plane to CloudWatch Logs in your account.
@@ -294,3 +368,6 @@ You can select the exact log types you need, and logs are sent as log streams to
 {:.table-striped} 
 
 Reference - <https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html>
+
+{% include donate.html %}
+{% include advertisement.html %}
