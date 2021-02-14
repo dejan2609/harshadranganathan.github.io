@@ -128,6 +128,51 @@ Reference - <https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.h
 {% include donate.html %}
 {% include advertisement.html %}
 
+### Cluster IAM Role
+
+Kubernetes clusters managed by Amazon EKS make calls to other AWS services on your behalf to manage the resources that you use with the service. 
+
+So, we need to create an IAM role with the managed policy `AmazonEKSClusterPolicy` so that we can attach it to our cluster for getting the required permissions.
+
+Also, the role must have a trust relationship for `eks.amazonaws.com` to assume the role.
+
+Sample terraform code is given below:
+
+```terraform
+data "aws_iam_policy_document" "assume_role" {
+  count = local.enabled ? 1 : 0
+
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["eks.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "default" {
+  count              = local.enabled ? 1 : 0
+  name               = module.label.id
+  assume_role_policy = join("", data.aws_iam_policy_document.assume_role.*.json)
+  tags               = module.label.tags
+}
+
+resource "aws_iam_role_policy_attachment" "amazon_eks_cluster_policy" {
+  count      = local.enabled ? 1 : 0
+  policy_arn = format("arn:%s:iam::aws:policy/AmazonEKSClusterPolicy", join("", data.aws_partition.current.*.partition))
+  role       = join("", aws_iam_role.default.*.name)
+}
+```
+
+Additionally, two more roles are automatically created for you:
+
+[1] AmazonEKSServicePolicy, which is a service linked role required for EKS service
+
+[2] An ELB service-linked role for provisioning LB
+
 ### RBAC access to Nodes
 
 In order, to allow our nodes to join the cluster, we need to add the instance role ARN of the nodes to `aws-auth` ConfigMap in `kube-system` namespace.
@@ -199,6 +244,8 @@ To grant additional AWS users or roles the ability to interact with your cluster
 |mapRoles|* rolearn<br/>* username<br/>* groups | Maps the IAM role to the user name within Kubernetes and the specified groups |
 |mapUsers |* userarn<br/>* username<br/>* groups | Maps the IAM user to the user name within Kubernetes and the specified groups |
 {:.table-striped} 
+
+*The Advantage of using Role to access the cluster instead of specifying directly IAM users is that it will be easier to manage: we won’t have to update the ConfigMap each time we want to add or remove users, we will just need to add or remove users from the IAM Group and we just configure the ConfigMap to allow the IAM Role associated to the IAM Group.*
 
 Sample terraform code that creates the configmap `aws-auth` and adds the mapRoles, mapUsers section:
 
