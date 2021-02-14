@@ -2,7 +2,7 @@
 layout: post
 title: "AWS EKS Cluster Setup with Terraform and Helm Charts - Part 2"
 date: 2021-02-13
-excerpt: "Guide to provisioning Kubernetes cluster in AWS EKS using Terraform and Helm Charts"
+excerpt: "Here, we will set up EKS Control Plane"
 tag:
 - terraform aws eks node group
 - terraform kubernetes provider eks
@@ -32,6 +32,10 @@ comments: true
 In this part, we will focus on setting up the control plane of our EKS cluster.
 
 Throughout this article we will be referring to the terraform snippets from [EKS Terraform Module](https://github.com/cloudposse/terraform-aws-eks-cluster) to describe the control plane set up process.
+
+You can find the sample code that uses the module to provision an EKS cluster in below repo:
+
+{% include repo-card.html repo="terraform-aws-eks" %}
 
 The Amazon EKS control plane consists of control plane nodes that run the Kubernetes software, such as etcd and the Kubernetes API server. 
 
@@ -120,6 +124,112 @@ There are three options to secure this API server endpoint.
 
 
 Reference - <https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html>
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+### RBAC access to Nodes
+
+In order, to allow our nodes to join the cluster, we need to add the instance role ARN of the nodes to `aws-auth` ConfigMap in `kube-system` namespace.
+
+If you are going to use managed node groups, then this ConfigMap is automatically updated by AWS.
+
+If you are going to use un-managed node groups, then you need to update the ConfigMap as follows:
+
+`aws-auth`
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: <ARN of instance role (not instance profile)>
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+        - system:bootstrappers
+        - system:nodes
+```
+
+Sample terraform code for the same is shown below:
+
+```terraform
+locals {
+  # Add worker nodes role ARNs (could be from many un-managed worker groups) to the ConfigMap
+  # Note that we don't need to do this for managed Node Groups since EKS adds their roles to the ConfigMap automatically
+  map_worker_roles = [
+    for role_arn in var.workers_role_arns : {
+      rolearn : role_arn
+      username : "system:node:{{EC2PrivateDNSName}}"
+      groups : [
+        "system:bootstrappers",
+        "system:nodes"
+      ]
+    }
+  ]
+}
+
+resource "kubernetes_config_map" "aws_auth" {
+  count      = local.enabled && var.apply_config_map_aws_auth && var.kubernetes_config_map_ignore_role_changes == false ? 1 : 0
+  depends_on = [null_resource.wait_for_cluster[0]]
+
+  metadata {
+    name      = "aws-auth"
+    namespace = "kube-system"
+  }
+
+  data = {
+    mapRoles    = yamlencode(local.map_worker_roles)
+  }
+}
+```
+
+### RBAC access to IAM users and roles
+
+When you create an Amazon EKS cluster, the IAM entity user or role, such as a federated user that creates the cluster, is automatically granted `system:masters` permissions in the cluster's RBAC configuration in the control plane.
+
+To grant additional AWS users or roles the ability to interact with your cluster, you must edit the `aws-auth` ConfigMap within Kubernetes.
+
+`aws-auth` ConfigMap has below sections:
+
+|Section |Fields |Purpose |
+|--|--|--|
+|mapRoles|* rolearn<br/>* username<br/>* groups | Maps the IAM role to the user name within Kubernetes and the specified groups |
+|mapUsers |* userarn<br/>* username<br/>* groups | Maps the IAM user to the user name within Kubernetes and the specified groups |
+{:.table-striped} 
+
+Sample terraform code that creates the configmap `aws-auth` and adds the mapRoles, mapUsers section:
+
+```terraform
+resource "kubernetes_config_map" "aws_auth" {
+  count      = local.enabled && var.apply_config_map_aws_auth && var.kubernetes_config_map_ignore_role_changes == false ? 1 : 0
+  depends_on = [null_resource.wait_for_cluster[0]]
+
+  metadata {
+    name      = "aws-auth"
+    namespace = "kube-system"
+  }
+
+  data = {
+    mapRoles    = yamlencode(var.map_additional_iam_roles)
+    mapUsers    = yamlencode(var.map_additional_iam_users)
+    mapAccounts = yamlencode(var.map_additional_aws_accounts)
+  }
+}
+```
+
+|Variable|Values|
+|---|---|
+|map_additional_iam_roles |[{<br/>rolearn = "arn:aws:iam::\<account_id\>:role/\<role_name\>"<br/>username = "Contributor"<br/>groups = ["system:masters"]<br/>}] |
+{:.table-striped} 
+
+
+Reference - <https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html>
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ### Control Plane Logs
 

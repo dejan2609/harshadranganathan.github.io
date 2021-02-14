@@ -2,7 +2,7 @@
 layout: post
 title: "AWS EKS Cluster Setup with Terraform and Helm Charts - Part 1"
 date: 2020-12-05
-excerpt: "Guide to provisioning Kubernetes cluster in AWS EKS using Terraform and Helm Charts"
+excerpt: "Here, we will set up VPC infrastructure needed for EKS"
 tag:
 - terraform aws eks node group
 - terraform kubernetes provider eks
