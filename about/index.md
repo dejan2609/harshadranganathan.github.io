@@ -168,6 +168,41 @@ Java Developer with 6+ years of experience in design, development and maintenanc
 
 ## Work Experience
 
+<div class="MobileViewCompanyName">Optum</div>
+<div class= "experienceSet">
+    <div class="CompanyLOGO"><img src="{{ site.url }}/assets/img/global/optum.png" />
+        <div class="CompanyName">Optum</div>
+        <div class="working_period">(2020 - Current)</div>
+    </div>
+    <div class="WholeContent">
+        <div class="ContentBlock">
+            <div class="Content">
+                <div class="Role"><span class="Highlighted">Position: </span>Software Engineer</div>
+                <div class="Years"><i class="fa fa-calendar">&nbsp;Oct 2020 – Mar 2021</i></div>
+                 <div class="location"><i class="fa fa-globe">&nbsp;County Dublin, Ireland</i></div>
+                <div class="Description">
+                    <ul class="des-content">
+                        <li>Built out AWS infrastructure for the entire platform which consisted of 6 EKS clusters, MSK (Kafka), Aurora, ElasticSearch, API Gateway, Cognito, Route53 and other AWS services per environment.</li>
+                        <li>Built out Multi-Cluster monitoring using Prometheus and Thanos with S3 for long term metrics storage.</li>
+                        <li>Organized numerous AWS JAD (Joint Application Design) sessions for capturing requirements, design and important decisions about infrastructure build-out.</li>
+                        <li>Designed patterns for Terraform and Helm charts to enforce reusability and ease of maintenance of IaC.</li>
+                    </ul>
+                    <!-- <input type="checkbox" id="SeeMore"/><label for="SeeMore">To See more</label> -->
+                </div>
+                <div class="Skill-Set">
+                    <span class="arrow-tag">AWS</span>
+                    <span class="arrow-tag">EKS</span>
+                    <span class="arrow-tag">Kafka</span>
+                    <span class="arrow-tag">Terraform</span>
+                    <span class="arrow-tag">Helm</span>
+                    <span class="arrow-tag">Prometheus</span>
+                    <span class="arrow-tag">Thanos</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="MobileViewCompanyName">Cognizant</div>
 <div class= "experienceSet">
     <div class="CompanyLOGO"><img src="{{ site.url }}/assets/img/global/cognizant.png" />
@@ -178,7 +213,7 @@ Java Developer with 6+ years of experience in design, development and maintenanc
         <div class="ContentBlock">
             <div class="Content">
                 <div class="Role"><span class="Highlighted">Position: </span>Associate</div>
-                <div class="Years"><i class="fa fa-calendar">&nbsp;Jan 2017 – Present (3 yrs*)</i></div>
+                <div class="Years"><i class="fa fa-calendar">&nbsp;Jan 2017 – Oct 2020</i></div>
                  <div class="location"><i class="fa fa-globe">&nbsp;County Dublin, Ireland</i></div>
                 <div class="Description">
                     <ul class="des-content">
