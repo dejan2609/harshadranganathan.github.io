@@ -69,6 +69,29 @@ We compare three approaches to externalize application configuration.
 {% include donate.html %}
 {% include advertisement.html %}
 
+## Kubernetes Config Maps
+
+1. Spring apps can use `spring-cloud-kubernetes` starter to simplify access to configmaps and secrets
+2. Supports hot reloading of beans/context when configmap changes
+3. Define configmap name and namespace
+4. We can have a Single `application.yaml` config map with multiple profile properties or config map per profile
+5. Config changes are detected by watching events API or polling configured via settings (deprecated) - new approach is to deploy Kubernetes Configuration Watcher
+6. Requires RBAC permissions to watch config changes
+
+### Pros
+
+1. Kubernetes native solution to which devops are accustomed
+2. Can leverage Kubernetes tools
+3. EKS resiliency means etcd is HA with 3 nodes
+
+### Cons
+
+1. Config size can't exceed 1 MB - otherwise consider mounting a volume or use a separate database or file service
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+
 ## AWS App Config
 
 1. Validator has syntactic and semantic checks using schema or lambda function
