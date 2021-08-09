@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "AWS Aurora DB Flavors Comparison"
+title: "AWS Aurora DB Clusters - Feature Comparison"
 date: 2021-08-09
-excerpt: "AWS Aurora DB Flavors Comparison"
+excerpt: "Compare different cluster configuration options of AWS Aurora"
 tag:
 - aws
 - aurora
