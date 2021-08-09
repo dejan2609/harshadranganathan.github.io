@@ -13,3 +13,13 @@
 | High Availability| * Multiple load balanced cloud config servers<br/>* (Optional) Discovery Client - e.g. Eureka| EKS resiliency - Three etcd nodes that run across three Availability Zones within a Region| AWS managed|
 |Advantages | REST API can be used by non-Spring apps| * Kubernetes native solution<br/>* For Spring apps, spring-cloud-kubernetes helps to run spring apps in Kubernetes using native services| Validation checks, deployment strategy and rollbacks|
 |Disadvantages |* Single point of failure without HA<br/>* Additionally, we might need Discovery Client & Cloud Bus depending on the design | ConfigMaps consumed as environment variables are not updated automatically and require a pod restart| AWS managed service|
+
+
+| |AWS AppConfig hosted configuration store| S3|Parameter Store| Document store| 
+|---|---|---|---|---|
+|Configuration size limit | 64 KB|* 1 MB<br/>* Enforced by AWS AppConfig, not S3| 4 KB (free tier) / 8 KB (advanced parameters)| 64 KB|
+|Resource storage limit | 	1 GB| Unlimited| 10,000 parameters (free tier) / 100,000 parameters (advanced parameters)| 500 documents|
+|Server-side encryption | Yes| No| No| No|
+|AWS CloudFormation support |Yes |Not for creating or updating data |Yes |No |
+|Validate create or update API actions| Not supported| Not supported|Regex supported | JSON Schema required for all put and update API actions|
+|Pricing | Free|See Amazon S3 pricing| See AWS Systems Manager pricing|Free|
