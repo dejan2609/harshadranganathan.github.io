@@ -44,6 +44,15 @@ We compare three approaches to externalize application configuration.
 {% include donate.html %}
 {% include advertisement.html %}
 
+## AWS App Config
+
+1. Validator has syntactic and semantic checks using schema or lambda function
+
+2. Configuration can be stored in parameter store, ssm document, app config store or s3
+
+3. Supports deployment strategies such as growth factor, final bake time in mins, all-in-one,  canary
+
+
 Here we will compare the different configuration stores available with AWS AppConfig.
 
 | |AWS AppConfig hosted configuration store| S3|Parameter Store| Document store| 
@@ -55,6 +64,15 @@ Here we will compare the different configuration stores available with AWS AppCo
 |Validate create or update API actions| Not supported| Not supported|Regex supported | JSON Schema required for all put and update API actions|
 |Pricing | Free|See Amazon S3 pricing| See AWS Systems Manager pricing|Free|
 {:.table-striped}
+
+### Pros:
+ 
+1. Support for validation checks and monitoring 
+2. Configuration storage support in variety of AWS services like S3, SSM, App config store etc.
+
+### Cons:
+
+1. Not cloud agnostic
 
 {% include donate.html %}
 {% include advertisement.html %}
