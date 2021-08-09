@@ -55,6 +55,19 @@ We compare three approaches to externalize application configuration.
 7. Proxy support is also available
 8. Configs can be accessed from multiple backends such as local, Git, S3 etc.
 
+### Pros
+
+1. Non spring apps can use the REST API to get the config
+
+### Cons
+
+1. Single point of failure in the absence of HA design - If cloud server is down then the pods won't get started
+2. Making cloud server highly available requires service discovery feature - either built-in Kubernetes service discovery or Eureka
+3. Config refresh using push model from Github requires Spring Cloud Bus so that we can refresh all the shared apps
+
+{% include donate.html %}
+{% include advertisement.html %}
+
 ## AWS App Config
 
 1. Validator has syntactic and semantic checks using schema or lambda function
