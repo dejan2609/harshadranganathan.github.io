@@ -20,7 +20,9 @@ comments: true
 We compare three approaches to externalize application configuration.
 
 [1] Spring Cloud Config Server - provides server-side and client-side support for externalized configuration in a distributed system
+
 [2] Kubernetes ConfigMaps - API object that lets you store configuration for other objects to use
+
 [3] AWS App Config - supports controlled deployments to applications of any size and includes built-in validation checks and monitoring
 
 
