@@ -1,4 +1,21 @@
-
+---
+layout: post
+title: "Externalized App Configuration - Approach Comparison"
+date: 2021-08-09
+excerpt: "Compare different approaches for externalizing app config"
+tag:
+- spring boot external properties file
+- spring cloud config server
+- kubernetes configmaps
+- aws app config
+- external configuration files
+- externalize configuration
+- twelve factor
+- kubernetes configmap watcher
+- configmaps
+- aws app config
+comments: true
+---
 
 | |Spring Cloud Config Server |Kubernetes ConfigMaps |AWS App Config|
 |---|---|---|---|
@@ -13,7 +30,10 @@
 | High Availability| * Multiple load balanced cloud config servers<br/><br/>* (Optional) Discovery Client - e.g. Eureka| EKS resiliency - Three etcd nodes that run across three Availability Zones within a Region| AWS managed|
 |Advantages | REST API can be used by non-Spring apps| * Kubernetes native solution<br/><br/>* For Spring apps, spring-cloud-kubernetes helps to run spring apps in Kubernetes using native services| Validation checks, deployment strategy and rollbacks|
 |Disadvantages |* Single point of failure without HA<br/><br/>* Additionally, we might need Discovery Client & Cloud Bus depending on the design | ConfigMaps consumed as environment variables are not updated automatically and require a pod restart| AWS managed service|
+{:.table-striped}
 
+{% include donate.html %}
+{% include advertisement.html %}
 
 | |AWS AppConfig hosted configuration store| S3|Parameter Store| Document store| 
 |---|---|---|---|---|
@@ -23,3 +43,8 @@
 |AWS CloudFormation support |Yes |Not for creating or updating data |Yes |No |
 |Validate create or update API actions| Not supported| Not supported|Regex supported | JSON Schema required for all put and update API actions|
 |Pricing | Free|See Amazon S3 pricing| See AWS Systems Manager pricing|Free|
+{:.table-striped}
+
+{% include donate.html %}
+{% include advertisement.html %}
+
