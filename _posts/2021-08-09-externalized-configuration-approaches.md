@@ -16,6 +16,7 @@ tag:
 - aws app config
 comments: true
 ---
+### Spring Cloud Config Server vs Kubernetes Config Maps vs AWS App Config
 
 We compare three approaches to externalize application configuration.
 
@@ -76,6 +77,7 @@ We compare three approaches to externalize application configuration.
 
 3. Supports deployment strategies such as growth factor, final bake time in mins, all-in-one,  canary
 
+### Configuration Store Options
 
 Here we will compare the different configuration stores available with AWS AppConfig.
 
