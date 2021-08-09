@@ -44,6 +44,17 @@ We compare three approaches to externalize application configuration.
 {% include donate.html %}
 {% include advertisement.html %}
 
+## Spring Cloud Config Server
+
+1. Supports pattern matching and multiple repositories for config 
+2. Search paths feature to look for configs in sub directories
+3. Supports shared configuration with all applications
+4. Config refresh can be done using poll/push model
+5. Push model, for example, requires Github webhook and Spring Cloud Bus to broadcast changes to matching applications
+6. By default, the server clones remote repositories when configuration is first requested. This can be changed by using clone first setting.
+7. Proxy support is also available
+8. Configs can be accessed from multiple backends such as local, Git, S3 etc.
+
 ## AWS App Config
 
 1. Validator has syntactic and semantic checks using schema or lambda function
