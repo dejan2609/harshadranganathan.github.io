@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Externalized App Configuration - Approach Comparison"
+title: "Externalized Configuration Approaches"
 date: 2021-08-09
 excerpt: "Compare different approaches for externalizing app config"
 tag:
