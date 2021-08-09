@@ -17,6 +17,13 @@ tag:
 comments: true
 ---
 
+We compare three approaches to externalize application configuration.
+
+[1] Spring Cloud Config Server - provides server-side and client-side support for externalized configuration in a distributed system
+[2] Kubernetes ConfigMaps - API object that lets you store configuration for other objects to use
+[3] AWS App Config - supports controlled deployments to applications of any size and includes built-in validation checks and monitoring
+
+
 | |Spring Cloud Config Server |Kubernetes ConfigMaps |AWS App Config|
 |---|---|---|---|
 |Config Format |	Plain text, yml, properties, json |	Configuration files, property keys |* YAML, JSON, or text documents in the AWS AppConfig hosted configuration store<br/><br/>* Objects in an Amazon Simple Storage Service (Amazon S3) bucket<br/><br/>* Documents in the Systems Manager document store<br/><br/>* Parameters in Parameter Store |
@@ -34,6 +41,8 @@ comments: true
 
 {% include donate.html %}
 {% include advertisement.html %}
+
+Here we will compare the different configuration stores available with AWS AppConfig.
 
 | |AWS AppConfig hosted configuration store| S3|Parameter Store| Document store| 
 |---|---|---|---|---|
