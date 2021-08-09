@@ -16,7 +16,7 @@ tag:
 - aws app config
 comments: true
 ---
-### Spring Cloud Config Server vs Kubernetes Config Maps vs AWS App Config
+## Spring Cloud Config Server vs Kubernetes Config Maps vs AWS App Config
 
 We compare three approaches to externalize application configuration.
 
