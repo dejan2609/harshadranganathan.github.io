@@ -65,12 +65,12 @@ Here we will compare the different configuration stores available with AWS AppCo
 |Pricing | Free|See Amazon S3 pricing| See AWS Systems Manager pricing|Free|
 {:.table-striped}
 
-### Pros:
+### Pros
  
 1. Support for validation checks and monitoring 
 2. Configuration storage support in variety of AWS services like S3, SSM, App config store etc.
 
-### Cons:
+### Cons
 
 1. Not cloud agnostic
 
