@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AWS EKS Cluster Upgrade - 1.16 To 1.17"
+title: "AWS EKS Cluster Upgrade (Self-managed) - 1.16 To 1.17"
 date: 2021-08-24
 excerpt: "Steps involved in upgrading EKS cluster from Kubernetes version 1.16 to 1.17"
 tag:
@@ -12,6 +12,8 @@ tag:
 - eks addons upgrade
 comments: true
 ---
+
+This upgrade guide is for self-managed nodes.
 
 ## Note
 
