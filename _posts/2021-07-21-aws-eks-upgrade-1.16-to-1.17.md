@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AWS EKS Cluster Upgrade - 1.16 To 1.17"
-date: 2021-07-21
+date: 2021-08-24
 excerpt: "Steps involved in upgrading EKS cluster from Kubernetes version 1.16 to 1.17"
 tag:
 - aws
@@ -122,6 +122,8 @@ data:
 
 ### Control Plane Upgrade
 
+#### Kube Version
+
 [1] If you are using IaC (Infrastructure As Code) tool, say terraform, you will update the Kubernetes version in that and apply your changes.
 
 Sample terraform vars change:
@@ -136,15 +138,51 @@ When you run terraform plan, it should show a change from `1.16` to `1.17` as sh
  ~ version                   = "1.16" -> "1.17"
 ```
 
-**Note:** You can only update one minor version at a time. Otherwise, terraform will return this error: ` error updating EKS Cluster version: InvalidParameterException: Unsupported Kubernetes minor version update from 1.16 to 1.19`
+**Note:** You can only update one minor version at a time. Otherwise, terraform will return this error: `error updating EKS Cluster version: InvalidParameterException: Unsupported Kubernetes minor version update from 1.16 to 1.19`
 
-Also, depending on the terraform module which you are using for EKS cluster management, it will show a new AMI ID which is configured with the target kubernetes version.
+#### AMI
 
-Reference - <https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html>
+Also, depending on the terraform module which you are using for EKS cluster management, it will show a new AMI ID in the plan output which is configured for the target kubernetes version.
 
-Review the plan and apply the changes.
+e.g. 
+
+```
+~ image_id                   = "ami-033cb6de8270b4ce7" -> "ami-0535962d400b33de7"
+```
+
+Alternatively, if the AMI is hardcoded in terraform, you can get the AMI pertaining to the target kubernetes version from this link - <https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html>
+
+Update the AMI ID in the terraform code.
+
+#### Launch Template
+
+Typically, a new launch template version will be created for the AMI change by your terraform module.
+
+There are two important settings that will drive how the upgrade is done.
+
+`default_version` in the launch template needs to be set to the new template version. This will be suggested automatically by your plan output or you need to configure it in case of hardcoded version number.
+
+Your auto scaling group, should have been configured to pick either the `latest` (or) `default` version of the launch template. If that's not the case you need to update your terraform code to pick the new launch template version so that any new nodes launched will use the new AMI image.
+
+```
+  ~ resource "aws_launch_template" "default" {
+        arn                                  = "arn:aws:ec2:us-east-1::launch-template/lt-"
+      ~ default_version                      = 4 -> (known after apply)
+        id                                   = "lt-"
+      ~ image_id                             = "ami-0c29dd87e87fb4dfd" -> "ami-0535962d400b33de7"
+        instance_type                        = "r5a.xlarge"
+      ~ latest_version                       = 4 -> (known after apply)
+        name                                 = prod-eks-20210217125057781700000004"
+        update_default_version               = true
+```
+
+Your plan output could be something like above where a new default and latest version is being set. Also, `update_default_version` flag here updates the default version to the latest template.
+
+
+Review all your plan output and apply the changes.
 
 It takes around 30 mins for the control plane upgrade to complete.
+
 
 [2] Verify the version of your cluster control plane post the upgrade.
 
@@ -172,7 +210,7 @@ Below steps are applicable if you are using self-managed nodes.
 
 In this approach, you will launch new nodes, gracefully migrate your existing applications to the new nodes and then remove the old nodes from your cluster.
 
-[1] Assuming you are using AWS autoscaling group for your nodes, double the desired capacity of the cluster to launch new nodes which will run on the target kubernetes version.
+[1] Assuming you are using AWS autoscaling group for your nodes, double the desired capacity of the cluster to launch new nodes which will run on the target kubernetes version (in previous steps we had configured the auto scaling group to pick the latest template version which has the new AMI image).
 
 E.g. If the Minimum capacity is set to 4 and the Desired capacity is set to 4, set the new Desired capacity as 8.
 
