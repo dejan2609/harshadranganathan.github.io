@@ -95,15 +95,15 @@ Java Developer with 6+ years of experience in design, development and maintenanc
             <div class="bottom">CONTAINERS</div>
             <div class="skills">
                 <div class="left">
-                    <span>Docker</span>
+                    <span>Kubernetes</span>
                 </div>
                 <div class="right">
-                    <span class="label intermediate">INTERMEDIATE</span>
+                    <span class="label proficient">PROFICIENT</span>
                 </div>
             </div>
             <div class="skills">
                 <div class="left">
-                    <span>Kubernetes</span>
+                    <span>Docker</span>
                 </div>
                 <div class="right">
                     <span class="label intermediate">INTERMEDIATE</span>
