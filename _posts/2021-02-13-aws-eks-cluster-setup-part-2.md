@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AWS EKS Cluster Setup with Terraform and Helm Charts - Part 2"
+title: "AWS EKS Cluster Setup with Terraform - Part 2"
 date: 2021-02-13
 excerpt: "Here, we will set up EKS Control Plane"
 tag:

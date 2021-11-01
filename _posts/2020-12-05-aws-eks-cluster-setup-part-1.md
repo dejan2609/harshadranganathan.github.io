@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AWS EKS Cluster Setup with Terraform and Helm Charts - Part 1"
+title: "AWS EKS Cluster Setup with Terraform - Part 1"
 date: 2020-12-05
 excerpt: "Here, we will set up VPC infrastructure needed for EKS"
 tag:
