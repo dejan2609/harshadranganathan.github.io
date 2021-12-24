@@ -542,7 +542,7 @@ files:
           port_value: 9901
     static_resources:
       listeners:
-      - name: listener_n0
+      - name: listener_clusterA
         address:
           socket_address:
             address: 0.0.0.0
@@ -580,32 +580,165 @@ files:
                       prefix: "/"
                       grpc: {}
                     route:
-                      host_rewrite_literal: example.com
-                      cluster: service_n0
+                      host_rewrite_literal: clusterA.prometheus.example.net
+                      cluster: service_clusterA
       clusters:
-      - name: service_n0
+      - name: service_clusterA
         connect_timeout: 30s
         type: logical_dns
         http2_protocol_options: {}
         dns_lookup_family: V4_ONLY
         load_assignment:
-          cluster_name: service_n0
+          cluster_name: service_clusterA
           endpoints:
           - lb_endpoints:
             - endpoint:
                 address:
                   socket_address:
-                    address: example.com
+                    address: clusterA.prometheus.example.net
                     port_value: 443
         transport_socket:
           name: envoy.transport_sockets.tls
           typed_config:
             "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
-            sni: example.com
+            sni: clusterA.prometheus.example.net
             common_tls_context:
               alpn_protocols:
               - "h2"
 ```
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+Below is the flow of above configuration file:
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2021/12/multi-cluster-monitoring-envoy-proxy-flow.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2021/12/multi-cluster-monitoring-envoy-proxy-flow.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2021/12/multi-cluster-monitoring-envoy-proxy-flow.png">
+            <img src="{{ site.url }}/assets/img/2021/12/multi-cluster-monitoring-envoy-proxy-flow.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+#### Listeners
+
+Envoy sits in between Thanos and proxies the connection requests to various clusters having thanos sidecar.
+
+So, for each cluster we need to proxy the request, need to have a listener running.
+
+
+```yaml
+listeners:
+  - name: listener_clusterA
+    address:
+      socket_address:
+        address: 0.0.0.0
+        port_value: 10000
+```
+
+In above, we configure envoy to start a listener at port `10000` for let's say `clusterA` whose metrics we need to access from the observer cluster.
+
+#### Filters
+
+Each Listener then defines a set of filters that sit in the data path, collectively forming a filter chain. 
+
+By composing and arranging a set of filters, users can configure Envoy to translate protocol messages, generate statistics, perform RBAC, etc. 
+
+Envoy provides numerous built-in filters
+
+##### HTTP connection management
+
+Envoy has a built in network level filter called the HTTP connection manager. 
+
+This filter translates raw bytes into HTTP level messages and events (e.g., headers received, body data received, trailers received, etc.). 
+
+It also handles functionality common to all HTTP connections and requests such as access logging, request ID generation and tracing, request/response header manipulation, route table management, and statistics.
+
+Initial set of configs are around Access logs, after which we do route management.
+
+```yaml
+route_config: 
+  name: local_route
+  virtual_hosts:
+    - name: local_service
+      domains: ["*"]
+      routes:
+        - match:
+            prefix: "/"
+            grpc: {}
+          route:
+            host_rewrite_literal: clusterA.prometheus.example.net
+            cluster: service_clusterA
+```
+
+Here, we configure a virtual host that maps domains to a set of routing rules.
+
+We create a route match to only gRPC requests since that is the protocol used by Thanos.
+
+Also, we configure to swap the host header during forwarding with the original host name requested by the client.
+
+#### Clusters
+
+Finally, we configure the upstream clusters.
+
+```yaml
+clusters:
+  - name: service_n0
+    connect_timeout: 30s
+    type: logical_dns
+    http2_protocol_options: {}
+    dns_lookup_family: V4_ONLY
+```
+
+Above are some basic configurations:
+
+[1] Service discovery type is set to `logical_dns` - a logical DNS cluster only uses the first IP address returned when a new connection needs to be initiated. Thus, a single logical connection pool may contain physical connections to a variety of different upstream hosts.
+
+[2] `http2_protocol_options` - Indicate Envoy to use HTTP/2 when making new HTTP connection pool connections
+
+##### Endpoints
+
+We then configure load balancing based endpoint to distribute the traffic, in our case, to the upstream domain.
+
+```yaml
+clusters:
+  - name: service_n0
+    connect_timeout: 30s
+    type: logical_dns
+    http2_protocol_options: {}
+    dns_lookup_family: V4_ONLY
+    load_assignment:
+      cluster_name: service_n0
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: clusterA.prometheus.example.net
+                port_value: 443
+```
+
+##### TLS
+
+Since we had configured our ALB's with certs on port 443, the proxying needs to happen over TLS.
+
+```yaml
+clusters:
+  - name: service_n0
+    ...
+    transport_socket:
+      name: envoy.transport_sockets.tls
+      typed_config:
+        "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+        sni: example.com
+        common_tls_context:
+          alpn_protocols:
+          - "h2"
+```
+
+Here, we configure the SNI and ALPN protocol (Transport Layer Security (TLS) extension that allows the application layer to negotiate which protocol should be performed over a secure connection in a manner that avoids additional round trips and which is independent of the application-layer protocols) to be used for the TLS connection.
 
 ### Thanos
 
