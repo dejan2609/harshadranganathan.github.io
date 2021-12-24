@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Multi Cluster Monitoring With Thanos In AWS"
-date: 2021-11-01
+date: 2021-12-24
 excerpt: "Steps involved in Multi Cluster Kubernetes Monitoring with Thanos in AWS"
 tag:
 - aws
@@ -464,6 +464,150 @@ Storage:
 Query:
 
 [1] You can now send queries to the cluster via the ALB to the Thanos sidecar which will respond with the metrics available in the local node realtime.
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Observer Cluster
+
+Now, we will focus on the setups to be done in the Observer cluster.
+
+As per our design, we need to access the prometheus metrics from the centralized observer cluster across all the clusters that we need to monitor.
+
+### Kube Prometheus Stack
+
+Similar to how we set up the kube-prometheus-stack in the other clusters, we need to also set it up in the Observer cluster for two purposes:
+
+[1] We need to monitor the health of the Observer cluster
+
+[2] We need to monitor the components installed in the Observer cluster e.g. exporters
+
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2021/12/multi-cluster-monitoring-thanos-observer-cluster.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2021/12/multi-cluster-monitoring-thanos-observer-cluster.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2021/12/multi-cluster-monitoring-thanos-observer-cluster.png">
+            <img src="{{ site.url }}/assets/img/2021/12/multi-cluster-monitoring-thanos-observer-cluster.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Let's add a new env/cluster specific file e.g. `observer-prod-values.yaml` with required settings.
+
+```yaml
+prometheus:
+  thanosIngress:
+    enabled: false
+  prometheusSpec:
+    externalLabels:
+      cluster: observer
+      stage: prod
+      region: us-east-1
+```
+
+Here, we just disable the thanos ingress as we don't need to have it exposed.
+
+Other settings come from the default `values.yaml` and `shared-values.yaml` file in our repository.
+
+Install the chart and you will have prometheus running in the cluster.
+
+```bash
+helm upgrade -i prometheus . -n platform --values=shared-values.yaml --values=observer-prod-values.yaml
+```
+
+### Envoy Proxy
+
+Next, we need envoy proxy to be able to connect with the other clusters.
+
+Reason why we need it is that the certificate validation fails against ALB with error `transport: authentication handshake failed: x509: cannot validate certificate for xxx because it doesn't contain any IP SANs`.
+
+Thanos underneath uses golang with gRPC protocol which fails if the certificate has missing fields.
+
+So, we use envoy proxy as a middleware as it doesn't perform these checks.
+
+{% include repo-card.html repo="helm-envoy-proxy" %}
+
+Let's see the complete envoy configuration and we will break it down into sections for better understanding.
+
+
+```yaml
+files:
+  envoy.yaml: |-
+    admin:
+      access_log_path: /dev/null
+      address:
+        socket_address:
+          address: 0.0.0.0
+          port_value: 9901
+    static_resources:
+      listeners:
+      - name: listener_n0
+        address:
+          socket_address:
+            address: 0.0.0.0
+            port_value: 10000
+        filter_chains:
+        - filters:
+          - name: envoy.filters.network.http_connection_manager
+            typed_config: 
+              "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+              stat_prefix: ingress_http
+              access_log:
+              - name: envoy.access_loggers.file
+                typed_config:
+                  "@type": type.googleapis.com/envoy.extensions.access_loggers.file.v3.FileAccessLog
+                  path: /dev/stdout
+                  log_format:
+                    text_format: |
+                      [%START_TIME%] "%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%"
+                      %RESPONSE_CODE% %RESPONSE_FLAGS% %RESPONSE_CODE_DETAILS% %BYTES_RECEIVED% %BYTES_SENT% %DURATION%
+                      %RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)% "%REQ(X-FORWARDED-FOR)%" "%REQ(USER-AGENT)%"
+                      "%REQ(X-REQUEST-ID)%" "%REQ(:AUTHORITY)%" "%UPSTREAM_HOST%" "%UPSTREAM_TRANSPORT_FAILURE_REASON%"\n             
+              - name: envoy.access_loggers.file
+                typed_config:
+                  "@type": type.googleapis.com/envoy.extensions.access_loggers.file.v3.FileAccessLog
+                  path: /dev/stdout
+              http_filters:
+              - name: envoy.filters.http.router
+              route_config:
+                name: local_route
+                virtual_hosts:
+                - name: local_service
+                  domains: ["*"]
+                  routes:
+                  - match:
+                      prefix: "/"
+                      grpc: {}
+                    route:
+                      host_rewrite_literal: example.com
+                      cluster: service_n0
+      clusters:
+      - name: service_n0
+        connect_timeout: 30s
+        type: logical_dns
+        http2_protocol_options: {}
+        dns_lookup_family: V4_ONLY
+        load_assignment:
+          cluster_name: service_n0
+          endpoints:
+          - lb_endpoints:
+            - endpoint:
+                address:
+                  socket_address:
+                    address: example.com
+                    port_value: 443
+        transport_socket:
+          name: envoy.transport_sockets.tls
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+            sni: example.com
+            common_tls_context:
+              alpn_protocols:
+              - "h2"
+```
+
+### Thanos
 
 {% include donate.html %}
 {% include advertisement.html %}
