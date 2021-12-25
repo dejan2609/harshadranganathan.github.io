@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Multi Cluster Monitoring With Thanos In AWS"
-date: 2021-12-24
+date: 2021-12-25
 excerpt: "Steps involved in Multi Cluster Kubernetes Monitoring with Thanos in AWS"
 tag:
 - aws
@@ -685,7 +685,7 @@ Finally, we configure the upstream clusters.
 
 ```yaml
 clusters:
-  - name: service_n0
+  - name: service_clusterA
     connect_timeout: 30s
     type: logical_dns
     http2_protocol_options: {}
@@ -704,13 +704,13 @@ We then configure load balancing based endpoint to distribute the traffic, in ou
 
 ```yaml
 clusters:
-  - name: service_n0
+  - name: service_clusterA
     connect_timeout: 30s
     type: logical_dns
     http2_protocol_options: {}
     dns_lookup_family: V4_ONLY
     load_assignment:
-      cluster_name: service_n0
+      cluster_name: service_clusterA
       endpoints:
       - lb_endpoints:
         - endpoint:
@@ -726,7 +726,7 @@ Since we had configured our ALB's with certs on port 443, the proxying needs to 
 
 ```yaml
 clusters:
-  - name: service_n0
+  - name: service_clusterA
     ...
     transport_socket:
       name: envoy.transport_sockets.tls
@@ -740,7 +740,106 @@ clusters:
 
 Here, we configure the SNI and ALPN protocol (Transport Layer Security (TLS) extension that allows the application layer to negotiate which protocol should be performed over a secure connection in a manner that avoids additional round trips and which is independent of the application-layer protocols) to be used for the TLS connection.
 
+#### Service Ports
+
+Finally, you wrap up by configuring the listener ports in your service and container port configuration.
+
+```yaml
+service:
+  ports:
+    clusterA:
+      port: 10000
+      targetPort: clusterA
+      protocol: TCP
+      
+ports:
+  clusterA:
+    containerPort: 10000
+    protocol: TCP
+```
+
+{% include donate.html %}
+{% include advertisement.html %}
+
 ### Thanos
+
+Now that we have prometheus stack and envoy proxy running in the observer cluster, final piece is to install the thanos components such as:
+
+| | |
+|--|--|
+|Thanos Querier |Thanos Querier essentially allows to aggregate and optionally deduplicate multiple metrics backends under single Prometheus Query endpoint. |
+|Thanos Store |The thanos store command (also known as Store Gateway) implements the Store API on top of historical data in an object storage bucket. <br/><br/>It acts primarily as an API gateway and therefore does not need significant amounts of local disk space. |
+|Thanos Compactor |Applies the compaction procedure of the Prometheus 2.0 storage engine to block data stored in object storage<br/><br/>It is also responsible for creating 5m downsampling for blocks larger than 40 hours (2d, 2w) and creating 1h downsampling for blocks larger than 10 days (2w) |
+{:.table-striped}
+
+Let's create a sample `shared-values.yaml` file with following configuration
+
+```yaml
+image:
+  tag: v0.18.0
+
+sidecar:
+  enabled: true
+  namespace: platform
+
+query:
+  storeDNSDiscovery: true
+  sidecarDNSDiscovery: true
+
+store:
+  enabled: true
+  serviceAccount: "thanos-store"
+
+bucket:
+  enabled: true
+  serviceAccount: "thanos-store"
+
+compact:
+  enabled: true
+  serviceAccount: "thanos-store"
+
+objstore:
+  type: S3
+  config:
+    endpoint: s3.us-east-1.amazonaws.com
+    sse_config:
+      type: "SSE-S3"
+```
+
+Here, we basically enable the various components and mention Thanos to use S3 object storage.
+
+Next, we create env specific values file for the hlem chart.
+
+`prod-values.yaml`
+
+```yaml
+objstore:
+  config:
+    # AWS S3 metrics bucket name
+    bucket: <bucket_name>
+```
+
+First, we configure the S3 bucket name where the metrics are stored so that compactor can downsample them and the store API can access them as well.
+
+Next, in the envoy proxy section we had configured listeners for each of the clusters that we want to pull the metrics.
+
+So, we now point thanos to the envoy listener ports. Thanos querier will then query the various clusters and aggregate the query results.
+
+```yaml
+query:
+  stores: 
+    - dnssrv+_clusterA._tcp.envoy
+  extraArgs:
+    - "--rule=dnssrv+_clusterA._tcp.envoy"
+    - "--rule=dnssrv+_grpc._tcp.thanos-sidecar-grpc.platform.svc.cluster.local"
+```
+
+Here, we use 'dnssrv+' scheme to detect Thanos API servers through respective DNS lookups.
+
+dnssrv+ scheme - *With DNS SD, a domain name can be specified and it will be periodically queried to discover a list of IPs.<br/>
+The domain name after this prefix will be looked up as a SRV query, and then each SRV record will be looked up as an A/AAAA query. You do not need to specify a port as the one from the query results will be used.*
+
+The second rule in the config `dnssrv+_grpc._tcp.thanos-sidecar-grpc.platform.svc.cluster.local` is required so that Thanos Querier can connect to the thanos sidecar in the local prometheus instance (observer cluster)
 
 {% include donate.html %}
 {% include advertisement.html %}
