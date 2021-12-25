@@ -76,7 +76,7 @@ For our setup, we will install Kube Prometheus Stack in each our clusters that w
 
 Since we are planning for monitoring from a central observer cluster, we do not want to install some tools e.g. grafana in each of the clusters.
 
-We make use of the helm chart repo [https://github.com/prometheus-operator/kube-prometheus] and override the values for easy installation.
+We make use of the helm chart repo [https://github.com/HarshadRanganathan/helm-aws-prometheus-stack] and override the values for easy installation.
 
 Let's see what's involved in setting up below components in a single cluster:
 
@@ -493,6 +493,8 @@ Similar to how we set up the kube-prometheus-stack in the other clusters, we nee
     </a>
 </figure>
 
+We will use the same helm chart repo [https://github.com/HarshadRanganathan/helm-aws-prometheus-stack] and override the values for easy installation.
+
 Let's add a new env/cluster specific file e.g. `observer-prod-values.yaml` with required settings.
 
 ```yaml
@@ -771,6 +773,8 @@ Now that we have prometheus stack and envoy proxy running in the observer cluste
 |Thanos Store |The thanos store command (also known as Store Gateway) implements the Store API on top of historical data in an object storage bucket. <br/><br/>It acts primarily as an API gateway and therefore does not need significant amounts of local disk space. |
 |Thanos Compactor |Applies the compaction procedure of the Prometheus 2.0 storage engine to block data stored in object storage<br/><br/>It is also responsible for creating 5m downsampling for blocks larger than 40 hours (2d, 2w) and creating 1h downsampling for blocks larger than 10 days (2w) |
 {:.table-striped}
+
+We make use of the helm chart repo [https://github.com/HarshadRanganathan/helm-thanos] and override the values for easy installation.
 
 Let's create a sample `shared-values.yaml` file with following configuration
 
