@@ -275,6 +275,25 @@ What I did:
 
 ## Backlog Grooming
 
+- Do frequent groomings instead of one big grooming call e.g. have the grooming meeting every week or break it down to smaller sessions based on team feedback
+- Encourage team conversations rather than you just providing all the required details
+- Remove any fear within team members by having conversations with them that it is okay to say you don't understand the story or it needs more details
+- Do a round table if you notice that any team members are not participating by providing their inputs/raising questions/feedback
+- Ensure that the story has enough details for anyone in the team to work on it
+- Use any tools to get the story point size from all team members 
+- Always try to go with a bigger estimation when in doubt rather than a smaller one
+- If any team member gives very high estimation ask them the reason to see if it's justified - split stories to multiple smaller ones if needed
+- For any stories that are new to the team check if a spike is needed - if so try to have it in the sprint prior to the work so that feasibility/approach to be used/gotchas are known prior to the implementation. Based on the spike further discussions can happen
+- If you have new team members they amy not be in a position to know if the story has required details - ask them to go through the story during the week and come up with any questions for the next grooming call
+
+Problems faced:
+- Getting team participation is always a difficult task - it requires commitment from every team member
+- Some team members end up asking more questions/indicate they have no idea on what needs to be done after picking up the story
+- Sometimes team members assume that they may not be working on a particular story so they don't need to worry about if adequate details are present in the story
+- More experience/domain knowledge amy be needed to assess impacts/risks associated with a work item
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## PI Planning
 
