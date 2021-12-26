@@ -168,7 +168,7 @@ On a recurring basis, this practice worked well.
 </figure>
 
 Problems faced:
-1. Requires the standup fecilitator to bring up the card on Thursday's
+1. Requires the standup facilitator to bring up the card on Thursday's
 2. Sometimes, team members still end up not delivering on docs so need to remind for next week
 
 ### External Contributors
@@ -192,7 +192,7 @@ Although this involves spending little bit more time with external contributors 
 {% include advertisement.html %}
 ## Daily Standup
 
-- Assign standup fecilitator or rotate it among team members every week/sprint
+- Assign standup facilitator or rotate it among team members every week/sprint
 - Ensure quick round table of updates 
 - If any team member derails the standup updates remind them to instead bring it up in the parking lot as every team member needs to first finish providing their updates
 - Ensure standup doesn't exceed the alloted time limit
@@ -202,6 +202,8 @@ Also, as a team lead the daily standup is a good place to provide:
 - any general updates 
 - check status on any specific work items
 - any specific items to be briefly discussed
+
+### Standup Cards
 
 Sometimes, people forget what they had planned to raise in the standup.
 
@@ -229,6 +231,47 @@ Problems faced:
 
 ## Retrospectives
 
+- In a tool of your choice, have different columns such as `Start`, `Stop`, `Continue` and `Action Items`
+- Rotate the retro facilitator every sprint
+- Start timer for `10-15 mins` and have the team members populate the cards for each section
+- Retro facilitator goes through the cards and works with team to see what cards can be merged (as duplicates) and what cards need more clarity
+- Start timer for `5 mins` to vote on cards - each team member is given certain number of votes which they use to indicate what is important to be addressed
+- Retro facilitator works with the team to generate action items and ownership for the cards
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2021/12/retro-board.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2021/12/retro-board.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2021/12/retro-board.png">
+            <img src="{{ site.url }}/assets/img/2021/12/retro-board.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Typically, every team struggles with retrospective action items:
+- card is not actionable since it requires more authority
+- team lead/member who has the action item assigned is busy so they come up with an excuse of `I was busy/no time/forgot` in the next retrospective
+- not all cards have action items assigned - so a team member could feel that their card is ignored
+
+In the end, retrospective becomes more of a place where people can vent their frustrations on a recurring basis and less problems get resolved.
+
+What I did:
+- Even if a retro card didn't get the votes if it feels to be an important item to be addressed even for a single team member then spend some time to provide tips/address concerns/generate an action item for it
+- Pick only reasonable action items - things that could be solved by the team/by manager - anything that requires more authority raise it as a feedback to manager 
+- Add a card to `Daily Standup Items` with a due date set to mid of the sprint to have a `Retro checkpoint` to share any updates on the action items/to remind team members of pending action items etc.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2021/12/teams-planner-card-retro-checkpoint.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2021/12/teams-planner-card-retro-checkpoint.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2021/12/teams-planner-card-retro-checkpoint.png">
+            <img src="{{ site.url }}/assets/img/2021/12/teams-planner-card-retro-checkpoint.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## Backlog Grooming
 
