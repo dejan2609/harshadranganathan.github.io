@@ -104,6 +104,9 @@ Problems faced:
 2. Each have their own style of writing - don't strictly expect members to follow same style as yours
 3. Team members who are new to writing meaningful/readable docs require more training - guide them with suggestions in PR on how they could improve
 
+{% include donate.html %}
+{% include advertisement.html %}
+
 ### Docs Backlog
 
 Create a new backlog for capturing items to be documented. These could be -
@@ -170,6 +173,9 @@ On a recurring basis, this practice worked well.
 Problems faced:
 1. Requires the standup facilitator to bring up the card on Thursday's
 2. Sometimes, team members still end up not delivering on docs so need to remind for next week
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ### External Contributors
 
@@ -339,6 +345,29 @@ What I did:
 {% include advertisement.html %}
 ## Design Discussions/Spikes
 
+- Sometimes team members jump on a hype train/trending tech/pick something they learnt in a course and decide to use that approach for a story
+- Always as part of a spike, ask the team member to come up with the list of approaches they evaluated, pros/cons of each approach, recommendations and schedule a team meeting within an agreed time box
+- Share analysis report with the team in advance before the meeting so that they can read through it and come prepared
+- In the team meeting, evaluate the approaches and recommendation from the team member, ask questions and decide if further analysis needed based on new inputs/risks/impacts
+- Prefer incremental improvements
+- Assess if the solution is unnecessarily complicated/over-engineered
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2021/12/spike-analysis-template.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2021/12/spike-analysis-template.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2021/12/spike-analysis-template.png">
+            <img src="{{ site.url }}/assets/img/2021/12/spike-analysis-templates.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Problems faced:
+- Theoretical vs Practical analysis
+- Delivery constraints force options
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## Technical Backlog
 
