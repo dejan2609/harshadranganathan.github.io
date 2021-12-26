@@ -188,9 +188,44 @@ Although this involves spending little bit more time with external contributors 
 
 - If PR's need to be approved due to urgency of the change, then ask the team member to raise an issue in the repo so that it's tracked as a pending item to be worked upon later
 
-
+{% include donate.html %}
+{% include advertisement.html %}
 ## Daily Standup
 
+- Assign standup fecilitator or rotate it among team members every week/sprint
+- Ensure quick round table of updates 
+- If any team member derails the standup updates remind them to instead bring it up in the parking lot as every team member needs to first finish providing their updates
+- Ensure standup doesn't exceed the alloted time limit
+- If any items require more discussion check with the team to see if they wish to continue in the same meeting/provide small break/ask the team member to create a dedicated meeting for further discussion etc.
+
+Also, as a team lead the daily standup is a good place to provide:
+- any general updates 
+- check status on any specific work items
+- any specific items to be briefly discussed
+
+Sometimes, people forget what they had planned to raise in the standup.
+
+So, I introduced a process to raise cards in the teams planner tab called `Daily Standup Items` where team members/team lead can quickly add a card with due date for discussion as and when it comes to their mind.
+
+Then, in the daily standup ceremony we go through these cards and the member who raised it provides updates/asks questions. In this way, we don't miss things to be raised in the standup.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2021/12/teams-planner-card-friday-docs.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2021/12/teams-planner-card-friday-docs.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2021/12/teams-planner-card-friday-docs.png">
+            <img src="{{ site.url }}/assets/img/2021/12/teams-planner-card-friday-docs.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Problems faced:
+1. Needs to be part of regular ceremony of things done in standup
+2. Sometimes, there might be more cards so try to pick cards which are important from team's perspective to be discussed right now and cards which can be delayed
+3. Some team members prefer to have their own personal notes
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## Retrospectives
 
