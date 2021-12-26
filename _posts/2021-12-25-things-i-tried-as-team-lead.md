@@ -375,11 +375,30 @@ Problems faced:
 
 ## Technical Backlog
 
+- Prioritise items in the backlog so that you can quickly pick any items/debt the team is interested o work upon to fill any gaps in sprint
+- Work with manager/product owner to have a buffer in the sprint to accommodate tech debt items
+
 
 ## JADs
 
+JADs (Joint Application Design sessions) help to flush out solutions to problems by involving all stakeholders.
+
+- Set prior agenda and send it in advance
+- Keep the size of the group small otherwise you will have difficulty reaching conclusions
+- Time box to avoid lengthy discussions leading to less meaningful outcomes
+- Capture meeting notes, decision points and have them stored in code repository/docs for future reference
+- Interrupt politely to have any topics to be taken outside the meeting which is not in scope
+- Sometimes it's better to come with recommendations rather than expecting it from the meeting
+- Discuss with team members to ensure every one are on the same page - last thing you want is your team member pitching something different in the call causing more chaos
+- Try to influence the meeting in the direction you want to take
+
 
 ## Priorities
+
+- Indicate priorities clearly to the team
+- Order the sprint items based on priorities so that team members pick from the top and work towards the botom
+- Check if team members are struggling with any priority items and get them the required support to avoid delivery delays
+- Indicate to team as and when priorities change
 
 
 ## Team Communication Model
@@ -401,9 +420,36 @@ e.g.
 |Teams Channel |Announcements<br/>Questions which may not get quick answers<br/>Maintain discussion thread for easy reference | | Security Remediations<br/>Docs<br/>General announcements<br/>Sprint reminders|
 {:.table-striped}
 
+{% include donate.html %}
+{% include advertisement.html %}
+
 
 ## PRs
 
+Typical problems:
+
+- PR's not reviewed in a timely manner
+- PR changes are too large
+- PR review comments ignored
+- Too much changes proposed
+- Rework of PR needed
+- Tone of the person's comment
+- Team Member doesn't approve other's PR but expects his PR to be approved
+- PR sits for more than a week
+- Change suggested in one place is not reflected wherever applicable
+- Instead of responding to PR comments, you receive pings with explanation
+
+Things I suggest to team members every now and then:
+- Dedicate time every day to review pending PR's
+- If you're waiting for a PR to be approved, post reminders in team's channel or raise it in the standup if it's a blocker
+- Break PR's to smaller reviewable chunks - don't mix things up - do iterative improvements
+- Provide description to the PR stating the change, purpose, any other info required for approval
+- Provide your response to all PR comments
+- Do not count how many comments are given - focus on improving the code, making it more maintainable and resolving any issues highlighted
+- Raise draft PR or have a small team discussion on the approach you are planning to take to avoid any re-work later
+- Use keywords such as 'Can you please' or suggestions in your PR comments. If you are reading the comments ignore the tone of the person and take it with a positive thought, share feedback with the person/manager to add it as a area of improvement for that person.
+- Approve any pending PR's before demanding your PR to be approved
+- Respond to PR comments in the PR itself - incase of any delays then reach out to the person to notify that you have responded to their comments
 
 ## Mentorship
 
@@ -474,6 +520,15 @@ What I did:
 - Foresee any information/potential blockers in advance and have them resolved/share information via email/channel notification so that the other time zone members have clarity/unlbocked once they come online early the next day
 
 ## General Tips
+
+- Try what works for your team
+- Do a round table with all team members to garner their thoughts and reach a collective conclusion - avoid being authoritative
+- Sometimes what the majority suggests isn't always the best solution - at those times enforce authority and guide the team in the right direction
+- Improve things step by step - you can't change the culture overnight
+- Place trust in the team members - avoid micro management (use only when necessary)
+- Market your team's work
+- Give credit where credit's due
+
 
 {% include donate.html %}
 {% include advertisement.html %}
