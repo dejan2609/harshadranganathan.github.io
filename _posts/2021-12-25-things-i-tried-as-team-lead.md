@@ -341,6 +341,10 @@ What I did:
 - Sort the work items in the sprint board based on priority so team members always pick from the top
 - Incase, the priority keeps changing - have a weekly Monday call to clarify the priority items for the week
 
+Problems faced:
+- Team members don't want to work on a particular task - boring/trivial/other reasons - but at the end of the day we are paid to do it and someone has to work on it
+- Multiple team members interested to take up same work item - determine who to assign based on various factors such as priorities, previous work assignments etc.
+
 {% include donate.html %}
 {% include advertisement.html %}
 ## Design Discussions/Spikes
@@ -380,25 +384,96 @@ Problems faced:
 
 ## Team Communication Model
 
+Sometimes you have conflicts within the team as to how the internal communication needs to take place.
+
+- Some prefer not to have personal pings
+- Some prefer to have everything discussed in a team channel so that every conversation is visible to every team member so that they are kept in loop as well
+- Some prefer not to jump on calls
+
+It's important to have a meeting within the team to discuss each person's thoughts and reach a collective communication model based on a majority.
+
+e.g.
+
+||When to use|What to avoid|Examples|
+|--|--|--|--|
+|Teams Chat Room| General discussions<br/>Support questions<br/>Quick PR approvals| Lengthy discussions<br/>Mixing different topics when a conversation is already happening| |
+|Dedicated Chat Room |Specific work items e.g. Spike | |DB Data Migration<br/>Production Release<br/>EKS Upgrades|
+|Teams Channel |Announcements<br/>Questions which may not get quick answers<br/>Maintain discussion thread for easy reference | | Security Remediations<br/>Docs<br/>General announcements<br/>Sprint reminders|
+{:.table-striped}
+
 
 ## PRs
 
 
 ## Mentorship
 
+One of the responsibilities of a team lead is to guide junior/all team members.
 
-## Newsletters
+Strategy I had used is to have bi-weekly connect sessions with all team members.
 
+- Discuss any concerns team members have
+- Discuss their goals
+- Discuss things they are interested to work on
+- Any technical discussions
+- Suggestions for improvement
+
+I try to keep these sessions informal and it has helped a lot to understand conflicts happening within the team, areas for improvement, determine potential work assignments, career paths etc.
+
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Newsletters/Announcements
+
+- Share what the team has delivered every sprint to stakeholders
+- Share any new docs published for everyone's awareness
+- Share proposed work items so that external/dependent teams can raise any risks/impacts
 
 ## External Support
+
+- Document any new questions that arise so that they could search and find the information themselves the next time or you could share link to the doc
+- Assess priorities of support vs delivery
 
 
 ## Meetings
 
+One of the problem that comes up in a Retro is `too many meetings` and how it impacts delivery.
+
+Strategy that I have used is to represent the team in most meetings and invite the team members only when necessary.
+
+This keeps the number of meetings that team members need to attend to a minimal.
+
+As a team lead, you then collate all updates and share it in the standup/team's channel announcement so that everyone is kept in loop as well.
+
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 
 ## Manager Discussions
 
+- Discuss your goals/expectations
+- Get feedback on your work
+- Highlight any retro items
+- Get inputs on any process you would like to try
+- Use the expertise of the manager to see how you can solve any team problems
+- Provide both strengths and weaknesses of team members on a recurring basis
 
+## Globally Distributed Team
+
+When you have a globally distributed team, some of the challenges which arise are:
+- Less time overlap where all team members are available
+- Team members blocked and waiting for info from members in another region
+- Missing any meetings that happen after-hours in a different time zone
+- Too many standups to give updates to different team members e.g. Product Owner in US while other teams are in different locations
+
+What I did:
+- Schedule standup in the overlap time (if possible) to avoid having many standups
+- If team members are blocked have some doc tasks that they could work on in the meantime while members in other location come online for support/clarification
+- Share any meeting updates via email/capture a card and give updates in the next standup to keep everyone in loop
+- Foresee any information/potential blockers in advance and have them resolved/share information via email/channel notification so that the other time zone members have clarity/unlbocked once they come online early the next day
 
 ## General Tips
+
+{% include donate.html %}
+{% include advertisement.html %}
