@@ -318,7 +318,25 @@ Problems faced:
 {% include advertisement.html %}
 ## Task Assignment
 
+Ideal state:
+- Team members pick tasks to work on as they finish each item
+- Team members indicate if they are blocked/need additional support
+- Team members are aware of the priority tasks
 
+Reality:
+- Team members wait for tasks to be assigned
+- Team members take additional time before they reach a conclusion they they need more support/mention it only when asked
+- Team members wait for standup to raise that they are blocked - instead they could have quickly mentioned in group chat
+- Team members work on low priority items/not aware of priority
+
+What I did:
+- To go to the ideal target state, we need to go step by step - so started assingning tasks explicitly to team members while working to develop a culture where members pick tasks themselves based on priorities
+- If there is a sense that a team member seems to be struggling or taking more time to deliver, check with them if they need more support or swap tasks as required
+- Sort the work items in the sprint board based on priority so team members always pick from the top
+- Incase, the priority keeps changing - have a weekly Monday call to clarify the priority items for the week
+
+{% include donate.html %}
+{% include advertisement.html %}
 ## Design Discussions/Spikes
 
 
