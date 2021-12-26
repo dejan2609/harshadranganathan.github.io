@@ -284,20 +284,38 @@ What I did:
 - Always try to go with a bigger estimation when in doubt rather than a smaller one
 - If any team member gives very high estimation ask them the reason to see if it's justified - split stories to multiple smaller ones if needed
 - For any stories that are new to the team check if a spike is needed - if so try to have it in the sprint prior to the work so that feasibility/approach to be used/gotchas are known prior to the implementation. Based on the spike further discussions can happen
-- If you have new team members they amy not be in a position to know if the story has required details - ask them to go through the story during the week and come up with any questions for the next grooming call
+- If you have new team members they may not be in a position to know if the story has required details - ask them to go through the story during the week and come up with any questions for the next grooming call
 
 Problems faced:
 - Getting team participation is always a difficult task - it requires commitment from every team member
 - Some team members end up asking more questions/indicate they have no idea on what needs to be done after picking up the story
 - Sometimes team members assume that they may not be working on a particular story so they don't need to worry about if adequate details are present in the story
-- More experience/domain knowledge amy be needed to assess impacts/risks associated with a work item
+- More experience/domain knowledge may be needed to assess impacts/risks associated with a work item
 
 {% include donate.html %}
 {% include advertisement.html %}
 
 ## PI Planning
 
+- Use any whiteboarding tools to plan work items across sprints
+- Get inputs from team members to allocate any technical debt/backlog items that they would like to focus on in the upcoming PI and see if it can be accommodated
+- Add sections/different areas that the team could focus on - e.g. CI/CD, security etc. so that everything is covered
+- Prioritize the backlog to see potential items that could be worked upon to fill any gaps in PI
+- Publish the planning to other dependent teams to that they could take a look at raise any items missed out
 
+<figure>
+    <a href="{{ site.url }}/assets/img/2021/12/pi-planning-board.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2021/12/pi-planning-board.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2021/12/pi-planning-board.png">
+            <img src="{{ site.url }}/assets/img/2021/12/pi-planning-board.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+
+{% include donate.html %}
+{% include advertisement.html %}
 ## Task Assignment
 
 
