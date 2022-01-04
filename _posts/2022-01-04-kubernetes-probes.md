@@ -31,7 +31,7 @@ spec:
   template:
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: 
           startupProbe:
             httpGet:
               path: /health
@@ -71,7 +71,7 @@ spec:
   template:
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: 
           readinessProbe:
             httpGet:
               path: /health
@@ -103,7 +103,7 @@ spec:
   template:
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: 
           livenessProbe:
             httpGet:
               path: /health
