@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AWS EKS Cluster Upgrade (Self-managed) - 1.18 To 1.19"
-date: 2021-08-24
+date: 2022-01-04
 excerpt: "Steps involved in upgrading EKS cluster from Kubernetes version 1.18 to 1.19"
 tag:
 - aws
@@ -30,6 +30,8 @@ This upgrade guide is for self-managed nodes.
 ## Things To Check
 
 1. Amazon EKS requires two to three free IP addresses from the subnets that were provided when you created the cluster. If these subnets don't have available IP addresses, then the update can fail. 
+
+2. AWS has a limit of 60 rules per security group. Make sure you haven't reached the limit for the sg used by your cluster. For e.g. if you create an NLB per API deployment then you will easily hit this limit as each NLB creates multiple rules. Your ALB controller will then throw security group rules exceeded error as it tries to evict pods and have them created in the new nodes. This will take more effort to rectify resulting in potential downtime.
 
 ## Upgrade Steps
 
@@ -198,6 +200,14 @@ aws autoscaling set-desired-capacity --auto-scaling-group-name <group_name> --de
 e.g.
 ```bash
 aws autoscaling set-desired-capacity --auto-scaling-group-name prod-eks-20210504110647253400000007 --desired-capacity 6
+```
+
+Note:
+
+If your max capacity doesn't allow doubling the nodes, then you need to increase the max capacity first to accommodate the new desired capacity.
+
+```bash
+aws autoscaling  update-auto-scaling-group --auto-scaling-group-name <group_name> --max-size <max_size>
 ```
 
 [4] Wait for the new nodes to spin up and be in `Healthy` status. This can be checked in the `Instance management` tab of the auto-scaling group in AWS console.
@@ -390,6 +400,15 @@ kubectl set image daemonset.apps/kube-proxy \
 ```
 
 That's it, you are done with the upgrade. Now it's time to check that you haven't broken anything :)
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Jenkins Pipeline Script
+
+Below you can find a sample script to perform the same upgrade steps in Jenkins:
+
+<script src="https://gist.github.com/HarshadRanganathan/90f098df3aa823aa221c815bffa4576d.js"></script>
 
 {% include donate.html %}
 {% include advertisement.html %}
