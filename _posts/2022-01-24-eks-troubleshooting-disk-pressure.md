@@ -193,3 +193,7 @@ You then ask the app team to fix the log settings to solve the issue.
 
 {% include donate.html %}
 {% include advertisement.html %}
+
+## References
+
+<https://docs.docker.com/storage/storagedriver/overlayfs-driver/>
