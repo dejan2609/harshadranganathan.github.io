@@ -127,5 +127,69 @@ du -h --max-depth=1 . |sort -n
 
 You can see that `usr` directory is occupying 497Mb and this is could be from your base image e.g. JDK libs etc.
 
+## Disk Usage
+
+You can run below command to see overall disk usage for all directories:
+
+```bash
+df -hT
+```
+
+This would also give you an idea as to what's consuming more storage.
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Scenario 1 - Local Log Files
+
+In this scenario, apps might be writing logs to local file instead of STDOUT causing the disk storage to fill up fast.
+
+In order to find out if any pods are doing it, you need to triangulate the app which may be causing the issue - filter out pods that you suspect might be causing the issue.
+
+Some pointers could be -
+
+[1] when does the disk pressure happen? when performance tests run for a specific app?
+
+[2] In the running pods, check the disk usage and compare it with overlay2 directory. If you notice something amiss, check further.
+
+For example, run this command inside one of the pods - 
+
+```bash
+du -h --max-depth=1 . |sort -n
+
+3.9M    ./sbin
+3.9M    ./tmp
+5.4M    ./bin
+8.9M    ./var
+9.4M    ./lib
+12K     ./root
+32K     ./resources
+500M    ./app
+497M    ./usr
+626M    .
+952K    ./etc
+```
+
+We see that the app directory is occupying 500Mb of storage so we check what files are present inside.
+
+To our surprise, we notice `logs.txt` file inside the app sub-directory and on further investigation we come to know that the app team have a log file appender configured so the logs are written to a local log file and never cleaned up.
+
+
+Sample log4j settings file in a Spring boot app asking to append logs to `logs/log.txt` file:
+
+```xml
+<File name="LogToFile" fileName="logs/log.txt">
+    <PatternLayout>
+        <pattern>{ "date_time":"%date","log_message":"%msg" }%n</pattern>
+    </PatternLayout>
+</File>
+```
+
+Any logs you write to STDOUT end up in the containers directory which is rotated based on size and you could have a log forwarder configured at cluster level which pushes them to an external sink e.g. cloudwatch, ELK, Splunk etc. Once the logs are forwarded they are deleted from the cluster by the forwarder.
+
+However, any file written by the app in the local container directory is not cleaned up by any process. So, the logs keep appending and grow forever based on the configured log settings.
+
+You then ask the app team to fix the log settings to solve the issue.
+
 {% include donate.html %}
 {% include advertisement.html %}
