@@ -106,6 +106,24 @@ a.vglnk {
   }
 }
 
+td a.vglnk {
+  transition: color .4s;
+  color: $color_shark;
+  &:link {
+  	color: black;
+  }
+  &:visited {
+  	color: $color_tuatara;
+  }
+  &:hover {
+  	color: $red;
+  }
+  &:active {
+  	transition: color .3s;
+  	color: $maroon;
+  }
+}
+
 a {
   transition: color .4s;
   color: $color_shark;
