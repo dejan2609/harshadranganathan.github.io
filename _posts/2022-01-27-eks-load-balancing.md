@@ -237,6 +237,9 @@ Above file results in below configuration:
 
 5. Enables Cross Zone load balancing
 
+{% include donate.html %}
+{% include advertisement.html %}
+
 ### Traffic Flow
 
 #### Instance Mode
@@ -264,6 +267,20 @@ Another factor is `externalTrafficPolicy` which is by default set to `Cluster` m
 
 {% include donate.html %}
 {% include advertisement.html %}
+
+### Integration Patterns
+
+#### API Gateway
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/01/eks-api-gateway-private-integration.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/01/eks-api-gateway-private-integration.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/01/eks-api-gateway-private-integration.png">
+            <img src="{{ site.url }}/assets/img/2022/01/eks-api-gateway-private-integration.png" alt="">
+        </picture>
+    </a>
+</figure>
 
 ## References
 
