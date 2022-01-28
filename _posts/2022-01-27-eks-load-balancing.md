@@ -102,6 +102,14 @@ To be able to successfully do that you need to tag your subnets as follows:
 |kubernetes.io/role/internal-elb |1 |Indicates that the subnet is private. Will be used if NLB is internal |
 {:.table-striped}
 
+### Instance Mode
+
+Instance target mode supports pods running on AWS EC2 instances. In this mode, AWS NLB sends traffic to the instances and the kube-proxy on the individual worker nodes forward it to the pods through one or more worker nodes in the Kubernetes cluster.
+
+### IP Mode
+
+IP target mode supports pods running on AWS EC2 instances and AWS Fargate. In this mode, the AWS NLB targets traffic directly to the Kubernetes pods behind the service, eliminating the need for an extra network hop through the worker nodes in the Kubernetes cluster.
+
 {% include donate.html %}
 {% include advertisement.html %}
 
@@ -152,6 +160,40 @@ spec:
   loadBalancerSourceRanges:
     - 10.1.0.0/16
 ```
+
+Above file results in below configuration:
+
+1. Uses AWS Load Balancer Controller instead of the in-tree kubernetes controller
+
+2. Provisions an internal NLB with instance mode
+
+3. Sets the tags provided
+
+4. Enables access logs to the provided S3 path
+
+5. Enables Cross Zone load balancing
+
+### Traffic Flow
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.png">
+            <img src="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+When a request is sent, it reaches the NLB which will load balance the traffic to the target backends (worker nodes).
+
+In instance mode, the traffic gets sent to the NodePort of the instance resulting in an additional hop.
+
+After which the kube-proxy running in the node, sends the request to the desired pod.
+
+EKS by default runs in iptables proxy mode, which means that the kube-proxy will make use of iptables to route traffic to the pods. iptables mode chooses a backend at random.
+
+Another factor is `externalTrafficPolicy` which is by default set to `Cluster` mode. Here, the traffic may randomly be routed to a pod on another host to ensure equal distribution.
 
 
 {% include donate.html %}
