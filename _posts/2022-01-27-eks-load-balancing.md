@@ -35,7 +35,7 @@ You can install aws load balancer controller by following the instructions in be
 
 Pre-requisites -
 
-- AWS LoadBalancer Controller >= v2.2.0
+- AWS LoadBalancer Controller >= v2.3.0
 - Kubernetes >= v1.20 or EKS >= 1.16 or the following patch releases for Service type LoadBalancer 1.18.18+ for 1.18 or 1.19.10+ for 1.19
 
 - Pods have native AWS VPC networking configured
@@ -116,11 +116,9 @@ Let's look at some of the annotations that you can configure and their behaviors
 |service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip" |Provision NLB in IP mode |
 |service.beta.kubernetes.io/aws-load-balancer-scheme: "internal" |Provision internal NLB|
 |service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing" |Provision internet-facing NLB |
-|service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: 'true' |Enable access logs |
-|service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: 'prod-bucket' |Name of the Amazon S3 bucket where load balancer access logs are stored |
-|service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: 'loadbalancing/web-app' |specifies the logical hierarchy you created for your Amazon S3 bucket |
 |service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: 'Stage=prod,App=web-app' |comma-separated list of key-value pairs which will be recorded as additional tags in the ELB |
-|service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true' |Specifies whether cross-zone load balancing is enabled for the load balancer |
+|service.beta.kubernetes.io/aws-load-balancer-attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=prod-bucket,access_logs.s3.prefix=loadbalancing/web-app |Enable access logs<br/><br/>Name of the Amazon S3 bucket where load balancer access logs are stored<br/><br/>Specify the logical hierarchy you created for your Amazon S3 bucket |
+|service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true |Specifies whether cross-zone load balancing is enabled for the load balancer |
 {:.table-striped}
 
 {% include donate.html %}
@@ -139,12 +137,9 @@ metadata:
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "external"
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: 'true'
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: 'prod-bucket'
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: 'loadbalancing/web-app'
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internal"
     service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: 'Stage=prod,App=web-app'
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
+    service.beta.kubernetes.io/aws-load-balancer-attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=prod-bucket,access_logs.s3.prefix=loadbalancing/web-app,load_balancing.cross_zone.enabled=true
 spec:
   ports:
     - name: https
@@ -161,3 +156,9 @@ spec:
 
 {% include donate.html %}
 {% include advertisement.html %}
+
+## References
+
+<https://kubernetes.io/docs/concepts/services-networking/service/>
+
+<https://kubernetes-sigs.github.io/aws-load-balancer-controller/>
