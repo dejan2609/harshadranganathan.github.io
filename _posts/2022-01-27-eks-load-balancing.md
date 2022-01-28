@@ -129,6 +129,70 @@ Let's look at some of the annotations that you can configure and their behaviors
 |service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true |Specifies whether cross-zone load balancing is enabled for the load balancer |
 {:.table-striped}
 
+### Security Groups
+
+Network Load Balancers do not have associated security groups. 
+
+However, you can add any CIDR rules to the security group of your worker nodes.
+
+This is achieved by making use of `spec.loadBalancerSourceRanges` property.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app
+  namespace: platform
+  labels:
+    app: web-app
+spec:
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+  selector:
+    app: web-app
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+    - 10.1.0.0/16
+```
+
+Here, CIDR `10.1.0.0/16` is added to the worker nodes security group.
+
+It's critical to understand the importance of `loadBalancerSourceRanges`.
+
+|NLB Type |Worker Node|loadBalancerSourceRanges|Behavior|
+|--|--|--|--|
+|Internal |Private |Not set |If you didn't set the value for loadBalancerSourceRanges, the default is 0.0.0.0/0<br/>Since the worker node and NLB is private, 0.0.0.0/0 wouldn't cause impact since it won't be reachable directly from public internet |
+|Internal |Private |VPC CIDR e.g. 10.0.0.0/16 (or) ENI private IP |You can either grant access to the entire VPC CIDR or the private IP of the load balancer's network interface to allow traffic from NLB |
+|Internet-facing |Private |Not set |If you didn't set the value for loadBalancerSourceRanges, the default is 0.0.0.0/0<br/>This will open traffic for the entire internet |
+|Internet-facing |Private |Client CIDR |This will allow traffic only from the Client CIDR ranges since NLB by default has client IP preservation enabled |
+{:.table-striped}
+
+#### Gotchas
+
+When you create a NLB for an application it adds below rules to the security group of the worker nodes:
+
+|Purpose |Rule |Number of Rules|
+|--|--|--|
+|Health Check |TCP;Node Port;Source - Subnet Range CIDR;Description - kubernetes.io/rule/nlb/health= |One per subnet CIDR|
+|Client |TCP;Node Port;Source - Source Range CIDR;Description - kubernetes.io/rule/nlb/client= |One per CIDR Range|
+{:.table-striped}
+
+Consider this setup - EKS having worker nodes across 3 AZ's and you add one loadBalancerSourceRange.
+
+This will result in 4 rules added to the worker node security group - 3 health check rules (1 per subnet) and 1 loadBalancerSourceRange rule.
+
+So, for one NLB you end up with 4 rules.
+
+Security groups have a default limit of 60 rules that can be added.
+
+As you create many NLB's/add more source ranges for your apps running in the same cluster, you will soon hit this limit and you can't create any more NLB's.
+
+You can increase the quota but that multiplied by the quota for security groups per network interface cannot exceed 1,000.
+
+
 {% include donate.html %}
 {% include advertisement.html %}
 
@@ -206,3 +270,7 @@ Another factor is `externalTrafficPolicy` which is by default set to `Cluster` m
 <https://kubernetes.io/docs/concepts/services-networking/service/>
 
 <https://kubernetes-sigs.github.io/aws-load-balancer-controller/>
+
+<https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#client-ip-preservation>
+
+<https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-register-targets.html#target-security-groups>
