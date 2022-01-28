@@ -45,11 +45,11 @@ Pre-requisites -
 ## Network Load Balancer
 
 <figure>
-    <a href="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.png">
+    <a href="{{ site.url }}/assets/img/2022/01/eks-nlb-flow-instance-mode.png">
         <picture>
-            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.webp">
-            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.png">
-            <img src="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.png" alt="">
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/01/eks-nlb-flow-instance-mode.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/01/eks-nlb-flow-instance-mode.png">
+            <img src="{{ site.url }}/assets/img/2022/01/eks-nlb-flow-instance-mode.png" alt="">
         </picture>
     </a>
 </figure>
@@ -175,12 +175,14 @@ Above file results in below configuration:
 
 ### Traffic Flow
 
+#### Instance Mode
+
 <figure>
-    <a href="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.png">
+    <a href="{{ site.url }}/assets/img/2022/01/eks-nlb-flow-instance-mode.png">
         <picture>
-            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.webp">
-            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.png">
-            <img src="{{ site.url }}/assets/img/2022/01/eks-nlb-flow.png" alt="">
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/01/eks-nlb-flow-instance-mode.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/01/eks-nlb-flow-instance-mode.png">
+            <img src="{{ site.url }}/assets/img/2022/01/eks-nlb-flow-instance-mode-instance-mode.png" alt="">
         </picture>
     </a>
 </figure>
@@ -191,7 +193,7 @@ In instance mode, the traffic gets sent to the NodePort of the instance resultin
 
 After which the kube-proxy running in the node, sends the request to the desired pod.
 
-EKS by default runs in iptables proxy mode, which means that the kube-proxy will make use of iptables to route traffic to the pods. iptables mode chooses a backend at random.
+EKS by default runs in `iptables proxy` mode, which means that the kube-proxy will make use of iptables to route traffic to the pods. iptables mode chooses a backend at random.
 
 Another factor is `externalTrafficPolicy` which is by default set to `Cluster` mode. Here, the traffic may randomly be routed to a pod on another host to ensure equal distribution.
 
