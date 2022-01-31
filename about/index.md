@@ -2,11 +2,11 @@
 layout: page
 title: Harshad Ranganathan
 tags: [about, harshad, ranganathan, harshad ranganathan]
-date: 2019-10-15
+date: 2022-01-31
 comments: false
 ---
 ## Summary
-Java Developer with 6+ years of experience in design, development and maintenance of Enterprise applications. During my career, I have worked in both the Developer and QA automation engineer roles. Passionate about learning new technologies, trends and being innovative at work.  
+Java Developer with 7+ years of experience in design, development and maintenance of Enterprise applications. During my career, I have worked in both the Developer and QA automation engineer roles. Passionate about learning new technologies, trends and being innovative at work.  
 
 ## Resume Skills
 
@@ -77,6 +77,17 @@ Java Developer with 6+ years of experience in design, development and maintenanc
                 </div>
                 <div class="right">
                     <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">IaC</div>
+            <div class="skills">
+                <div class="left">
+                    <span>Terraform</span>
+                </div>
+                <div class="right">
+                    <span class="label proficient">PROFICIENT</span>
                 </div>
             </div>
         </li>
@@ -574,6 +585,12 @@ Java Developer with 6+ years of experience in design, development and maintenanc
             <div class="skills">
                 <div>
                     <span>Redis</span>
+                </div>
+            </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>DynamoDB</span>
                 </div>
             </div>
         </li>
