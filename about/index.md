@@ -6,7 +6,7 @@ date: 2022-01-31
 comments: false
 ---
 ## Summary
-Java Developer with 7+ years of experience in design, development and maintenance of Enterprise applications. During my career, I have worked in both the Developer and QA automation engineer roles. Passionate about learning new technologies, trends and being innovative at work.  
+Java Developer with 7+ years of experience in design, development and maintenance of Enterprise applications. During my career, I have worked in Developer, QA, Automation, Cloud Enablement and Tech Lead roles. Passionate about learning new technologies, trends and being innovative at work.
 
 ## Resume Skills
 
