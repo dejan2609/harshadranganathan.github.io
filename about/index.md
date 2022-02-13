@@ -43,10 +43,37 @@ Java Developer with 7+ years of experience in design, development and maintenanc
             <div class="bottom">JAVA FRAMEWORKS</div>
             <div class="skills">
                 <div class="left">
-                    <span>Spring</span>
+                    <span>Spring Boot</span>
                 </div>
                 <div class="right">
                     <span class="label proficient">PROFICIENT</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">Test FRAMEWORKS</div>
+            <div class="skills">
+                <div class="left">
+                    <span>JUnit 4/5</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="left">
+                    <span>Mockito</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="left">
+                    <span>JBehave BDD</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
                 </div>
             </div>
         </li>
@@ -55,6 +82,25 @@ Java Developer with 7+ years of experience in design, development and maintenanc
             <div class="skills">
                 <div class="left">
                     <span>Spark</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">API</div>
+            <div class="skills">
+                <div class="left">
+                    <span>REST</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="left">
+                    <span>GraphQL</span>
                 </div>
                 <div class="right">
                     <span class="label intermediate">INTERMEDIATE</span>
@@ -121,6 +167,104 @@ Java Developer with 7+ years of experience in design, development and maintenanc
                 </div>
             </div>
         </li>
+        <li>
+            <div class="bottom">Kubernetes Distributions</div>
+            <div class="skills">
+                <div class="left">
+                    <span>EKS</span>
+                </div>
+                <div class="right">
+                    <span class="label proficient">PROFICIENT</span>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="left">
+                    <span>Openshift</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">CI/CD</div>
+            <div class="skills">
+                <div class="left">
+                    <span>Jenkins</span>
+                </div>
+                <div class="right">
+                    <span class="label proficient">PROFICIENT</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">Project Management Tools</div>
+            <div class="skills">
+                <div class="left">
+                    <span>JIRA</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="left">
+                    <span>Rally</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">Stacks</div>
+            <div class="skills">
+                <div class="left">
+                    <span>ELK</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">Observability</div>
+            <div class="skills">
+                <div class="left">
+                    <span>Prometheus</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="left">
+                    <span>Grafana</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+            <div class="skills">
+                <div class="left">
+                    <span>Kiali</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">Mesh</div>
+            <div class="skills">
+                <div class="left">
+                    <span>Istio</span>
+                </div>
+                <div class="right">
+                    <span class="label intermediate">INTERMEDIATE</span>
+                </div>
+            </div>
+        </li>
     </ul>
 </div><br/>
 
@@ -173,6 +317,11 @@ Java Developer with 7+ years of experience in design, development and maintenanc
     <div class="column">
     <a href="https://www.youracclaim.com/badges/d5d4b3cb-d2b1-492c-8f29-77741b96a5c9/public_url">
         <img src="{{ site.url }}/assets/img/global/ckad.png" style="height:115px;width:115px;">
+    </a>
+  </div>
+  <div class="column">
+    <a href="https://www.credly.com/badges/5bc89b89-6075-4770-abde-c7391ed79e7a/public_url">
+        <img src="{{ site.url }}/assets/img/global/cka.png" style="height:115px;width:115px;">
     </a>
   </div>
 </div><br/>
@@ -501,6 +650,12 @@ Java Developer with 7+ years of experience in design, development and maintenanc
                     <span>Go</span>
                 </div>
             </div>
+            <hr>
+            <div class="skills">
+                <div>
+                    <span>Dart</span>
+                </div>
+            </div>
         </li>
         <li>
             <div class="bottom">JAVA FRAMEWORKS</div>
@@ -615,6 +770,14 @@ Java Developer with 7+ years of experience in design, development and maintenanc
             </div>
         </li>
         <li>
+            <div class="bottom">Bundlers</div>
+            <div class="skills">
+                <div>
+                    <span>Webpack</span>
+                </div>
+            </div>
+        </li>
+        <li>
             <div class="bottom">MOBILE APPS</div>
             <div class="skills">
                 <div>
@@ -661,6 +824,14 @@ Java Developer with 7+ years of experience in design, development and maintenanc
             <div class="skills">
                 <div>
                     <span>UiPath</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="bottom">Stacks</div>
+            <div class="skills">
+                <div>
+                    <span>MERN</span>
                 </div>
             </div>
         </li>
