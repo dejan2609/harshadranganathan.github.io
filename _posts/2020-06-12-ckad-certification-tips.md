@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Certified Kubernetes Application Developer (CKAD) Preparation And Exam Tips"
-date:   2020-06-12
+date:   2022-02-13
 excerpt: "Preparation and exam tips to pass Kubernetes Application Developer certification exam"
 tag:
 - kubernetes certification training
@@ -61,7 +61,7 @@ Learn the kubernetes concepts and tasks through below documentation:
 
 ### Practice Exams
 
-[https://killer.sh/](https://killer.sh/) (I highly recommend to take this exam as it gives you a simulation of the exam environment with time boxed practice tests)
+[https://killer.sh/](https://killer.sh/) (You get 2 free attempts as part of your certification registration - activate it from your exam schedule page)
 
 [https://kodekloud.com/courses/enrolled/675122](https://kodekloud.com/courses/enrolled/675122) (Lightning labs and Mock exams)
 
@@ -90,26 +90,15 @@ Create bookmarks to various concepts/tasks so that you can quickly refer them in
 
 ## Exam Tips
 
-### Kubectl Autocomplete & Alias Configuration
+### Kubectl Alias Configuration
 
-As soon as your exam timer starts, the first step is to configure your bash with kubectl auto completion and alias configuration.
+Your bash is already configured with kubectl autocompletion and `k` alias.
+
+As soon as your exam timer starts, the first step is to configure any needed aliases.
 
 This will save you a lot of time as you attempt your questions.
 
-You don't need to remember below commands as they are available in -
-
-[https://kubernetes.io/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
-
-You are allowed to access this page during your exam in one additional tab of your browser.
-
 ```bash
-# add autocomplete permanently to your bash shell
-echo "source <(kubectl completion bash)" >> ~/.bashrc
-
-# use a shorthand alias for kubectl that also works with completion
-echo "alias k=kubectl" >> ~/.bashrc
-echo "complete -F __start_kubectl k" >> ~/.bashrc
-
 # use a shorthand alias for setting namespace
 echo "alias kn='k config set-context --current --namespace '" >> ~/.bashrc
 ```
@@ -192,6 +181,7 @@ If you are using vim editor for your yaml files, it's good to know below command
 | Goto line | Press the Esc key if you are currently in insert or append mode<br/>Press : (the colon). The cursor should reappear at the lower left corner of the screen next to a : prompt<br/>Enter the line number where you need the cursor to go e.g. `22`|
 | Copy/Cut lines| Move the cursor to the start of line from where you need to cut/copy<br/>Press the Esc key followed by `V` to go to visual mode<br/>Press `d` to cut the lines (or) `y` to copy them|
 | Paste lines | To paste the copied lines in visual mode, go to command mode by pressing ESC key<br/>Press `Shift + p` key combination to paste the content|
+| Tab multiple lines| Enter VISUAL LINE mode by holding [SHIFT] and hitting the “v” key.<br/>Use the arrow keys or “j” and “k” to select the lines you want to indent.<br/>Hit the “>” character (hold [SHIFT] and hit the “.” key) to indent.|
 {:.table-striped}
 
 <br/>
@@ -226,11 +216,11 @@ Spend two minutes to quickly go through all the questions and capture their perc
 For example, I ordered the questions by their score. Question 3 is of 1% while question 12 is of 12%.
 
 ```text
-3 #1%
-5,7,9 #3%
-11,15 #5%
-19,1,2 #7%
-12 #12%
+1% - 3
+3% - 5,7,9
+5% - 11,15
+7% - 19,1,2
+12% - 12
 ```
 
 Then, start working on questions with highest score percentage. You'll notice that some questions with high percentage are relatively simple when compared to questions with low percentage score.
@@ -245,9 +235,64 @@ Always, ensure that you perform below tasks when you attempt a question:
 
 [1] Set the correct cluster context. (Command will be available in the question)
 
-[2] Set the correct namespace. If the namespace is not given, then use `default`.
+[2] Set the correct namespace. If the namespace is not given, then use `default`. 
+
+Make sure when you switch between questions, you reset back to `default` if no namespace is given. Otherwise, you may end up creating resources in the namespace given for previous question
 
 [3] As a safety measure, provide namespace in your imperative commands (or) in your yaml files.
+
+### Use Help Option
+
+You don't need to remember all the options available for a command or the full command itself.
+
+kubectl has a nice feature flag `-h` which displays some useful information -
+
+[1] Examples of how to use the command with options
+
+[2] List of available options
+
+This is handy where you can just copy/paste from examples and edit to your needs.
+
+```bash
+$ k create deployment -h
+Create a deployment with the specified name.
+
+Aliases:
+deployment, deploy
+
+Examples:
+  # Create a deployment named my-dep that runs the busybox image.
+  kubectl create deployment my-dep --image=busybox
+
+  # Create a deployment with command
+  kubectl create deployment my-dep --image=busybox -- date
+
+  # Create a deployment named my-dep that runs the nginx image with 3 replicas.
+  kubectl create deployment my-dep --image=nginx --replicas=3
+
+  # Create a deployment named my-dep that runs the busybox image and expose port 5701.
+  kubectl create deployment my-dep --image=busybox --port=5701
+
+Options:
+      --allow-missing-template-keys=true: If true, ignore any errors in templates when a field or map key is missing in
+the template. Only applies to golang and jsonpath output formats.
+      --dry-run='none': Must be "none", "server", or "client". If client strategy, only print the object that would be
+sent, without sending it. If server strategy, submit server-side request without persisting the resource.
+      --field-manager='kubectl-create': Name of the manager used to track field ownership.
+      --image=[]: Image names to run.
+  -o, --output='': Output format. One of:
+json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.
+      --port=-1: The port that this container exposes.
+  -r, --replicas=1: Number of replicas to create. Default is 1.
+      --save-config=false: If true, the configuration of current object will be saved in its annotation. Otherwise, the
+annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+      --template='': Template string or path to template file to use when -o=go-template, -o=go-template-file. The
+template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+      --validate=true: If true, use a schema to validate the input before sending it
+
+Usage:
+  kubectl create deployment NAME --image=image -- [COMMAND] [args...] [options]
+```
 
 ### Time Tracking
 
