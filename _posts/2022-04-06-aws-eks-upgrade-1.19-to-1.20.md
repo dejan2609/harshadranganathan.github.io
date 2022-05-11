@@ -464,3 +464,12 @@ That's it, you are done with the upgrade. Now it's time to check that you haven'
 
 {% include donate.html %}
 {% include advertisement.html %}
+
+## Jenkins Pipeline Script
+
+Below you can find a sample script to perform the same upgrade steps in Jenkins:
+
+<script src="https://gist.github.com/HarshadRanganathan/f1ca74bc41ee0f3ee5df9b60b4a807d7.js"></script>
+
+{% include donate.html %}
+{% include advertisement.html %}
