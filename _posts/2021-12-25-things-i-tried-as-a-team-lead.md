@@ -65,11 +65,11 @@ I prefer Microsites generated with static site generator tools such as mkdocs, d
 - Establish general documentation guidelines via PR templates
 
 <figure>
-    <a href="{{ site.url }}/assets/img/2021/12/microsite-doc-sections.png">
+    <a href="{{ site.url }}/assets/img/2021/12/aws-platform-docs.png">
         <picture>
-            <source type="image/webp" srcset="{{ site.url }}/assets/img/2021/12/microsite-doc-sections.webp">
-            <source type="image/png" srcset="{{ site.url }}/assets/img/2021/12/microsite-doc-sections.png">
-            <img src="{{ site.url }}/assets/img/2021/12/microsite-doc-sections.png" alt="">
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/05/aws-platform-docs.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/05/aws-platform-docs.png">
+            <img src="{{ site.url }}/assets/img/2022/05/aws-platform-docs.pngg" alt="">
         </picture>
     </a>
 </figure>
