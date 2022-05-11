@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Things I Tried As A Team Lead"
-date: 2021-12-25
+date: 2022-05-11
 excerpt: "Opinionated article on the things I tried as a Team Lead - what worked and what didn't work"
 tag:
 - Team Lead
@@ -511,13 +511,26 @@ When you have a globally distributed team, some of the challenges which arise ar
 - Less time overlap where all team members are available
 - Team members blocked and waiting for info from members in another region
 - Missing any meetings that happen after-hours in a different time zone
-- Too many standups to give updates to different team members e.g. Product Owner in US while other teams are in different locations
+- Giving same updates in different standups e.g. Product Owner in US while other teams are in different locations
 
 What I did:
-- Schedule standup in the overlap time (if possible) to avoid having many standups
-- If team members are blocked have some doc tasks that they could work on in the meantime while members in other location come online for support/clarification
+- Use the overlap time effectively e.g. learning sessions, retrospective
+- Split the standups to suit different timezones but don't ask to repeat same updates from team members who end up having to attend multiple standups. Instead, summarize the updates wherever applicable.
+- If team members are blocked, have some doc tasks that they could work on in the meantime while members in other location come online for support/clarification
 - Share any meeting updates via email/capture a card and give updates in the next standup to keep everyone in loop
-- Foresee any information/potential blockers in advance and have them resolved/share information via email/channel notification so that the other time zone members have clarity/unlbocked once they come online early the next day
+- Foresee any information/potential blockers in advance and have them resolved/share information via email/channel notification so that the other time zone members have clarity/unblocked once they come online early the next day
+
+To zoom and view the content, check the image here - https://raw.githubusercontent.com/HarshadRanganathan/team-leader-templates/main/meeting-schedule/meeting-schedule.png
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/05/meeting-schedule.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/05/meeting-schedule.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/05/meeting-schedule.png">
+            <img src="{{ site.url }}/assets/img/2022/05/meeting-schedule.png" alt="">
+        </picture>
+    </a>
+</figure>
 
 ## General Tips
 
