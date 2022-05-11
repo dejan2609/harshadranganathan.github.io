@@ -465,6 +465,41 @@ Strategy I had used is to have bi-weekly connect sessions with all team members.
 
 I try to keep these sessions informal and it has helped a lot to understand conflicts happening within the team, areas for improvement, determine potential work assignments, career paths etc.
 
+## Listen To Feedback
+
+It's important to listen to feedback as a Team Lead.
+
+More often, Team Leads fail to gather feedback from their Team Members due to following reasons -
+
+[1] They think they are doing a good job
+
+[2] Lack of time
+
+[3] Confusing the need for feedback with retrospective sessions
+
+Below is a sample feedback you could get from your team every quarter, to know the team pulse - 
+
+[1] Make sure every team member completes the feedback form
+
+[2] Remove ambiguity in the questions
+
+[3] Ensure your questions cover aspects you think are important for the growth, culture of the team
+
+[4] Ensure you ask questions that aren't covered in retrospectives but are in your team member's mind which they don't ask due to some hesitation
+
+<iframe width="640px" height="480px" src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__qYx7d9UQzRYTDI5NUQ0WEM5REZHRE5RSjQ4WEUyMC4u&embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
+
+First step is to ask for feedback but even more important step is to act upon the feedback!
+
+Most often, feedbacks asked by companies are not acted upon - empty promises are given such as 'we'll look into them', 'your feedback is really important to us' etc. after which the conversation dies and you end up filling similar feedback for next year.
+
+Once you get the feedback do the following -
+
+[1] See what suggestions are within your control and makes sense that you can quickly implement in the team
+
+[2] Discuss with your manager on any items that need his guidance/approval/discussion with higher management
+
+[3] Keep the team posted on a recurring basis on what you are doing to address the feedback items in your capacity
 
 {% include donate.html %}
 {% include advertisement.html %}
