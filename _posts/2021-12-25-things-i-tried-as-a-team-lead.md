@@ -12,6 +12,7 @@ comments: true
 
 Documentation is one of the important things to be done for any team.
 
+<br/>
 Documentation has many benefits:
 - Information easily accessible for all team members
 - Helps to understand how the system works
@@ -27,6 +28,7 @@ Also, when people face issues executing a code or take more time to troubleshoot
 
 etc. and they don't focus on solving the real problem.
 
+<br/>
 In reality, even if you document things, sometimes teams either don't refer the documentation or still do mistakes etc. for a variety of reasons:
 
 - lack of clarity in the documentation
@@ -38,6 +40,7 @@ etc.
 
 But nevertheless, it's good to have things documented, so that next time someone raises question around "Is it documented? Maybe we should do that" you could quickly answer that it's already done and show it to them so that they will start to focus on the real problem next.
 
+<br/>
 Also, if you don't document:
 
 - team members struggle and spend more time trying to figure out things (it still happens even if you document - for reasons stated above)
@@ -398,7 +401,7 @@ JADs (Joint Application Design sessions) help to flush out solutions to problems
 - Indicate priorities clearly to the team
 - Order the sprint items based on priorities so that team members pick from the top and work towards the botom
 - Check if team members are struggling with any priority items and get them the required support to avoid delivery delays
-- Indicate to team as and when priorities change
+- Indicate to the team as and when priorities change
 
 
 ## Team Communication Model
@@ -504,11 +507,53 @@ Once you get the feedback do the following -
 {% include donate.html %}
 {% include advertisement.html %}
 
+## Monthly Learning Sessions
+
+Knowledge sharing is an important aspect to help the team grow, avoid silos, dependencies with an individual team member, career growth etc.
+
+Each and every team member needs to be aware of how certain component works, not just from a code aspect but also from an hands-on approach as well as be given the opportunity to raise questions.
+
+Although we could say that PR's are the platform for achieving some of the above, it is not always possible as sometimes certain members don't review PR's or give quick approvals due to lack of time/delivery constraints.
+
+<br/>
+Schedule a recurring Monthly Learning Session following below practices -
+
+[1] Keep the learning session to a max of 1 hour - anything more than that will just make people to lose focus
+
+[2] Make sure every team member contributes to the session - Have a form created before the session and ask each team member to fill it out in terms of what they would be sharing within the team - it could be something that they worked in the current sprint, any technology news/trends etc.
+
+It shouldn't be the case where one team member keeps sharing the knowledge while others just keep listening. It's not a training class.
+
+Each team member should bring something to the table.
+
+[3] Time-box the session to 15 mins for each team member to present.
+
+[4] Record the sessions and have them embedded in your internal documentation site so that external teams/new team members can simply listen to them instead of having to repeat same information every now and then.
+
+[5] If your team has more team members than you could accommodate within a 1 hour session then split the session into 2 learning sessions on different day.
+
+<br/>
+*What does above achieve?*
+
+[1] Work could be distributed instead of depending on same team member every time
+
+[2] Anyone in the team could handle support/issues 
+
 ## Newsletters/Announcements
 
 - Share what the team has delivered every sprint to stakeholders
 - Share any new docs published for everyone's awareness
 - Share proposed work items so that external/dependent teams can raise any risks/impacts
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/05/newsletters.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/05/newsletters.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/05/newsletters.png">
+            <img src="{{ site.url }}/assets/img/2022/05/newsletters.png" alt="">
+        </picture>
+    </a>
+</figure>
 
 ## External Support
 
