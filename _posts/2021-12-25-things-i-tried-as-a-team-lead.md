@@ -468,6 +468,37 @@ Strategy I had used is to have bi-weekly connect sessions with all team members.
 
 I try to keep these sessions informal and it has helped a lot to understand conflicts happening within the team, areas for improvement, determine potential work assignments, career paths etc.
 
+## Sharing Credit/Recognition
+
+As a Team Lead, always share credit to the work done by your Team Member. e.g. mention that person X worked on it in a call instead of projecting that it was your efforts and getting undue credit
+
+Recognize the efforts of your Team Members.
+
+Take notes of your Team Members contributions that you feel needs to be acknowledged.
+
+On a recurring basis, recognize the efforts by -
+
+[1] Sharing feedback with the Team Member's supervisor
+
+[2] Recognizing the efforts through any internal awards/points/thank-you portal
+
+[3] Sending `Thank You` email cc-ing the Supervisor/Manager
+
+[4] Calling out contributions in any meetings/slides etc.
+
+Be more concrete with your recognition. I have seen many people who send thank you with vague content.
+
+Capture every detail as possible in your email/reward so that the Team Member gets astonished by the level of observation by the Tech Lead.
+
+**Bad Recognition Examples**
+
+*Thanks for all your efforts last month*
+
+*Thanks for all your efforts in delivering the project X*
+
+{% include donate.html %}
+{% include advertisement.html %}
+
 ## Listen To Feedback
 
 It's important to listen to feedback as a Team Lead.
