@@ -17,6 +17,19 @@ tag:
 comments: true
 ---
 
+## Architecture
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/07/private-rds-access-local.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/07/private-rds-access-local.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/07/private-rds-access-local.png">
+            <img src="{{ site.url }}/assets/img/2022/07/private-rds-access-local.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+
 ## Session Manager
 
 ### Session Encryption (KMS)
