@@ -29,8 +29,29 @@ comments: true
     </a>
 </figure>
 
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## Session Manager
+
+### VPC Endpoints
+
+It's recommended to use VPC Endpoints for session manager so that the network traffic between your managed instances, Systems Manager, and Amazon EC2 is restricted to the Amazon network.
+
+Create VPC Endpoints for the following -
+
+Refer this guide on how to create them as it is beyond the scope of this article - <https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html#create-interface-endpoint>
+
+|VPC Endpoint |Purpose |
+|--|--|
+|com.amazonaws.region.ssm |The endpoint for the Systems Manager service. |
+|com.amazonaws.region.ssmmessages |This endpoint is required only if you're connecting to your instances through a secure data channel using Session Manager. For more information, see AWS Systems Manager Session Manager and Reference: ec2messages, ssmmessages, and other API operations. |
+|com.amazonaws.region.ec2messages |Systems Manager uses this endpoint to make calls from SSM Agent to the Systems Manager service. |
+|com.amazonaws.region.ec2 | If you're using Systems Manager to create VSS-enabled snapshots, you need to ensure that you have an endpoint to the EC2 service. Without the EC2 endpoint defined, a call to enumerate attached Amazon EBS volumes fails, which causes the Systems Manager command to fail. |
+|com.amazonaws.region.kms |This endpoint is optional. However, it can be created if you want to use AWS Key Management Service (AWS KMS) encryption for Session Manager or Parameter Store parameters. |
+|com.amazonaws.region.logs | This endpoint is optional. However, it can be created if you want to use Amazon CloudWatch Logs (CloudWatch Logs) for Session Manager, Run Command, or SSM Agent logs. |
+|com.amazonaws.region.s3 |Systems Manager uses this endpoint to update SSM Agent and toperform patching operations. Systems Manager also uses this endpoint for tasks like uploading output logs you choose to store in S3 buckets, retrieving scripts or other files you store in buckets, and so on. If the security group associated with your instances restricts outbound traffic, you must add a rule to allow traffic to the prefix list for Amazon S3. |
+{:.table-striped}
 
 ### Session Encryption (KMS)
 
@@ -61,6 +82,9 @@ In order to turn on KMS encryption for your session data, follow these steps -
 </figure>
 
 References - <https://docs.aws.amazon.com/systems-manager/latest/userguide/session-preferences-enable-encryption.html>
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## IAM
 
