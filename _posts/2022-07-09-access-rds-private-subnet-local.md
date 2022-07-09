@@ -17,13 +17,45 @@ tag:
 comments: true
 ---
 
+## Session Manager
+
+### Session Encryption (KMS)
+
+KMS key encryption for sessions is accomplished using a key that is created in AWS KMS.
+
+This ensures that the session data transmitted between your managed nodes and the local machines of users in your AWS account is encrypted using KMS key encryption.
+
+In order to turn on KMS encryption for your session data, follow these steps - 
+
+[1] Open the AWS Systems Manager console at <https://console.aws.amazon.com/systems-manager/>.
+
+[2] In the navigation pane, choose `Session Manager`.
+
+[3] Choose the `Preferences` tab, and then choose Edit.
+
+[4] Select the check box next to `Enable KMS encryption`.
+
+[5] Choose the KMS key alias which we had created previously.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/07/session-manager-preferences-kms.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/07/session-manager-preferences-kms.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/07/session-manager-preferences-kms.png">
+            <img src="{{ site.url }}/assets/img/2022/07/session-manager-preferences-kms.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+References - <https://docs.aws.amazon.com/systems-manager/latest/userguide/session-preferences-enable-encryption.html>
+
 ## IAM
 
 ### IAM Policy
 
 Let's create a custom managed IAM policy that provides below permissions to the EC2 instance - 
 
-[1] `kms:Decrypt` to make use of KMS key to encrypt session data
+[1] `kms:Decrypt` to make use of KMS key to encrypt session data - provide the KMS key arn which we had created earlier for encrypting the sessions
 
 [2] `s3:GetEncryptionConfiguration` to be able to use the encryption specified in the bucket for storing session logs
 
@@ -101,7 +133,7 @@ We are good to launch the instance now.
 
 Wait for the status checks to pass.
 
-### Session Manager
+### Session Manager Connect
 
 Once the instance is `Running` state with status checks passed, click the `Connect` button after selecting the instance.
 
@@ -141,6 +173,33 @@ yum info amazon-ssm-agent
 {% include donate.html %}
 {% include advertisement.html %}
 
+
+## Session Manager Plugin (CLI)
+
+If you want to use the AWS Command Line Interface (AWS CLI) to start and end sessions that connect you to your managed nodes, you must first install the Session Manager plugin on your local machine. 
+
+Example, for installing the plugin in Mac below are the commands -
+
+```bash
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/session-manager-plugin.pkg" -o "session-manager-plugin.pkg"
+
+sudo installer -pkg session-manager-plugin.pkg -target /
+sudo ln -s /usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local/bin/session-manager-plugin
+```
+
+To verify that the plugin installed successfully, run below -
+
+```
+session-manager-plugin
+```
+
+The following message is returned.
+
+```
+The Session Manager plugin is installed successfully. Use the AWS CLI to start a session.
+```
+
+Reference - <https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html>
 
 ## SSM Port Forwarding Session To Remote Host
 
