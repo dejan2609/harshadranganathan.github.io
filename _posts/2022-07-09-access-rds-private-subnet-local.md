@@ -17,6 +17,36 @@ tag:
 comments: true
 ---
 
+## Approach
+
+We will be using AWS System Manager's port forwarding feature to connect with our RDS database running in a private subnet.
+
+With remote port forwarding, you can now use a managed instance as a “jump host” to securely connect to an application port on remote servers, such as databases and web servers, without exposing those servers to outside network.
+
+Corporate network can be quite restrictive in many ways -
+
+[1] Allowing only HTTPS connections
+
+[2] SSH/RDP ports blocked
+
+[3] Cannot use Direct Connect, Site to Site VPN etc.
+
+[4] Zero trust policy
+
+We can overcome above restrictions and still remain compliant using System Manager's port forwarding approach.
+
+Here are some of the advantages of using Session Manager - 
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/07/session-manager-features.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/07/session-manager-features.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/07/session-manager-features.png">
+            <img src="{{ site.url }}/assets/img/2022/07/session-manager-features.png" alt="">
+        </picture>
+    </a>
+</figure>
+
 ## Architecture
 
 <figure>
@@ -33,6 +63,10 @@ comments: true
 {% include advertisement.html %}
 
 ## Session Manager
+
+Session Manager is a fully managed AWS Systems Manager capability. 
+
+With Session Manager, you can manage your Amazon Elastic Compute Cloud (Amazon EC2) instances, edge devices, and on-premises servers and virtual machines (VMs). 
 
 ### VPC Endpoints
 
