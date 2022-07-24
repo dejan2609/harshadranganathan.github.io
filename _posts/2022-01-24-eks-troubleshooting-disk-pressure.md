@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "EKS Troubleshooting - Disk Pressure"
-date: 2022-01-24
+date: 2022-07-24
 excerpt: "Troubleshoot node disk pressure error in your EKS cluster"
 tag:
 - aws
@@ -190,6 +190,73 @@ Any logs you write to STDOUT end up in the containers directory which is rotated
 However, any file written by the app in the local container directory is not cleaned up by any process. So, the logs keep appending and grow forever based on the configured log settings.
 
 You then ask the app team to fix the log settings to solve the issue.
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Scenario 2 - Container Image Size
+
+In this scenario, you might have several docker images which are larger in size causing the storage to fill up fast.
+
+We follow the same steps as outlined above to find apps which are larger in size.
+
+For example, we run below command to find layers occupying most storage -
+
+```bash
+TOP_STORAGE=$(du -hs /var/lib/docker/overlay2/* | grep -Ee '^[0-9]{3}[M]+|[0-9]G' | sort -h |tail -n 10 |tee -a /dev/stderr |awk '{print$2}'|xargs|sed 's/ /|/g')
+1.8G    /var/lib/docker/overlay2/96a6173871b5bdd0176897b8c5c961a8dfe654fc0ba4b03e1ffb430559d74848
+3.1G    /var/lib/docker/overlay2/10aaa9c4002dd6780db00db5ab434df13f465e7598c05a727e7c88a1ad8806d9
+3.1G    /var/lib/docker/overlay2/ec47f6e8d88997a06aac4e1ee4232f19b9b1c89600d14a413803d73d8877f79d
+3.3G    /var/lib/docker/overlay2/33d9accb90bf93dbf486cc2374f238aaea5cc41295f9d2992bdd24a7fc799e7c
+3.3G    /var/lib/docker/overlay2/8c66a97fd2db6f8a96d6b93ebd9289f57334024bcbaa6dec3cbeeaf346470ed3
+```
+
+We can see that we have several layers which are taking up ~ 3Gb of storage space.
+
+We then see what containers they belong to -
+
+```bash
+docker inspect $(docker ps -q) | jq '.[]|.Config.Hostname,.Config.Labels."io.kubernetes.pod.name",.GraphDriver.Data.MergedDir,.hovno' | grep -B2 "$TOP_STORAGE"
+"graphql-productA-api"
+"/var/lib/docker/overlay2/8c66a97fd2db6f8a96d6b93ebd9289f57334024bcbaa6dec3cbeeaf346470ed3/merged"
+--
+"graphql-productB-api"
+"/var/lib/docker/overlay2/33d9accb90bf93dbf486cc2374f238aaea5cc41295f9d2992bdd24a7fc799e7c/merged"
+--
+"graphql-productC-api"
+"/var/lib/docker/overlay2/ec47f6e8d88997a06aac4e1ee4232f19b9b1c89600d14a413803d73d8877f79d/merged"
+```
+
+We can see that the containers belonging to GraphQL (node.js) apps are occupying ~3 Gb of storage each.
+
+We then proceed to examine the pod to see why they are taking up so much storage.
+
+```bash
+du -h --max-depth=1 . |sort -n
+2.4G    .
+2.4G    ./node_modules
+4.0K    ./scripts
+12K     ./chart
+84K     ./config
+120K    ./src
+788K    ./.git
+```
+
+Here, we notice that `node_modules` dependency folder is occupying 2.4G of storage.
+
+Depending on the node size and number of such pods stacked in the same node increases, storage might get quickly filled up.
+
+For example, if you have a node with EBS volume of 20 Gb attached, 9-10 pods of above container will cause DiskPressure (assuming they are all on the same node).
+
+You have couple of action items based on your analysis -
+
+[1] As a quick fix, proceed to increase the EBS volume size of your nodes
+
+[2] Ask the app teams to reduce the container image size by removing unnecessary dependencies, slim base images etc.
+
+[3] If there are no further options to exhaust, you can have a larger EBS volume to accommodate the images.
+
+[4] Switch to EFS storage for your EKS cluster which is pay-as-you go and scales however there is A price increase compared to using EBS.
 
 {% include donate.html %}
 {% include advertisement.html %}
