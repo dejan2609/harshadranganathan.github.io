@@ -665,8 +665,8 @@ Java Developer with 7+ years of experience in design, development and maintenanc
 
 <div class="row">
   <div class="column">
-    <a href="https://www.youracclaim.com/users/harshad-ranganathan">
-        <img src="{{ site.url }}/assets/img/global/acclaim.png" align="left" alt="HARSHAD RANGANATHAN - Badges - Acclaim" title="HARSHAD RANGANATHAN - Badges - Acclaim" style="width: 150px;height:50px;" />
+    <a href="https://www.credly.com/users/harshad-ranganathan/badges">
+        <img src="{{ site.url }}/assets/img/global/credly.png" align="left" alt="HARSHAD RANGANATHAN - Badges - Acclaim" title="HARSHAD RANGANATHAN - Badges - Acclaim" style="width: 100px;height:50px;" />
     </a>
   </div>
   <div class="column">
