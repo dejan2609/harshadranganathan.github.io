@@ -335,6 +335,54 @@ Java Developer with 7+ years of experience in design, development and maintenanc
         <div class="working_period">(2020 - Current)</div>
     </div>
     <div class="WholeContent">
+    <div class="ContentBlock">
+            <div class="Content">
+                <div class="Role"><span class="Highlighted">Position: </span>Lead Software Engineer</div>
+                <div class="Years"><i class="fa fa-calendar">&nbsp;Mar 2022 – Current</i></div>
+                 <div class="location"><i class="fa fa-globe">&nbsp;County Dublin, Ireland</i></div>
+                <div class="Description">
+                    <ul class="des-content">
+                        <li>Leading a Public Cloud Infrastructure Enablement Platform team of 5 engineers geographically distributed across 3 regions composed of FTEs and Contractors.</li>
+                        <li>Architecture Design, Consultation & Support across various initiatives such as Multi-Region enablement, EKS upgrades, Cost Optimization, Well-architected design and Cloud Migrations.</li>
+                        <li>Facilitating cross-collaboration calls with 3 teams operating in different AWS accounts and also with Tech Leads of 3 internal Platform teams.</li>
+                        <li>Team mentoring, Bi-weekly connect sessions with every team member, Listening to team feedback and Monthly Learning Sessions to spread knowledge across the organization.</li>
+                    </ul>
+                    <!-- <input type="checkbox" id="SeeMore"/><label for="SeeMore">To See more</label> -->
+                </div>
+                <div class="Skill-Set">
+                    <span class="arrow-tag">Design</span>
+                    <span class="arrow-tag">Architecture</span>
+                    <span class="arrow-tag">Listening to Feedback</span>
+                    <span class="arrow-tag">Collaboration</span>
+                    <span class="arrow-tag">Leading the Team</span>
+                </div>
+            </div>
+        </div>
+        <div class="ContentBlock">
+            <div class="Content">
+                <div class="Role"><span class="Highlighted">Position: </span>Senior Software Engineer</div>
+                <div class="Years"><i class="fa fa-calendar">&nbsp;Apr 2021 – Feb 2022</i></div>
+                 <div class="location"><i class="fa fa-globe">&nbsp;County Dublin, Ireland</i></div>
+                <div class="Description">
+                    <ul class="des-content">
+                        <li>Set up Istio Service Mesh for the API EKS Cluster for utilising observability and traffic management capabilities.</li>
+                        <li>Simplified EKS Ingress pattern from having NLB per app (resulting in 10 NLB per cluster in early stages of migration) to 1 ALB per cluster saving on costs and easier maintenance.</li>
+                        <li>Enabled ALB based authentication for 8+ internal web apps thereby securing and achieving SSO.</li>
+                        <li>Designed CI/CD approach for cloud deployments by working with CI/CD guild members reaching wide consensus and roll-out across various projects.</li>
+                        <li>Built alerting solution for the platform on top of Prometheus and Grafana by utilising Alert Manager component.</li>
+                    </ul>
+                    <!-- <input type="checkbox" id="SeeMore"/><label for="SeeMore">To See more</label> -->
+                </div>
+                <div class="Skill-Set">
+                    <span class="arrow-tag">AWS</span>
+                    <span class="arrow-tag">EKS</span>
+                    <span class="arrow-tag">Terraform</span>
+                    <span class="arrow-tag">Istio</span>
+                    <span class="arrow-tag">CI/CD</span>
+                    <span class="arrow-tag">Prometheus</span>
+                </div>
+            </div>
+        </div>
         <div class="ContentBlock">
             <div class="Content">
                 <div class="Role"><span class="Highlighted">Position: </span>Software Engineer</div>
