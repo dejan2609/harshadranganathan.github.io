@@ -14,7 +14,16 @@ tag:
 comments: true
 ---
 
+## Introduction
+
+We will look at various ways to containerize a Spring Boot application.
+
+You can refer below sample project for the complete setup.
+
 {% include repo-card.html repo="spring-boot-example" %}
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## Spring Boot Maven Plugin
 
@@ -69,7 +78,7 @@ Above command performs the following actions:
 
 - Pulls Paketo Base Builder image
 - Pulls JRE Runtime image, Executable Jar image & Spring Boot image
-- Sets JVM memory requirements and sets them as command line options inside the container
+- Sets JVM memory requirements as command line options inside the container
 - Builds your App image
 
 ```text
@@ -89,6 +98,49 @@ Above command performs the following actions:
 [INFO]     [creator]       https://github.com/paketo-buildpacks/spring-boot
 [INFO] Successfully built image 'docker.io/library/spring-boot-example:latest'
 ```
+
+### Specify JVM version
+
+Since the buildpack only ships a single version of each supported line, updates to the buildpack can change the exact version of the JDK or JRE.
+
+i.e. If you are running the buildpack today it might download JDK 11 assets but if the buildpack is updated to use JDK 17 then that's what will get downloaded. 
+
+In order to lock the JVM version, you can set `BP_JVM_VERSION` environment variable.
+
+For example, you can update the Spring Boot Maven plugin with the environment variable as follows:
+
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.springboot.example</groupId>
+  <artifactId>spring-boot-example</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <spring.boot.version>2.7.2</spring.boot.version>
+    <java.version>11</java.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring.boot.version}</version>
+        <configuration>
+          <image>
+            <env>
+              <!-- Used by Paketo Buildpacks to choose correct runtime version -->
+              <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
+            </env>
+          </image>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+```
+
 
 {% include donate.html %}
 {% include advertisement.html %}
