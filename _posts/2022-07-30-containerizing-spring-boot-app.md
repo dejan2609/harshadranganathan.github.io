@@ -141,6 +141,101 @@ For example, you can update the Spring Boot Maven plugin with the environment va
 </project>
 ```
 
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Jib Maven Plugin
+
+Jib is an open source tool by Google which doesn't need docker for building images.
+
+Jib builds the image by using the same standard output as you get from docker build but does not use docker.
+
+You also do not need a Dockerfile.
+
+Jib separates local application resources from dependencies, but it goes a step further and also puts snapshot dependencies into a separate layer, since they are more likely to change. 
+
+To use Jib, add below to your `pom.xml` -
+
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.springboot.example</groupId>
+  <artifactId>spring-boot-example</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <spring-boot.build-image.imageName>spring-boot-example</spring-boot.build-image.imageName>
+  </properties>
+
+  <build>
+    <plugin>
+      <groupId>com.google.cloud.tools</groupId>
+      <artifactId>jib-maven-plugin</artifactId>
+      <version>3.2.1</version>
+      <configuration>
+        <to>
+          <image>${spring-boot.build-image.imageName}</image>
+        </to>
+      </configuration>
+    </plugin>
+  </build>
+</project>
+```
+
+### Build Image without using Docker Daemon
+
+To generate container image without using docker daemon, run below maven command:
+
+```bash
+./mvnw compile jib:build
+```
+
+Note - 
+
+You need to be authenticated to a container registry of your choice. In our example, we didn't specify any particular container registry so it will use DockerHub registry as default (docker login).
+
+Jib has multiple ways to configure authentication depending on the registry of your choice. Please refer below guides as it is beyond the scope of this article -
+
+<https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#authentication-methods>
+
+<https://github.com/GoogleContainerTools/jib/blob/master/docs/faq.md#what-should-i-do-when-the-registry-responds-with-unauthorized>
+
+
+
+You will get below sample output -
+
+```text
+[INFO] --- jib-maven-plugin:3.2.1:build (default-cli) @ spring-boot-example ---
+[INFO]
+[INFO] Containerizing application to spring-boot-example...
+[INFO] Using base image with digest: sha256:
+[INFO]
+[INFO] Container entrypoint set to [java, -cp, @/app/jib-classpath-file, com.springboot.example.Example]
+[INFO] Executing tasks:
+[INFO] [==============================] 100.0% complete
+```
+
+### Build Image using Docker Daemon
+
+To build image directly to Docker daemon, run below command -
+
+```bash
+./mvnw compile jib:dockerBuild
+```
+
+Note - This uses the docker command line tool and requires that you have docker available on your PATH.
+
+```text
+[INFO] --- jib-maven-plugin:3.2.1:build (default-cli) @ spring-boot-example ---
+[INFO]
+[INFO] Containerizing application to Docker daemon as spring-boot-example...
+[INFO] Using base image with digest: sha256:
+[INFO]
+[INFO] Container entrypoint set to [java, -cp, @/app/jib-classpath-file, com.springboot.example.Example]
+[INFO] Built image to Docker daemon as spring-boot-example
+[INFO] Executing tasks:
+[INFO] [==============================] 100.0% complete
+```
 
 {% include donate.html %}
 {% include advertisement.html %}
