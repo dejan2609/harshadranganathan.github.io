@@ -7,3 +7,4 @@ gem 'jekyll-mentions'
 gem 'jekyll-feed'
 gem "jekyll-github-metadata"
 gem "dotenv"
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?

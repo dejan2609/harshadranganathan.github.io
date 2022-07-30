@@ -90,6 +90,7 @@ GEM
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     unicode-display_width (1.6.0)
+    wdm (0.1.1)
     zeitwerk (2.2.0)
 
 PLATFORMS
@@ -103,6 +104,7 @@ DEPENDENCIES
   jekyll-github-metadata
   jekyll-mentions
   jekyll-sitemap
+  wdm (>= 0.1.0)
 
 BUNDLED WITH
-   2.0.1
+   2.1.4
