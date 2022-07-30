@@ -182,13 +182,15 @@ To use Jib, add below to your `pom.xml` -
 </project>
 ```
 
-### Build Image without using Docker Daemon
+### Build Image without Docker Daemon
 
 To generate container image without using docker daemon, run below maven command:
 
 ```bash
 ./mvnw compile jib:build
 ```
+
+Subsequent builds run faster.
 
 Note - 
 
@@ -215,7 +217,7 @@ You will get below sample output -
 [INFO] [==============================] 100.0% complete
 ```
 
-### Build Image using Docker Daemon
+### Build Image To Docker Daemon
 
 To build image directly to Docker daemon, run below command -
 
