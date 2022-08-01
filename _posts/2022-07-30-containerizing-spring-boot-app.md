@@ -425,5 +425,55 @@ COPY --from=app-build application/application/ ./
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
 ```
 
+You can see that the final image size is just `152 MB`.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-dive.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-dive.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-dive.png">
+            <img src="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-dive.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+### Layer Caching
+
+Let's see how our spring boot layered approach helps with faster re-builds leveraging layer caching.
+
+When you build the image for the first time, docker steps through the instructions in your Dockerfile, executing each in the order specified. It generates a checksum for each of the layers 
+
+- For ADD and COPY instructions, checksum is based on the file content.
+- For RUN, the checksum is based on the command and not on the files.
+
+On subsequent builds, it compares the existing checksums with the new one, so if both match it uses the respective cached layer.
+
+Below we can see that the build leverages cache for spring boot layers since nothing changed between subsequent builds.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-caching.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-caching.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-caching.png">
+            <img src="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-caching.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Let's do a small code change in our app and run the docker build again. We see that the build is still fast as you can see from below, only the app code is updated (COPY instruction) while rest of the layers are from cache (dependencies etc.) since they didn't change.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-cache-example.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-cache-example.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-cache-example.png">
+            <img src="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile-cache-example" alt="">
+        </picture>
+    </a>
+</figure>
+
 {% include donate.html %}
 {% include advertisement.html %}
