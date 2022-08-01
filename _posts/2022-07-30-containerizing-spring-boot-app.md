@@ -18,6 +18,19 @@ comments: true
 
 We will look at various ways to containerize a Spring Boot application.
 
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/08/spring-boot-containerization-comparison.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/08/spring-boot-containerization-comparison.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/08/spring-boot-containerization-comparison.png">
+            <img src="{{ site.url }}/assets/img/2022/08/spring-boot-containerization-comparison.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Note - Above is not an exhaustive comparison
+
+
 You can refer below sample project for the complete setup.
 
 {% include repo-card.html repo="spring-boot-example" %}
