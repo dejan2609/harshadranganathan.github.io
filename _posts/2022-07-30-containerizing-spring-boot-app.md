@@ -244,6 +244,148 @@ Note - This uses the docker command line tool and requires that you have docker 
 
 ## Dockerfile
 
+Let's look at containerizing our Spring Boot app using Dockerfile approach.
+
+We will use `Multi-Stage builds` approach for our Dockerfile. 
+
+With multi-stage builds, you use multiple FROM statements in your Dockerfile. 
+
+Each FROM instruction can use a different base, and each of them begins a new stage of the build. 
+
+You can selectively copy artifacts from one stage to another, leaving behind everything you don’t want in the final image. This will help with optimizing the image size as well as making the build process efficient.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile.png">
+            <img src="{{ site.url }}/assets/img/2022/08/spring-boot-dockerfile.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+### Custom JRE Image Layer
+
+In the first build stage, we choose a distribution of our choice to create a custom JRE with only the required modules.
+
+```docker
+FROM eclipse-temurin:11 as jre-build
+
+RUN $JAVA_HOME/bin/jlink \
+         --add-modules java.base,java.naming,java.desktop,java.compiler,java.logging,java.instrument,java.management,java.security.jgss,java.sql,java.xml,java.rmi,jdk.charsets \
+         --strip-debug \
+         --no-man-pages \
+         --no-header-files \
+         --compress=2 \
+         --output /javaruntime
+```
+
+In above, we chose `eclipse-temurin` as our base image.
+
+`jlink` is a linker tool and can be used to link a set of modules, along with their transitive dependencies, to create a custom modular run-time image.
+
+In principle, this would get you a smaller total image size than using the openjdk official docker images.
+
+Notice the `--add-modules` argument where we supply the list of java modules that are needed for our app to run.
+
+If you're unsure of what modules are needed for your application, you can run below command which will scan your dependencies as well as your app code to generate the module list.
+
+```bash
+jdeps --ignore-missing-deps -q -recursive --multi-release 11 \
+--print-module-deps --class-path 'target/libs/*' \
+target/spring-boot-example-1.0-SNAPSHOT.jar > jre-deps.info
+```
+
+To generate the libs for your spring boot project, you can leverage the `maven-dependency-plugin` as follows:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+   <groupId>org.apache.maven.plugins</groupId>
+   <artifactId>maven-dependency-plugin</artifactId>
+   <version>${maven.dependency.plugin.version}</version>
+   <executions>
+      <execution>
+         <id>copy-dependencies</id>
+         <phase>package</phase>
+         <goals>
+            <goal>copy-dependencies</goal>
+         </goals>
+         <configuration>
+            <outputDirectory>${project.build.directory}/libs</outputDirectory>
+            <overWriteReleases>false</overWriteReleases>
+            <overWriteSnapshots>false</overWriteSnapshots>
+            <overWriteIfNewer>true</overWriteIfNewer>
+         </configuration>
+      </execution>
+   </executions>
+</plugin>
+```
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+### Spring Boot App Layer
+
+A JAR file built with the Spring Boot Maven plugin includes layer information in the JAR file.
+
+This layer information separates parts of the application based on how likely they are to change between application builds.
+
+This can be used to make Docker image layers even more efficient.
+
+The layer information can be used to extract the JAR contents into a directory for each layer as follows:
+
+```docker
+FROM debian:buster-slim as app-build
+
+ENV JAVA_HOME=/opt/jdk
+ENV PATH "${JAVA_HOME}/bin:${PATH}"
+
+WORKDIR application
+
+COPY --from=jre-build /javaruntime $JAVA_HOME
+COPY target/spring-boot-*.jar application.jar
+
+RUN java -Djarmode=layertools -jar application.jar extract
+```
+
+Notice the command `java -Djarmode=layertools -jar application.jar extract` which is used to extract the layers.
+
+Also, we copy the JRE build from the previous stage so that we can run the layer extract.
+
+We use `debian slim` as our base image here. 
+
+Using debian as a base image has following advantages -
+
+- Presence of libc
+- No performance issues of Alpine for certain programming languages
+- Suitable for testing with tools available out of the box
+
+### Final Image
+
+Finally, we copy the necessary files (JRE & Spring Boot App layers) from previous stages to our final stage.
+
+```docker
+FROM debian:buster-slim
+
+ENV JAVA_HOME=/opt/jdk
+ENV PATH "${JAVA_HOME}/bin:${PATH}"
+
+WORKDIR application
+
+COPY --from=jre-build /javaruntime $JAVA_HOME
+COPY --from=app-build application/dependencies/ ./
+COPY --from=app-build application/spring-boot-loader/ ./
+COPY --from=app-build application/snapshot-dependencies/ ./
+COPY --from=app-build application/application/ ./
+
+ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+```
+
+We use `JarLauncher` to start the application without hard-coding the main application class.
+
+You can find the complete Dockerfile here - 
+
 ```docker
 FROM eclipse-temurin:11 as jre-build
 
