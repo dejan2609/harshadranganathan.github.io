@@ -95,3 +95,47 @@ We should aim to take appropriate actions based on the root cause analysis inste
 
 {% include donate.html %}
 {% include advertisement.html %}
+
+### Approaches to Configuring Memory Limits
+
+#### kubectl top command
+
+`kubectl top` command returns current CPU and memory usage for a cluster's pods or nodes.
+
+Note - This requires Metrics server to be installed in your cluster
+
+```bash
+# Show metrics for a given pod and its containers
+kubectl top pod POD_NAME --containers
+```
+
+For example, to view the resource consumption of all pods in all namespaces -
+
+```bash
+kubectl top pod -A
+NAMESPACE     NAME                                        CPU(cores)   MEMORY(bytes)         
+grafana       grafana-5bcd5dbf74-rcx2d                    1m           22Mi            
+kube-system   coredns-6c46d74d64-d8k2z                    5m           10Mi           
+kube-system   metrics-server-ff9dbcb6c-8jqp6              36m          13Mi            
+```
+
+So, to determine the appropriate memory limits, you could run the `kubectl top` command in watch mode and perform load tests.
+
+Observe the memory consumption and determine appropriate values.
+
+e.g.
+
+```bash
+$ watch kubectl top pod aws-fluent-bit-platform-2f6n8 --containers
+
+Every 2.0s: kubectl top pod aws-fluent-bit-platform-2f6n8 --containers                              
+
+POD                             NAME                 CPU(cores)   MEMORY(bytes)
+aws-fluent-bit-platform-2f6n8   aws-for-fluent-bit   2m           36Mi
+```
+
+#### Prometheus & Grafana
+
+#### VPA
+
+##### Goldilocks
