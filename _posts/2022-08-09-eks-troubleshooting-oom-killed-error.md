@@ -70,3 +70,28 @@ Reason: OOMKilled - exit code: 137
 ```
 
 If you are using the default `restartPolicy` which is set to `Always`, then your pod will get restarted automatically on OOM failure.
+
+### Failure Scenarios
+
+A container may allocate more memory than your configured limit for the following reasons -
+
+[1] Application is experiencing higher load than normal due to any of
+
+- Increased traffic
+- Increased queue consumption
+- Increased in-memory data for processing e.g. certain requests result in db select queries returning huge volume of records for processing and subsequent publishing of the result to an output topic 
+
+[2] Application is having a memory leak
+
+### Actions
+
+We should aim to take appropriate actions based on the root cause analysis instead of just going for the easy fix which is increasing the memory limit.
+
+|Cause |Resolution |
+|-- |-- |
+|Application is having a memory leak |Debug the application and resolve the memory leak |
+|Application is experiencing higher load than normal |Increase memory limit in the container specifications |
+{:.table-striped}
+
+{% include donate.html %}
+{% include advertisement.html %}
