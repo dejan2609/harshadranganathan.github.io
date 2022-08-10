@@ -148,7 +148,7 @@ Goldilocks is a utility that can help you identify a starting point for resource
 
 This tool creates a VPA in recommendation mode for each workload in a namespace and then queries them for information.
 
-Once your VPAs are in place, you'll see recommendations appear in the Goldilocks dashboard.
+Once your VPAs are in place, you'll see the recommendations appearing in the Goldilocks dashboard.
 
 ###### Installation
 
@@ -207,6 +207,87 @@ You can see Goldilocks showing recommendations such as below for your deployment
         </picture>
     </a>
 </figure>
+
+###### Case Study
+
+Let's see some examples of how Goldilocks recommendations help us to tune the memory limits.
+
+An app team has a container named `logstash-exporter` with below configuration -
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - image: localhost:5000/apps/logstash-exporter
+        name: logstash-exporter
+        resources:
+          limits:
+            cpu: 300m
+            memory: 750Mi
+          requests:
+            cpu: 100m
+            memory: 350Mi
+```
+
+We notice that they have configured memory requirements in the range of 350 - 750 MiB.
+
+We enable VPA recommender for above using Goldilocks namespace enablement and then check the recommendations after a period of workload activity.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-exporter-chart.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-exporter-chart.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-exporter-chart.png">
+            <img src="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-exporter-chart.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+We could clearly see that this container requires a max of 53MiB to function whereas the original requirements was way above than what was needed.
+
+We can then ask the app team to update the memory configuration based on the recommendations so that the unneeded memory could be released for other workloads usage. 
+
+
+In an another example, an app team has configured a container named `logstash-chart` with below configuration -
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - image: localhost:5000/apps/logstash-chart
+        name: logstash-chart
+        resources:
+          limits:
+            cpu: 300m
+            memory: 750Mi
+          requests:
+            cpu: 100m
+            memory: 350Mi
+```
+
+We notice that the above configuration is resulting in OOMKilled state. So, we remove the limits and run the workloads to observe the recommendations.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-chart.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-chart.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-chart.png">
+            <img src="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-chart.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+We can see that the container requires a max of ~1300 MiB of memory to process based on the current load however we had configured a max of 750 MiB previously.
+
+We then ask the app team to increase the memory limits so that the container can process without restarts (provided above is not related to a memory leak).
 
 
 {% include donate.html %}
