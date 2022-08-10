@@ -136,6 +136,78 @@ aws-fluent-bit-platform-2f6n8   aws-for-fluent-bit   2m           36Mi
 
 #### Prometheus & Grafana
 
+
+{% include donate.html %}
+{% include advertisement.html %}
+
 #### VPA
 
 ##### Goldilocks
+
+Goldilocks is a utility that can help you identify a starting point for resource requests and limits.
+
+This tool creates a VPA in recommendation mode for each workload in a namespace and then queries them for information.
+
+Once your VPAs are in place, you'll see recommendations appear in the Goldilocks dashboard.
+
+###### Installation
+
+To install Goldilocks, run below commands in your cluster:
+
+```bash
+helm repo add fairwinds-stable https://charts.fairwinds.com/stable
+
+## Installs only VPA recommender and not the admission webhook
+helm install vpa fairwinds-stable/vpa --namespace vpa --create-namespace
+
+helm install goldilocks fairwinds-stable/goldilocks --namespace goldilocks --create-namespace
+```
+
+If everything is successful, you can see the Goldilocks dashboard running with below comamnd:
+
+```bash
+$ kubectl get pods --namespace goldilocks -l "app.kubernetes.io/name=goldilocks,app.kubernetes.io/instance=goldilocks,app.kubernetes.io/component=dashboard" -o jsonpath="{.items[0].metadata.name}\n"
+
+goldilocks-dashboard-9d494-4hejfj
+```
+
+Note - Default memory limits configured for `goldilocks controller & dashboards` deployments are quite low. If you are planning to run it against an namespace having huge number of pods then increase the memory limit to avoid OOMKilled state. Your dashboard won't work properly without the goldilocks deployments in steady state.
+
+###### Enable Namespace
+
+Pick an application namespace and label it like so in order to see some data:
+
+e.g.
+
+```bash
+kubectl label ns <namespace> goldilocks.fairwinds.com/enabled=true
+```
+
+After that you should start to see VPA objects in that namespace.
+
+
+###### Dashboard
+
+The default installation creates a ClusterIP service for the dashboard. You can access via port forward:
+
+```bash
+kubectl -n goldilocks port-forward svc/goldilocks-dashboard 8080:80
+```
+
+Then open your browser to http://localhost:8080
+
+You can see Goldilocks showing recommendations such as below for your deployments:
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-chart.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-chart.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-chart.png">
+            <img src="{{ site.url }}/assets/img/2022/08/goldilocks-logstash-chart.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+
+{% include donate.html %}
+{% include advertisement.html %}
