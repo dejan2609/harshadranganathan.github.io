@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Load Balancing in EKS"
-date: 2022-01-27
+date: 2022-08-19
 excerpt: "Steps to expose services through a load balancer in EKS"
 tag:
 - aws
@@ -282,6 +282,148 @@ Another factor is `externalTrafficPolicy` which is by default set to `Cluster` m
     </a>
 </figure>
 
+## Classic Load Balancer
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/08/eks-elb-flow.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/08/eks-elb-flow.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/08/eks-elb-flow.png">
+            <img src="{{ site.url }}/assets/img/2022/08/eks-elb-flow.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+### How To Provision
+
+To provision a Classic Load Balancer, you need to create a service of type `LoadBalancer`.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app
+  namespace: platform
+  labels:
+    app: web-app
+spec:
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+  selector:
+    app: web-app
+type: LoadBalancer
+```
+
+Following actions are performed by the In-Tree Legacy Cloud Provider in Kubernetes, when it sees a service object of type `LoadBalancer`:
+
+1. ELB is created in AWS for the service. Depending on the annotations it's either internal or external.
+
+2. Listeners are created for each port detailed in the service definition.
+
+3. Health checks are configured.
+
+### Subnet Discovery
+
+In-Tree Legacy Cloud Provider auto discovers network subnets by default.
+
+To be able to successfully do that you need to tag your subnets as follows:
+
+|Tag Key |Tag Value |Purpose|
+|--|--|--|
+|kubernetes.io/role/elb |1 |Indicates that the subnet is public. Will be used if NLB is internet-facing |
+|kubernetes.io/role/internal-elb |1 |Indicates that the subnet is private. Will be used if NLB is internal |
+{:.table-striped}
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+### Annotations
+
+Let's look at some of the annotations that you can configure and their behaviors.
+
+|Annotation Example |Purpose |
+|--|--|
+|service.beta.kubernetes.io/aws-load-balancer-internal: 'true' |Indicate that we want an internal ELB. Default: External ELB|
+|service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: '60' |Specify access log emit interval|
+|service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: 'true' |Service to enable or disable access logs |
+|service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: prod-bucket |Specify access log s3 bucket name |
+|service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: loadbalancing/web-app |Specify access log s3 bucket prefix |
+|service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true' |Used on the service to enable or disable cross-zone load balancing |
+|service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: Stage=prod,App=web-app  |Additional tags in the ELB |
+{:.table-striped}
+
+### Load Balancer Security Group
+
+You can configure the security groups to be attached to an ELB for restricting traffic.
+
+|Annotation Example |Purpose |
+|--|--|
+|service.beta.kubernetes.io/aws-load-balancer-security-groups: "sg-53fae93f" |A list of existing security groups to be configured on the ELB created.<br/><br/>This replaces all other security groups previously assigned to the ELB and also overrides the creation of a uniquely generated security group for this ELB.<br/><br/>The first security group ID on this list is used as a source to permit incoming traffic to target worker nodes (service traffic and health checks).<br/><br/>If multiple ELBs are configured with the same security group ID, only a single permit line will be added to the worker node security groups, that means if you delete any of those ELBs it will remove the single permit line and block access for all ELBs that shared the same security group ID. This can cause a cross-service outage if not used properly|
+|service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: "sg-53fae93f" |A list of additional security groups to be added to the created ELB, this leaves the uniquely generated security group in place, this ensures that every ELB has a unique security group ID and a matching permit line to allow traffic to the target worker nodes (service traffic and health checks). <br/><br/> Security groups defined here can be shared between services.|
+|.spec.loadBalancerSourceRanges |Add CIDR to the uniquely generated security group for this ELB (defaults to 0.0.0.0/0) |
+{:.table-striped}
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+Complete service file with the annotations will look as follows:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app
+  namespace: platform
+  labels:
+    app: web-app
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: '60'
+    service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: 'true'
+    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: prod-bucket
+    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: loadbalancing/web-app
+    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: Stage=prod,App=web-app
+    service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: 'true'
+    service.beta.kubernetes.io/aws-load-balancer-connection-draining-timeout: '300'
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
+    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: sg-53fae93f
+spec:
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+  selector:
+    app: web-app
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+    - 10.1.0.0/16
+```
+
+Above file results in below configuration:
+
+1. Provisions an ELB in the desired subnet
+
+2. Sets the tags provided
+
+3. Enables access logs to the provided S3 path
+
+4. Enables Cross Zone load balancing
+
+5. Adds `.spec.loadBalancerSourceRanges` to the uniquely generated security group for this ELB
+
+6. Adds `sg-53fae93f` as an additional security group to the ELB
+
+7. Adds a matching permit line to allow traffic from the ELB to the target worker nodes
+
+{% include donate.html %}
+{% include advertisement.html %}
+
 ## References
 
 <https://kubernetes.io/docs/concepts/services-networking/service/>
@@ -291,3 +433,7 @@ Another factor is `externalTrafficPolicy` which is by default set to `Cluster` m
 <https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#client-ip-preservation>
 
 <https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-register-targets.html#target-security-groups>
+
+<https://kubernetes.io/docs/concepts/services-networking/_print/#pg-374e5c954990aec58a0797adc70a5039>
+
+<https://github.com/kubernetes/legacy-cloud-providers/blob/master/aws/aws.go>
