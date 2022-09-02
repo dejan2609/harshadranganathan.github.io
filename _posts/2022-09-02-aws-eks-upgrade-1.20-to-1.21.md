@@ -232,7 +232,7 @@ ip-10-0-xx-xx.ec2.internal    Ready    <none>   2m37s   v1.21.14-eks-6d3986b <--
 
 [7] Taint the nodes that aren't labelled with the latest AMI ID so that no new pods are scheduled there.
 
-In above example, any node that has version `v1.19.13-eks-f39f26` is referred to as not using latest AMI and needs to be tainted.
+In above example, any node that has version `v1.20.15-eks-ba74326` is referred to as not using latest AMI and needs to be tainted.
 
 ```bash
 K8S_VERSION="1.20"
@@ -263,7 +263,7 @@ Since, autoscaling is configured with a desired capacity, this will trigger an a
 This new node will be using Kubernetes version 1.21 since the launch template will use the default/latest version having 1.21 AMI image.
 
 ```bash
-K8S_VERSION="1.21"
+K8S_VERSION="1.20"
 nodes=($(kubectl get nodes -o json | jq -r '.items[] | select(.status.nodeInfo.kubeletVersion | contains('\"v$K8S_VERSION\"')) | .metadata.name' | tr '\n' ' '))
 for node in ${nodes[@]}
 do
