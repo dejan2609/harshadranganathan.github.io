@@ -420,7 +420,7 @@ That's it, you are done with the upgrade. Now it's time to check that you haven'
 
 Below you can find a sample script to perform the same upgrade steps in Jenkins:
 
-
+<script src="https://gist.github.com/HarshadRanganathan/aac6f59bf5b12c8a120e231744e701d1.js"></script>
 
 {% include donate.html %}
 {% include advertisement.html %}
