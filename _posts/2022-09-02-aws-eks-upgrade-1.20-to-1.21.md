@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AWS EKS Cluster Upgrade (Self-managed) - 1.20 To 1.21"
-date: 2022-09-02
+date: 2022-09-05
 excerpt: "Steps involved in upgrading EKS cluster from Kubernetes version 1.20 to 1.21"
 tag:
 - aws
@@ -415,6 +415,49 @@ That's it, you are done with the upgrade. Now it's time to check that you haven'
 
 {% include donate.html %}
 {% include advertisement.html %}
+
+### Service Account Tokens
+
+The BoundServiceAccountTokenVolume feature is enabled by default in Kubernetes version 1.21 and later.
+
+This feature improves the security of service account tokens by allowing workloads running on Kubernetes to request JSON web tokens that are audience, time, and key bound.
+
+Service account tokens have an expiration of one hour. In earlier Kubernetes versions, the tokens didn't have an expiration. 
+
+This means that clients that rely on these tokens must `refresh the tokens within an hour`. 
+
+If your workload is using an older client version, then you must update it. 
+
+To enable a smooth migration of clients to the newer time-bound service account tokens, Kubernetes version 1.21 and later adds an extended expiry period to the service account token over the default one hour. 
+
+For Amazon EKS clusters, the `extended expiry period is 90 days`. 
+
+Your Amazon EKS cluster's Kubernetes API server rejects requests with tokens older than 90 days. 
+
+We recommend that you check your applications and their dependencies to make sure that the Kubernetes client SDKs are the same or later than the versions listed previously.
+
+To identify applications that needs to be updated (using stale tokens), enable control plane logging and run below query in Cloudwatch insights:
+
+```text
+fields @timestamp
+| filter @logStream like /kube-apiserver-audit/
+| filter @message like /seconds after warning threshold/
+| parse @message "subject: *, seconds after warning threshold:*\"" as subject, elapsedtime
+```
+
+For example, we run above query and see that `kubernetes dashboard` and `fluenbit logging` need to be updated as they are using client SDKs which are not refreshing their service tokens.
+
+So, you find the appropriate version and update the helm charts of those installations and upgrade them.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2022/09/stale-service-account-tokens.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2022/09/stale-service-account-tokens.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2022/09/stale-service-account-tokens.png">
+            <img src="{{ site.url }}/assets/img/2022/09/stale-service-account-tokens.png" alt="">
+        </picture>
+    </a>
+</figure>
 
 ## Jenkins Pipeline Script
 
