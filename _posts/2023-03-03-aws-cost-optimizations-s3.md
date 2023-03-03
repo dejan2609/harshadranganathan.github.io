@@ -67,6 +67,8 @@ Caveats:
 {% include donate.html %}
 {% include advertisement.html %}
 
+#### Lifecycle Rules
+
 To enable this for your bucket, follow below steps:
 
 - Create a new lifecycle rule, and enable that for all objects in your bucket. Also, for actions enable "Moving objects between storage classes" for both current and noncurrent versions.
@@ -108,6 +110,37 @@ This is how your lifecycle rule will look like -
 </figure>
 
 After applying above lifecycle rule, your objects are managed by intelligent tiering and you start to reap the benefits by not paying the same price for objects sitting idle in your bucket.
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+#### Archival Configurations
+
+Next, you can further save costs by enabling archive options but check with your stakeholders before enabling them as these may cause workload impacts.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-access-tiers-transition-flow-archive-features.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-access-tiers-transition-flow-archive-features.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-access-tiers-transition-flow-archive-features.png">
+            <img src="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-access-tiers-transition-flow-archive-features.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+You enable these in the bucket properties under 'Intelligent-Tiering Archive configurations'. Note that this only applies to objects in Intelligent Tier storage class.
+
+So, you need to first move objects to Intelligent Storage class for archival options to apply. This may be confusing for newbies as the settings are split between lifecycle rules and intelligent tiering configurations.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-archival-configurations.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-archival-configurations.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-archival-configurations.png">
+            <img src="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-archival-configurations.png" alt="">
+        </picture>
+    </a>
+</figure>
 
 {% include donate.html %}
 {% include advertisement.html %}
