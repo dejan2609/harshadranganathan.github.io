@@ -39,7 +39,7 @@ There are multiple approaches to set up the Cost Intelligence Framework such as:
 
 We'll be focusing on the second approach in this article as that gives more flexibility compared to using a CF template as each organization might follow different practices/account setups/might want to re-use existing configurations (buckets etc.) so you don't have to fiddle with CF templates.
 
-CF templates on other hand help for easier and cleaner deletion although some of the resources set up by this framework might still be needed for different usecases so it makes sense to create/re-use existing resources based on your needs.
+CF templates on other hand help for easier (if it works for your set-up) and cleaner deletion, some of the resources set up by this framework might still be needed for different usecases so it makes sense to create/re-use existing resources.
 
 {% include donate.html %}
 {% include advertisement.html %}
@@ -93,6 +93,29 @@ After you create your report, it can take up to 24 hours for AWS to deliver the 
 </figure>
 
 Also, raise a support ticket in `Service=Billing` and `category=Invoices and Reporting`, requesting a backfill of your CUR (name=cid) with 12 months of data as that will help to show cost reports with historic and last 30 days data.
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## Configure Athena
+
+If this is the first time you will be using Athena, then you need to configure an S3 bucket for storing the query results before you can start to make use of Athena service.
+
+Otherwise, please skip this section.
+
+Navigate to Athena service and configure the query result location in S3 as shown in the prompt below:
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/athena-s3-query-results-location.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/athena-s3-query-results-location.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/athena-s3-query-results-location.png">
+            <img src="{{ site.url }}/assets/img/2023/03/athena-s3-query-results-location.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Also, navigate to `Workgroups` and configure `Query result location` for your `primary` workgroup which will be used by Quicksight later.
 
 {% include donate.html %}
 {% include advertisement.html %}
