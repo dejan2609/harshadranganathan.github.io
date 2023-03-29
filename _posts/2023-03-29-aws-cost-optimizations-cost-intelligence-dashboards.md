@@ -117,5 +117,69 @@ Navigate to Athena service and configure the query result location in S3 as show
 
 Also, navigate to `Workgroups` and configure `Query result location` for your `primary` workgroup which will be used by Quicksight later.
 
+## CUR & Athena Integration
+
+In step 1, when we had specified `Amazon Athena` as the `Report data integration` the CUR extract would automatically generate `crawler-cfn.yml` file in your CUR S3 bucket.
+
+This CF template file can be used load the CUR data to Athena for querying purposes.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/cur-crawler-cfn.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/cur-crawler-cfn.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/cur-crawler-cfn.png">
+            <img src="{{ site.url }}/assets/img/2023/03/cur-crawler-cfn.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Upload `crawler-cfn.yml` to CloudFormation service and create the stack resources.
+
+This creates the following services:
+
+- S3 event notification for the CUR S3 bucket
+- Lambda service which kickstarts Glue crawler whenever new CUR data is available
+- IAM roles with needed permissions
+- Glue database
+- Glue crawler to load the data to Athena
+
+Below you can see the CUR crawler lambda function which listens for events from your CUR S3 bucket.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/cur-crawler-lambda.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/cur-crawler-lambda.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/cur-crawler-lambda.png">
+            <img src="{{ site.url }}/assets/img/2023/03/cur-crawler-lambda.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+In Glue, you will see a crawler which will be invoked by above lambda and loads the data to Athena.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/cur-glue-crawler.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/cur-glue-crawler.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/cur-glue-crawler.png">
+            <img src="{{ site.url }}/assets/img/2023/03/cur-glue-crawler.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Once your CUR extract is available in S3, the glue crawler loads the data and it will be available for query in Athena.
+
+You can see below the Athena data source, database and the tables.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/cur-athena-data.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/cur-athena-data.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/cur-athena-data.png">
+            <img src="{{ site.url }}/assets/img/2023/03/cur-athena-data.png" alt="">
+        </picture>
+    </a>
+</figure>
+
 {% include donate.html %}
 {% include advertisement.html %}
