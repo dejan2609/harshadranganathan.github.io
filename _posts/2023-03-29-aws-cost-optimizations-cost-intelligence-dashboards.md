@@ -183,3 +183,32 @@ You can see below the Athena data source, database and the tables.
 
 {% include donate.html %}
 {% include advertisement.html %}
+
+## Enable Quicksight
+
+If you haven't used Quicksight before in your account, you need to sign-up for Quicksight first.
+
+Please check for Quicksight pricing and Sign up for Quicksight by navigating to the `Quicksight` service.
+
+As part of the sign-up process, enable `Quicksight to auto-discover your Amazon S3 buckets` option. (Note: This can be done at a later stage as well by navigating to `Security & permissions` section in Quicksight)
+
+Choose two S3 buckets in the integration:
+
+- CUR S3 bucket
+
+- Athena Query Results bucket
+
+Make sure to enable `Write permission for Athena Workgroup` option for the S3 bucket.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/quicksight-s3-integration.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/quicksight-s3-integration.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/quicksight-s3-integration.png">
+            <img src="{{ site.url }}/assets/img/2023/03/quicksight-s3-integration.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+{% include donate.html %}
+{% include advertisement.html %}
