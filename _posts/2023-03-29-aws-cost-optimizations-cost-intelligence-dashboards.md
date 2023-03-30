@@ -32,14 +32,14 @@ There are multiple approaches to set up the Cost Intelligence Framework such as:
 
 - Cloudformation template
 
-- Combination of CLI and Manual Steps
+- Combination of CLI, CF and Manual Steps
 
 - Manual Steps
 
 
-We'll be focusing on the second approach in this article as that gives more flexibility compared to using a CF template as each organization might follow different practices/account setups/might want to re-use existing configurations (buckets etc.) so you don't have to fiddle with CF templates.
+We'll be focusing on the second approach in this article as that gives more flexibility compared to using a full fledged CF template as each organization might follow different practices/account setups/might want to re-use existing configurations (buckets etc.) so you don't have to fiddle with CF templates.
 
-CF templates on other hand help for easier (if it works for your set-up) and cleaner deletion, some of the resources set up by this framework might still be needed for different usecases so it makes sense to create/re-use existing resources.
+CF templates on other hand help for easier (if it works for your set-up) and cleaner deletion, however some of the resources set up by this framework might still be needed for different use-cases so it makes sense to create/re-use existing resources.
 
 {% include donate.html %}
 {% include advertisement.html %}
@@ -206,6 +206,140 @@ Make sure to enable `Write permission for Athena Workgroup` option for the S3 bu
             <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/quicksight-s3-integration.webp">
             <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/quicksight-s3-integration.png">
             <img src="{{ site.url }}/assets/img/2023/03/quicksight-s3-integration.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+## Deploy CUDOS Dashboard
+
+You can deploy the dashboards either using CF template or through CLI.
+
+If you prefer to use CF template, then create the stack using this template [Cloud Intelligence Dashboards Template](https://console.aws.amazon.com/cloudformation/home#/stacks/create/review?&templateURL=https://aws-managed-cost-intelligence-dashboards.s3.amazonaws.com/cfn/cid-cfn.yml&stackName=Cloud-Intelligence-Dashboards&param_DeployCUDOSDashboard=yes&param_DeployKPIDashboard=yes&param_DeployCostIntelligenceDashboard=yes)
+
+Alternatively, open cloud-shell and run below commands:
+
+```bash
+python3 -m ensurepip --upgrade
+
+pip3 install --upgrade cid-cmd
+
+cid-cmd deploy
+```
+
+CLI command will now ask for some inputs to deploy the Quicksight dashboards.
+
+```bash
+Latest template: arn:aws:quicksight:us-east-1:xxxxx:template/cudos_dashboard_v3/version/191
+Dashboard "cudos" is not deployed
+Required datasets:
+summary_view
+ec2_running_cost
+compute_savings_plan_eligible_spend
+s3_view
+customer_all
+Looking by DataSetId defined in template...complete
+There are still 5 datasets missing: compute_savings_plan_eligible_spend, customer_all, ec2_running_cost, s3_view, summary_view
+Creating dataset: compute_savings_plan_eligible_spend
+```
+
+Select the Athena database which was created by Glue earlier:
+
+```bash
+? [athena-database] Select AWS Athena database to use: athenacurcfn_c_u_r_comprehensive
+Detected views:
+Missing views: compute_savings_plan_eligible_spend
+Checking if CUR is enabled and available...
+Athena table: cur_comprehensive
+Resource IDs: yes
+SavingsPlans: yes
+Reserved Instances: yes
+```
+
+It will now create the views in Athena based on the CUR database tables.
+
+```bash
+Dataset "compute_savings_plan_eligible_spend" created
+Creating dataset: customer_all
+Detected views: cur_comprehensive
+Dataset "customer_all" created
+Creating dataset: ec2_running_cost
+Detected views:
+Missing views: ec2_running_cost
+Dataset "ec2_running_cost" created
+Creating dataset: s3_view
+Detected views:
+Missing views: account_map, s3_view
+```
+
+We will choose dummy for the CUR account data mapping for the time being.
+
+```bash
+Creating account_map...
+autodiscovering...account metadata not detected
+? [account-map-source] Please select account metadata collection method: Dummy (CUR account data, no names)
+Notice: Dummy account mapping will be created
+creating view...done
+Dataset "s3_view" created
+```
+
+If everything is successful, cudos dashboard will be created.
+
+```bash
+Creating dataset: summary_view
+Detected views:
+Missing views: ri_sp_mapping, summary_view
+Dataset "summary_view" created
+Using dataset summary_view: d01a936f-2b8f-49dd-8f95-d9c7130c5e46
+Using dataset ec2_running_cost: 9497cc49-c9b1-4dcd-8bcc-c16396898f29
+Using dataset compute_savings_plan_eligible_spend: 3fa0d804-9bf5-4a20-a61d-4bdbb6d543b1
+Using dataset s3_view: 826896be-4d0f-4f90-832f-3427f5444016
+Using dataset customer_all: 595c66b7-08b6-46ad-87ed-b74fe34dd333
+Deploying dashboard cudos
+```
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## View CUDOS Dashboard
+
+Go to Quicksight and you can see the deployed CUDOS dashboard.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/quicksight-dashboards-view.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/quicksight-dashboards-view.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/quicksight-dashboards-view.png">
+            <img src="{{ site.url }}/assets/img/2023/03/quicksight-dashboards-view.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Open the CUDOS dashboard and you will see many views, for example, in `Optics Explorer` view you can see the Top 10 resources with the Resource ARNs and categorized by the services.
+
+In Cost Explorer, you can view either the cost at service level or list the resources by cost allocation tags but for leadership it's not quite apparent what resources are costing more money and which AWS services they belong to as the Cost Explorer is very limited in nature on what you can show.
+
+This is where the CUDOS dashboard helps to give a more customized view for the business and leaders using the comprehensive CUR data.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/quicksight-cudos-dashboard.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/quicksight-cudos-dashboard.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/quicksight-cudos-dashboard.png">
+            <img src="{{ site.url }}/assets/img/2023/03/quicksight-cudos-dashboard.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Finally, make sure you share your dashboard for everyone/specific people in your account to view otherwise the dashboard won't be visible for them in the listing.
+
+This can be done by clicking the share icon on the top right of the dashboard.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/03/quicksight-dashboard-share.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/quicksight-dashboard-share.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/quicksight-dashboard-share.png">
+            <img src="{{ site.url }}/assets/img/2023/03/quicksight-dashboard-share.png" alt="">
         </picture>
     </a>
 </figure>
