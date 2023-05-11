@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AWS Cost Optimization - Cost Intelligence Dashboards"
-date: 2023-03-29
+date: 2023-05-11
 excerpt: "Cost Intelligence Dashboards that can be leveraged by Executives, CFOs to understand AWS bills with custom cost reports tailored for your organization"
 tag:
     - aws cost intelligence dashboard
@@ -27,6 +27,16 @@ Cost Intelligence Dashboard is a framework to show comprehensive cost report of 
 - Track KPIs
 
 and many more.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/05/cudos-dashboard-overview.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/05/cudos-dashboard-overview.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/05/cudos-dashboard-overview.png">
+            <img src="{{ site.url }}/assets/img/2023/05/cudos-dashboard-overview.png" alt="">
+        </picture>
+    </a>
+</figure>
 
 There are multiple approaches to set up the Cost Intelligence Framework such as:
 
