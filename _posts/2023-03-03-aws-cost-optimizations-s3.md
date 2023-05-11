@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AWS Cost Optimization - S3"
-date: 2023-03-29
+date: 2023-05-11
 excerpt: "Ways to reduce your S3 storage costs"
 tag:
     - s3 intelligent-tiering
@@ -258,6 +258,46 @@ So, you need to first move objects to Intelligent Storage class for archival opt
             <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-archival-configurations.webp">
             <source type="image/png" srcset="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-archival-configurations.png">
             <img src="{{ site.url }}/assets/img/2023/03/s3-intelligent-tiering-archival-configurations.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+#### Storage Class Metrics
+
+Once you have applied the Intelligent Tiering rules, you might want to monitor how these objects are transitioned to the various storage classes in Intelligent Tiering so that you can get an idea of your object's access patterns and cost savings you got by enabling this feature.
+
+Set up CUDOS dashboard by following these steps - [https://rharshad.com/aws-cost-optimizations-cost-intelligence-dashboards/](https://rharshad.com/aws-cost-optimizations-cost-intelligence-dashboards/)
+
+Once you have set it up, in the `Amazon S3` tab you can view the graph for `Daily Storage Bucket Explorer` which shows the following trend:
+
+- Before we had enabled Intelligent Tiering, all our objects (900 TB) were in `Standard Storage` class
+
+- Once we enabled Intelligent Tiering lifecycle policies, we can see the objects being transitioned to `Intelligent Tiering Frequent Access` storage class
+
+- After 30 days, we can see that the objects which were not accessed for the past 30 days (686 TB of 900 TB) being transitioned to `Intelligent Tiering Infrequent Access Tier` storage class which gives us up to 40% in savings.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/05/s3-daily-storage-bucket-explorer.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/05/s3-daily-storage-bucket-explorer.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/05/s3-daily-storage-bucket-explorer.png">
+            <img src="{{ site.url }}/assets/img/2023/05/s3-daily-storage-bucket-explorer.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Also, in the `Daily Cost Bucket Explorer` graph we can see the costs dropping from $750 per day average to $440 per day largely influenced by storage of objects in `Infrequent access`.
+ 
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/05/s3-daily-cost-bucket-explorer.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/05/s3-daily-cost-bucket-explorer.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/05/s3-daily-cost-bucket-explorer.png">
+            <img src="{{ site.url }}/assets/img/2023/05/s3-daily-cost-bucket-explorer.png" alt="">
         </picture>
     </a>
 </figure>
