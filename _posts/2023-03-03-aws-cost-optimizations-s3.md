@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AWS Cost Optimization - S3"
-date: 2023-05-11
+date: 2023-05-25
 excerpt: "Ways to reduce your S3 storage costs"
 tag:
     - s3 intelligent-tiering
@@ -298,6 +298,64 @@ Also, in the `Daily Cost Bucket Explorer` graph we can see the costs dropping fr
             <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/05/s3-daily-cost-bucket-explorer.webp">
             <source type="image/png" srcset="{{ site.url }}/assets/img/2023/05/s3-daily-cost-bucket-explorer.png">
             <img src="{{ site.url }}/assets/img/2023/05/s3-daily-cost-bucket-explorer.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+### Delete incomplete multipart uploads
+
+For large object uploads, multipart upload feature is more efficient providing higher throughout and quicker recovery for network issues.
+
+However, if the multipart upload process is not completed fully, the uploaded bytes still remain in your S3 storage incurring costs.
+
+These leftover bytes will start piling up and add to costs depending on the processes e.g. EMR jobs is one scenario where Multipart uploads can be left incomplete because of job failures.
+
+So, set a lifecycle policy to clean up on those incomplete multipart uploads.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule.png">
+            <img src="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+In above, we enable the option `Delete expired object delete markers or incomplete multipart uploads` which will give you the action options where you can configure the days after which the incomplete multipart upload bytes can be cleaned up from the buckets.
+
+As you can see in below image, you can set the number of days after which the cleanup happens e.g. 2 days giving ample time incase any of the long running processes complete the uploads with delays due to intermittent network issues.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule-days.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule-days.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule-days.png">
+            <img src="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule-days.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Once you configured the lifecycle rule, you can see the policy rule described in the rule overview section.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule-overview.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule-overview.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule-overview.png">
+            <img src="{{ site.url }}/assets/img/2023/05/s3-multipart-lifecycle-rule-overview.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+In the Storage Lens dashboards, from the metrics we can see that the incomplete upload bytes going up to 44 GB and then getting cleaned up eventually by the lifecycle rules resulting in 0 bytes.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/05/s3-multipart-upload-bytes-metrics.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/05/s3-multipart-upload-bytes-metrics.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/05/s3-multipart-upload-bytes-metrics.png">
+            <img src="{{ site.url }}/assets/img/2023/05/s3-multipart-upload-bytes-metrics.png" alt="">
         </picture>
     </a>
 </figure>
