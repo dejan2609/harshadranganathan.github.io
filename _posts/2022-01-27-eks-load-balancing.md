@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Load Balancing in EKS"
-date: 2022-08-19
+date: 2023-06-14
 excerpt: "Steps to expose services through a load balancer in EKS"
 tag:
 - aws
@@ -311,6 +311,10 @@ metadata:
     app: web-app
 spec:
   ports:
+    - name: health
+      protocol: TCP
+      port: 9080
+      targetPort: 9080
     - name: https
       protocol: TCP
       port: 443
@@ -365,8 +369,8 @@ You can configure the security groups to be attached to an ELB for restricting t
 |Annotation Example |Purpose |
 |--|--|
 |service.beta.kubernetes.io/aws-load-balancer-security-groups: "sg-53fae93f" |A list of existing security groups to be configured on the ELB created.<br/><br/>This replaces all other security groups previously assigned to the ELB and also overrides the creation of a uniquely generated security group for this ELB.<br/><br/>The first security group ID on this list is used as a source to permit incoming traffic to target worker nodes (service traffic and health checks).<br/><br/>If multiple ELBs are configured with the same security group ID, only a single permit line will be added to the worker node security groups, that means if you delete any of those ELBs it will remove the single permit line and block access for all ELBs that shared the same security group ID. This can cause a cross-service outage if not used properly|
-|service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: "sg-53fae93f" |A list of additional security groups to be added to the created ELB, this leaves the uniquely generated security group in place, this ensures that every ELB has a unique security group ID and a matching permit line to allow traffic to the target worker nodes (service traffic and health checks). <br/><br/> Security groups defined here can be shared between services.|
-|.spec.loadBalancerSourceRanges |Add CIDR to the uniquely generated security group for this ELB (defaults to 0.0.0.0/0) |
+|service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: "sg-53fae93f" |A list of additional security groups to be added to the created ELB, this leaves the uniquely generated security group in place, this ensures that every ELB has a unique security group ID and a matching permit line to allow traffic to the target worker nodes (service traffic and health checks). <br/><br/> Security groups defined here can be shared between services.<br/><br/>You can use this annotation to whitelist the CIDR ranges which are allowed to connect with your load balancer.|
+|.spec.loadBalancerSourceRanges |Add CIDR to the uniquely generated security group for this ELB (defaults to 0.0.0.0/0) <br/><br/> You can specify your VPC CIDR range here e.g. 10.1.0.0/16 |
 {:.table-striped}
 
 {% include donate.html %}
@@ -394,6 +398,10 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: sg-53fae93f
 spec:
   ports:
+    - name: health
+      protocol: TCP
+      port: 9080
+      targetPort: 9080
     - name: https
       protocol: TCP
       port: 443
@@ -407,19 +415,18 @@ spec:
 
 Above file results in below configuration:
 
-1. Provisions an ELB in the desired subnet
+1. Provisions an external ELB in the desired subnet.
 
-2. Sets the tags provided
+2. Sets the tags provided.
 
-3. Enables access logs to the provided S3 path
+3. Enables access logs to the provided S3 path.
 
-4. Enables Cross Zone load balancing
+4. Enables Cross Zone load balancing.
 
-5. Adds `.spec.loadBalancerSourceRanges` to the uniquely generated security group for this ELB
+5. Adds `.spec.loadBalancerSourceRanges` as an inbound rule (covering both traffic and health port e.g. 443 & 9080) to the uniquely generated ELB security group. This security group is then added as an inbound rule to the worker node security group thereby allowing traffic to the worker nodes.
 
-6. Adds `sg-53fae93f` as an additional security group to the ELB
+6. Adds `sg-53fae93f` as an additional security group to the ELB which has your custom inbound rules say for external traffic.
 
-7. Adds a matching permit line to allow traffic from the ELB to the target worker nodes
 
 {% include donate.html %}
 {% include advertisement.html %}
