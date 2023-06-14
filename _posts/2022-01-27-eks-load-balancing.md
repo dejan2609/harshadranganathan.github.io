@@ -35,9 +35,8 @@ You can install aws load balancer controller by following the instructions in be
 
 Pre-requisites -
 
-- AWS LoadBalancer Controller >= v2.3.0
-- Kubernetes >= v1.20 or EKS >= 1.16 or the following patch releases for Service type LoadBalancer 1.18.18+ for 1.18 or 1.19.10+ for 1.19
-
+- AWS LoadBalancer Controller >= v2.4.0
+- Kubernetes >= v1.22
 - Pods have native AWS VPC networking configured
 
 {% include repo-card.html repo="helm-aws-load-balancer-controller" %}
@@ -119,10 +118,10 @@ Let's look at some of the annotations that you can configure and their behaviors
 
 |Annotation Example |Purpose |
 |--|--|
-|service.beta.kubernetes.io/aws-load-balancer-type: "external" |Indicate to use the external AWS Load balancer controller instead of the in-tree controller available in kubernetes |
+|service.beta.kubernetes.io/aws-load-balancer-type: "external" |Indicate to use the external AWS Load balancer controller instead of the in-tree controller available in kubernetes <br/><br/>Alternatively, you can set `spec.loadBalancerClass: service.k8s.aws/nlb` which is a CloudProvider agnostic way of offloading the reconciliation for Kubernetes Service resources of type LoadBalancer to an external controller |
 |service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance" |Provision NLB in Instance mode |
 |service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip" |Provision NLB in IP mode |
-|service.beta.kubernetes.io/aws-load-balancer-scheme: "internal" |Provision internal NLB|
+|service.beta.kubernetes.io/aws-load-balancer-scheme: "internal" |Provision internal NLB (default)|
 |service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing" |Provision internet-facing NLB |
 |service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: 'Stage=prod,App=web-app' |comma-separated list of key-value pairs which will be recorded as additional tags in the ELB |
 |service.beta.kubernetes.io/aws-load-balancer-attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=prod-bucket,access_logs.s3.prefix=loadbalancing/web-app |Enable access logs<br/><br/>Name of the Amazon S3 bucket where load balancer access logs are stored<br/><br/>Specify the logical hierarchy you created for your Amazon S3 bucket |
