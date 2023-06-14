@@ -123,6 +123,8 @@ Let's look at some of the annotations that you can configure and their behaviors
 |service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip" |Provision NLB in IP mode |
 |service.beta.kubernetes.io/aws-load-balancer-scheme: "internal" |Provision internal NLB (default)|
 |service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing" |Provision internet-facing NLB |
+|service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:.." |ACM certificate for NLB to terminate TLS at Load Balancer level |
+|service.beta.kubernetes.io/aws-load-balancer-ssl-ports: 443 |Port to be used for listening TLS traffic |
 |service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: 'Stage=prod,App=web-app' |comma-separated list of key-value pairs which will be recorded as additional tags in the ELB |
 |service.beta.kubernetes.io/aws-load-balancer-attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=prod-bucket,access_logs.s3.prefix=loadbalancing/web-app |Enable access logs<br/><br/>Name of the Amazon S3 bucket where load balancer access logs are stored<br/><br/>Specify the logical hierarchy you created for your Amazon S3 bucket |
 |service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true |Specifies whether cross-zone load balancing is enabled for the load balancer |
