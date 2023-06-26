@@ -2,7 +2,7 @@
 layout: post
 title:  "Connect to RDS in VPC Private Subnet using EC2 Instance Connect Endpoint (Local/Laptop)"
 date:   2023-06-26
-excerpt: "Steps to Access RDS DB running in a private subnet from your local/laptop"
+excerpt: "Steps to Access RDS/Aurora DB running in a private subnet from your local/laptop"
 tag:
 - rds
 - private subnet
