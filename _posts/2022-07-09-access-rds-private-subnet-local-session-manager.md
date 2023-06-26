@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Access AWS RDS DB in a Private Subnet (Local/Laptop)"
-date:   2022-07-09
+title:  "Access AWS RDS DB in a Private Subnet - Session Manager (Local/Laptop)"
+date:   2023-06-26
 excerpt: "Steps to Access RDS DB running in a private subnet from your local/laptop"
 tag:
 - rds
@@ -14,6 +14,7 @@ tag:
 - aws rds access from outside
 - how to access aws rds in private subnet
 - how to connect to rds instance in private subnet
+- how to connect to rds instance in private subnet using AWS Session Manager
 comments: true
 ---
 
