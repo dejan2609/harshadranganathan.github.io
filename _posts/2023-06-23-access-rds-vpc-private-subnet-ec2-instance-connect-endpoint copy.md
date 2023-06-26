@@ -103,9 +103,9 @@ We can use `10.1.12.2` to open a tunnel to the RDS proxy instance and access you
 
 ## RDS Proxy Security Groups
 
-You need to ensure your proxy security group to allow traffic from your EC2 Instance Connect Endpoint.
+You need to ensure your proxy security group allows traffic from your EC2 Instance Connect Endpoint.
 
-This can be achieved in following ways:
+This can be achieved in the following ways:
 
 [1] Add the EC2 Instance Connect Endpoint security group as an Inbound rule to the RDS Proxy security group.
 
