@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AWS Cost Optimization - S3"
-date: 2023-05-25
+date: 2023-07-19
 excerpt: "Ways to reduce your S3 storage costs"
 tag:
     - s3 intelligent-tiering
