@@ -302,7 +302,7 @@ Also, in the `Daily Cost Bucket Explorer` graph we can see the costs dropping fr
     </a>
 </figure>
 
-### Delete incomplete multipart uploads
+### Delete Incomplete Multipart Uploads
 
 For large object uploads, multipart upload feature is more efficient providing higher throughout and quicker recovery for network issues.
 
@@ -356,6 +356,73 @@ In the Storage Lens dashboards, from the metrics we can see that the incomplete 
             <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/05/s3-multipart-upload-bytes-metrics.webp">
             <source type="image/png" srcset="{{ site.url }}/assets/img/2023/05/s3-multipart-upload-bytes-metrics.png">
             <img src="{{ site.url }}/assets/img/2023/05/s3-multipart-upload-bytes-metrics.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+### Delete/Reduce NonCurrent Versions Retained
+
+If you have buckets which are versioned, you will quickly accumulate costs as the number of previous versions of objects grow.
+
+For example, if your teams are running EMR jobs and writing to versioned buckets those jobs might overwrite files on multiple re-runs depending on configuration causing an explosion of previous version of files.
+
+So, it's always recommended to have a lifecycle policy in place to clean up non-current versions of objects. 
+
+There are two options available -
+
+[1] If your use case needs to maintain non-current versions for the long-term for any recovery/compliance/audit purposes then determine how many versions of noncurrent objects you would like to maintain. e.g. If you need only up to 1 previous version to be maintained then you can configure a lifecycle policy to clean up rest of the older previous versions.
+
+[2] If your use case needs to maintain non-current versions only for a few days to support accidental deletions then configure a policy to expire all non-current versions after 'x' days.
+
+You set up a lifecycle rule like shown below where we say not to retain any non-current versions post 2 days and to permanently delete all of the non-current versions post 2 days.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/07/s3-non-current-version-expiry-lifecycle-policy.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/07/s3-non-current-version-expiry-lifecycle-policy.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/07/s3-non-current-version-expiry-lifecycle-policy.png">
+            <img src="{{ site.url }}/assets/img/2023/07/s3-non-current-version-expiry-lifecycle-policy.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Once the lifecycle policy gets applied, using Storage lens we can observe the `% noncurrent version bytes` metric trend showing a 47.83% drop meaning we had so much data accumulated from non-current versions of objects costing us $$.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/07/s3-non-current-version-metrics-trend.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/07/s3-non-current-version-metrics-trend.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/07/s3-non-current-version-metrics-trend.png">
+            <img src="{{ site.url }}/assets/img/2023/07/s3-non-current-version-metrics-trend.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+In storage lens, if you plot the data using the metrics, we can see the storage dropping from 1.8 PB all the way down to 900 TB (blue line) and from the red line we can see the drop co-relates to the clean up of `Noncurrent version bytes`.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/07/s3-storage-lens-non-current-version-trend.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/07/s3-storage-lens-non-current-version-trend.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/07/s3-storage-lens-non-current-version-trend.png">
+            <img src="{{ site.url }}/assets/img/2023/07/s3-storage-lens-non-current-version-trend.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+From cost explorer, we can see our actions led to a cost drop from $900 per day to $380 per day for closer to PB of data residing in S3. If you multiple this for 12 months, you get significant savings all by enabling a lifecycle policy and taking meaningful actions on the data. 
+
+S3 costs are cheap but bad data management means your costs will keep on increasing and by the time you take notice you will already paid a lot for it to AWS.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/07/s3-non-current-version-cost-drop.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/07/s3-non-current-version-cost-drop.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/07/s3-non-current-version-cost-drop.png">
+            <img src="{{ site.url }}/assets/img/2023/07/s3-non-current-version-cost-drop.png" alt="">
         </picture>
     </a>
 </figure>
