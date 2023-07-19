@@ -413,9 +413,9 @@ In storage lens, if you plot the data using the metrics, we can see the storage 
     </a>
 </figure>
 
-From cost explorer, we can see our actions led to a cost drop from $900 per day to $380 per day for closer to PB of data residing in S3. If you multiple this for 12 months, you get significant savings all by enabling a lifecycle policy and taking meaningful actions on the data. 
+From cost explorer, we can see our actions led to a cost drop from $900 per day to $380 per day for closer to PB of data residing in S3. If you calculate this cost for 12 months, you notice that you got significant savings by just enabling a lifecycle policy and taking meaningful actions on the data.
 
-S3 costs are cheap but bad data management means your costs will keep on increasing and by the time you take notice you will already paid a lot for it to AWS.
+S3 costs are cheap but bad data management means your costs will keep on increasing and by the time it comes to your attention you would have already paid the bills to AWS.
 
 <figure>
     <a href="{{ site.url }}/assets/img/2023/07/s3-non-current-version-cost-drop.png">
