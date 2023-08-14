@@ -94,7 +94,75 @@ This is a limitation and hence we recommend not to use path based filters on PR 
 {% include donate.html %}
 {% include advertisement.html %}
 
+## Default Values
+
+You can set default settings that will apply to all jobs/steps in a workflow.
+
+We use it to set default shell for our workflow.
+
+```yaml
+name: 'Policy Check: EMR Release Label'
+
+on: [pull_request]
+
+defaults:
+  run:
+    shell: bash
+```
+
+## Environment Variables
+
+You can set environment variables to be used in any steps of all jobs in your workflow.
+
+For example, below we set `TARGET_RELEASE_LABEL` as an environment variable so that we can refer it anywhere/change in one place in the workflow.
+
+Note, there are many context variables that Github actions provides but their scope varies i.e. which part of actions they can be accessed.
+
+Check this documentation on context availability: <https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability>
+
+```yaml
+name: 'Policy Check: EMR Release Label'
+
+on: [pull_request]
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  TARGET_RELEASE_LABEL: 6.10.0
+```
+
 ## Workflow Permissions
+
+GitHub provides a token that you can use to authenticate on behalf of GitHub Actions.
+
+This token is available via `GITHUB_TOKEN` secret.
+
+You will have to explicitly defines certain permissions, for example, to use the token to add a comment to a PR.
+
+We define such permissions in the workflow.
+
+```yaml
+name: 'Policy Check: EMR Release Label'
+
+on: [pull_request]
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  TARGET_RELEASE_LABEL: 6.10.0
+
+permissions:
+  id-token: write
+  contents: read 
+  pull-requests: write
+```
+
+{% include donate.html %}
+{% include advertisement.html %}
 
 ## Workflow Steps
 
