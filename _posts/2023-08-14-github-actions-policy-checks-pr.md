@@ -442,7 +442,7 @@ jobs:
 
         echo "result=pass" >> "$GITHUB_OUTPUT"
 
-        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+        for file in {% raw %}${{ steps.changed-files.outputs.all_changed_files }};{% endraw %} do
             if [ "${file: -4}" == ".tpl" ]; then
               if ! grep -q emr-$TARGET_RELEASE_LABEL "$file"; then
                 echo "|👎 |$file | Not using EMR release label $TARGET_RELEASE_LABEL |" >> $GITHUB_STEP_SUMMARY
@@ -539,7 +539,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
           echo "result=pass" >> "$GITHUB_OUTPUT"
           
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          for file in {% raw %}${{ steps.changed-files.outputs.all_changed_files }};{% endraw %} do
             if [ "${file: -4}" == ".tpl" ]; then
               if ! grep -q emr-$TARGET_RELEASE_LABEL "$file"; then
                 echo "|👎 |$file | Not using EMR release label $TARGET_RELEASE_LABEL |" >> $GITHUB_STEP_SUMMARY
