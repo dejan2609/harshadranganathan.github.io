@@ -320,3 +320,243 @@ jobs:
 
 {% include donate.html %}
 {% include advertisement.html %}
+
+
+### Run Commands
+
+If the PR contains the files we are interested in, our `Validate Policy` step will be executed.
+
+We can use `run` to execute multiple commands in a shell environment.
+
+Note, that `run` is not the same as say `bash` execution. It's an action construct which does variable substitution first i.e. replaces values for supported contexts specified using placeholders {% raw %}`${{ }}`{% endraw %} and then supplies the commands to shell environment.
+
+```yaml
+name: 'Policy Check: EMR Release Label'
+
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.7
+        with:
+          files: '**/*.tpl'
+
+      - name: Validate Policy
+        id: validate-policy 
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+            echo 'Hello'
+            echo 'World'
+```
+
+### Validate Policy
+
+Let's start writing out the logic for validating the changed files.
+
+Before we do that, there are 3 temporary files that get created by the runner for each workflow execution we need to understand:
+
+| |Description |Example|Limitations|
+|--|--|--|--|
+|**GITHUB_ENV** |You can make an environment variable available to any subsequent steps in a workflow job by defining or updating the environment variable and writing this to the GITHUB_ENV environment file. | echo "{environment_variable_name}={value}" >> "$GITHUB_ENV"| |
+|**GITHUB_OUTPUT** |Sets a step's output parameter. Note that the step will need an id to be defined to later retrieve the output value. |echo "{name}={value}" >> "$GITHUB_OUTPUT" |Outputs are Unicode strings, and can be a maximum of 1 MB. The total of all outputs in a workflow run can be a maximum of 50 MB. |
+|**GITHUB_STEP_SUMMARY** |You can set some custom Markdown for each job so that it will be displayed on the summary page of a workflow run and doesn't need to go to logs.  | echo "{markdown content}" >> $GITHUB_STEP_SUMMARY|GITHUB_STEP_SUMMARY is unique for each step in a job. |
+{:.table-striped}
+
+We will be using them in our policy validation logic.
+
+Firstly, we want the results of our validation to be shown in Job Summary page (when you open the action execution run) so that the team members don't have to look into the logs as to what happened.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/08/github-actions-job-summary.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/08/github-actions-job-summary.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/08/github-actions-job-summary.png">
+            <img src="{{ site.url }}/assets/img/2023/08/github-actions-job-summary.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+We generate such summary statements by continuously appending the markdown content to the `$GITHUB_STEP_SUMMARY` file as shown below. Note that the file will be unique for each step so your content will be lost in the subsequent steps which affects your design.
+
+```yaml
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+
+    - name: Validate Policy
+      id: validate-policy 
+      if: steps.changed-files.outputs.any_changed == 'true'
+      run: |
+        {
+            echo "|Result |File |Reason |" 
+            echo "|--- |--- |--- |" 
+        } >> "$GITHUB_STEP_SUMMARY"
+
+```
+
+Also, we need to indicate if the workflow execution was success or not. For that purpose, we store the result in `$GITHUB_OUTPUT` file which can be accessed in later steps.
+
+```yaml
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+
+    - name: Validate Policy
+      id: validate-policy 
+      if: steps.changed-files.outputs.any_changed == 'true'
+      run: |
+        {
+            echo "|Result |File |Reason |" 
+            echo "|--- |--- |--- |" 
+        } >> "$GITHUB_STEP_SUMMARY"
+
+        echo "result=pass" >> "$GITHUB_OUTPUT"
+
+```
+
+We then write the execution logic and append the markdown results. In our example usecase, we would like to pass the PR if it uses the expected release label.
+
+So, we grep the file to see if that's the case and write the appropriate result. 
+
+Since, we are executing the commands in `run` we have access to contexts such as `steps, env` etc, which we can use to get workflow values.
+
+```yaml
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+
+    - name: Validate Policy
+      id: validate-policy 
+      if: steps.changed-files.outputs.any_changed == 'true'
+      run: |
+        {
+            echo "|Result |File |Reason |" 
+            echo "|--- |--- |--- |" 
+        } >> "$GITHUB_STEP_SUMMARY"
+
+        echo "result=pass" >> "$GITHUB_OUTPUT"
+
+        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [ "${file: -4}" == ".tpl" ]; then
+              if ! grep -q emr-$TARGET_RELEASE_LABEL "$file"; then
+                echo "|👎 |$file | Not using EMR release label $TARGET_RELEASE_LABEL |" >> $GITHUB_STEP_SUMMARY
+                echo "result=fail" >> "$GITHUB_OUTPUT"
+              else
+                echo "|👍  |$file | Using EMR release label $TARGET_RELEASE_LABEL |" >> $GITHUB_STEP_SUMMARY
+              fi
+            fi
+        done
+
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Update your template to use \"ReleaseLabel\": \"emr-$TARGET_RELEASE_LABEL\"" >> $GITHUB_STEP_SUMMARY
+
+```
+
+As you can see above, we iterate the changed files, and then grep based on our condition.
+
+If the changes are compliant we append the success result as markdown table with emoji's and if not otherwise.
+
+Also, note that if the result is a failure, we can override the content of the `$GITHUB_OUTPUT` file which we will be using in later steps to indicate success/failure of the workflow execution.
+
+```bash
+echo "result=fail" >> "$GITHUB_OUTPUT"
+```
+
+
+Finally, we also append the `$GITHUB_STEP_SUMMARY` to `$GITHUB_ENV`. Reason for doing so is the Actions UI is badly designed in such a way that the Job Summary is useless.
+
+If any of the actions you use have any warnings, currently you can't suppress them and they pollute the summary page in such a way that your Job Summary goes to the bottom.
+
+Also, clicking on the execution links in PR status checks doesn't take you to the Job Summary but to the logs first.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/08/github-actions-annotations.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/08/github-actions-annotations.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/08/github-actions-annotations.png">
+            <img src="{{ site.url }}/assets/img/2023/08/github-actions-annotations.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+```bash
+echo "summary<<EOF"  >> $GITHUB_ENV
+cat $GITHUB_STEP_SUMMARY >> $GITHUB_ENV
+echo "EOF" >> $GITHUB_ENV
+```
+
+You will have to use above syntax to pass multi-line string to Github environment file.
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+Complete file is as follows:
+
+```yaml
+name: 'Policy Check: EMR Release Label'
+
+on: [pull_request]
+
+defaults:
+  run:
+    shell: bash
+    
+env:
+  TARGET_RELEASE_LABEL: 6.10.0
+  
+permissions:
+  id-token: write
+  contents: read 
+  pull-requests: write
+  
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.7
+        with:
+          files: '**/*.tpl'
+
+      - name: Validate Policy
+        id: validate-policy 
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          {
+            echo "|Result |File |Reason |" 
+            echo "|--- |--- |--- |" 
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "result=pass" >> "$GITHUB_OUTPUT"
+          
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [ "${file: -4}" == ".tpl" ]; then
+              if ! grep -q emr-$TARGET_RELEASE_LABEL "$file"; then
+                echo "|👎 |$file | Not using EMR release label $TARGET_RELEASE_LABEL |" >> $GITHUB_STEP_SUMMARY
+                echo "result=fail" >> "$GITHUB_OUTPUT"
+              else
+                echo "|👍  |$file | Using EMR release label $TARGET_RELEASE_LABEL |" >> $GITHUB_STEP_SUMMARY
+              fi
+            fi
+          done
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Update your template to use \"ReleaseLabel\": \"emr-$TARGET_RELEASE_LABEL\"" >> $GITHUB_STEP_SUMMARY
+          
+          echo "summary<<EOF"  >> $GITHUB_ENV
+          cat $GITHUB_STEP_SUMMARY >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+```
+
+{% include donate.html %}
+{% include advertisement.html %}
