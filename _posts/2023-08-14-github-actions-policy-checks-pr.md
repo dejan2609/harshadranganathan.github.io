@@ -560,7 +560,166 @@ jobs:
 
 ### Add PR Comment
 
+We also publish the result to the PR as a comment so that team's don't have to navigate to the actions summary page.
+
+This can be achieved by using `actions/github-script` and `$GITHUB_TOKEN` secret which has token with permissions to add a comment to the PR.
+
+Our summary is available via environment variable to which we set in last step which we can access using `process.env.summary`. 
+
+```yaml
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+
+    steps:
+      - name: Update Pull Request
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: process.env.summary
+            })
+```
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/08/github-bot-pr-comments.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/08/github-bot-pr-comments.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/08/github-bot-pr-comments.png">
+            <img src="{{ site.url }}/assets/img/2023/08/github-bot-pr-comments.png" alt="">
+        </picture>
+    </a>
+</figure>
+
 ### Action Result
+
+Finally, you need to indicate the action result for the PR status check to pass/fail.
+
+This can be done by accessing the step output and setting exit code.
+
+```yaml
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+
+    steps:
+      - name: Result
+        if: steps.changed-files.outputs.any_changed == 'true' && steps.validate-policy.outputs.result != 'pass'
+        run: exit 1
+```
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/08/github-actions-pr-status-check.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/08/github-actions-pr-status-check.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/08/github-actions-pr-status-check.png">
+            <img src="{{ site.url }}/assets/img/2023/08/github-actions-pr-status-check.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+Complete file:
+
+```yaml
+name: 'Policy Check: EMR Release Label'
+
+on: [pull_request]
+
+defaults:
+  run:
+    shell: bash
+    
+env:
+  TARGET_RELEASE_LABEL: 6.10.0
+  
+permissions:
+  id-token: write
+  contents: read 
+  pull-requests: write
+  
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.7
+        with:
+          files: '**/*.tpl'
+
+      - name: Validate Policy
+        id: validate-policy 
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          {
+            echo "|Result |File |Reason |" 
+            echo "|--- |--- |--- |" 
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "result=pass" >> "$GITHUB_OUTPUT"
+          
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [ "${file: -4}" == ".tpl" ]; then
+              if ! grep -q emr-$TARGET_RELEASE_LABEL "$file"; then
+                echo "|👎 |$file | Not using EMR release label $TARGET_RELEASE_LABEL |" >> $GITHUB_STEP_SUMMARY
+                echo "result=fail" >> "$GITHUB_OUTPUT"
+              else
+                echo "|👍  |$file | Using EMR release label $TARGET_RELEASE_LABEL |" >> $GITHUB_STEP_SUMMARY
+              fi
+            fi
+          done
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Update your template to use \"ReleaseLabel\": \"emr-$TARGET_RELEASE_LABEL\"" >> $GITHUB_STEP_SUMMARY
+          
+          echo "summary<<EOF"  >> $GITHUB_ENV
+          cat $GITHUB_STEP_SUMMARY >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          
+      - name: Update Pull Request
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: process.env.summary
+            })
+      
+      - name: Result
+        if: steps.changed-files.outputs.any_changed == 'true' && steps.validate-policy.outputs.result != 'pass'
+        run: exit 1
+```
+
+{% include donate.html %}
+{% include advertisement.html %}
+
+## PR Status Checks
+
+In order to mandate these PR status checks, ensure all your workflows have same job name so that all of them are executed for every PR.
+
+In your branch protection rules, enable below setting and add the job names which needs to be mandatory to pass.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/08/github-pr-required-status-checks.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/08/github-pr-required-status-checks.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/08/github-pr-required-status-checks.png">
+            <img src="{{ site.url }}/assets/img/2023/08/github-pr-required-status-checks.png" alt="">
+        </picture>
+    </a>
+</figure>
 
 {% include donate.html %}
 {% include advertisement.html %}
