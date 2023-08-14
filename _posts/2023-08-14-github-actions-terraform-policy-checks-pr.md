@@ -164,6 +164,61 @@ permissions:
 {% include donate.html %}
 {% include advertisement.html %}
 
+## Workflow Jobs
+
+Your workflow contains one or more jobs which can run in sequential order or in parallel. Each job will run inside its own virtual machine runner, or inside a container, and has one or more steps that either run a script that you define or run an action, which is a reusable extension that can simplify your workflow.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/08/overview-actions-simple.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/08/overview-actions-simple.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/08/overview-actions-simple.png">
+            <img src="{{ site.url }}/assets/img/2023/08/overview-actions-simple.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+```yaml
+name: 'Policy Check: Managed Scaling'
+
+on: [pull_request]
+
+defaults:
+  run:
+    shell: bash
+    
+permissions:
+  id-token: write
+  contents: read 
+  pull-requests: write
+  
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+```
+
+We define a job named `PR Checks` which is the name which will show up in the build status checks (Workflow name followed by Job name), also in action summary view.
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/08/github-actions-pr-status-check.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/08/github-actions-pr-status-check.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/08/github-actions-pr-status-check.png">
+            <img src="{{ site.url }}/assets/img/2023/08/github-actions-pr-status-check.png" alt="">
+        </picture>
+    </a>
+</figure>
+
+<figure>
+    <a href="{{ site.url }}/assets/img/2023/08/actions-summary.png">
+        <picture>
+            <source type="image/webp" srcset="{{ site.url }}/assets/img/2023/08/actions-summary.webp">
+            <source type="image/png" srcset="{{ site.url }}/assets/img/2023/08/actions-summary.png">
+            <img src="{{ site.url }}/assets/img/2023/08/actions-summary.png" alt="">
+        </picture>
+    </a>
+</figure>
+
 ## Workflow Steps
 
 {% include donate.html %}
