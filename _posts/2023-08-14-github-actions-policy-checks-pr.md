@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Github Actions - Pull Request Policy Checks for Terraform Repos"
+title:  "Github Actions - Pull Request Policy Checks"
 date:   2023-08-14
-excerpt: "Example of writing Github Actions for doing policy checks on PR's for Terraform Repos"
+excerpt: "Example of writing Github Actions for doing policy checks on PR's"
 tag:
 - understanding github actions
 - learn github actions
@@ -557,6 +557,10 @@ jobs:
           cat $GITHUB_STEP_SUMMARY >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 ```
+
+### Add PR Comment
+
+### Action Result
 
 {% include donate.html %}
 {% include advertisement.html %}
