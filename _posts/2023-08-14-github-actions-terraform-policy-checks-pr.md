@@ -221,5 +221,102 @@ We define a job named `PR Checks` which is the name which will show up in the bu
 
 ## Workflow Steps
 
+A job contains a sequence of tasks called steps. Steps can run commands, run setup tasks, or run an action in your repository, a public repository, or an action published in a Docker registry. 
+
+### Checkout Repo
+
+Our first step is to checkout the workspace, so we use another action which performs it for us `actions/checkout@v3`.
+
+You can invoke a public action using the version tag, action in same repo or reference it from other container registries.
+
+```yaml
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+```
+
+### Changed Files
+
+Previously, we recommended not to use path based filters on workflow triggers as they block PR status checks.
+
+As a workaround, one of the approaches is to use another public action `tj-actions/changed-files` which helps to get list of all changed pull request files (added, copied, modified, deleted, renamed, type changed, unmerged, unknown).
+
+```yaml
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.7
+        with:
+          files: '**/*.tpl'
+```
+
+We can use `files` input to define patterns to be matched for returning changed files instead of all changed files.
+
+In order to skip execution of other steps if the PR doesn't contain the file we are looking for, we can use the `if` conditional checks on the steps. This helps to break the execution flow and return success if the PR has changes e.g. just README update which we aren't interested on for our policy checks but would require the build checks to pass on.
+
+```yaml
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+        
+    steps:
+        - name: Validate Policy
+          id: validate-policy 
+          if: steps.changed-files.outputs.any_changed == 'true'
+```
+
+For example, in above, the step `Validate Policy` will be skipped based on the if condition i.e. we use the outputs of `changed-files` action based on filters to determine if the PR has any changed files we are interested in using the expression `steps.changed-files.outputs.any_changed == 'true'`.
+
+You can refer the documentation of public actions to see what outputs they produce which can be referenced using the steps context as follows: `steps.<step_id>.outputs.<output_name>`
+
+Complete file is as follows:
+
+```yaml
+name: 'Policy Check: EMR Release Label'
+
+on: [pull_request]
+
+defaults:
+  run:
+    shell: bash
+    
+env:
+  TARGET_RELEASE_LABEL: 6.10.0
+  
+permissions:
+  id-token: write
+  contents: read 
+  pull-requests: write
+  
+jobs:
+  pr_checks:
+    name: 'PR Checks'
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.7
+        with:
+          files: '**/*.tpl'
+
+      - name: Validate Policy
+        id: validate-policy 
+        if: steps.changed-files.outputs.any_changed == 'true'
+```
+
 {% include donate.html %}
 {% include advertisement.html %}
